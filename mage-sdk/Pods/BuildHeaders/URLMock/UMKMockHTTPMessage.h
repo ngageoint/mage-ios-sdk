@@ -1,1 +1,0 @@
-../../URLMock/URLMock/Mock Messages/UMKMockHTTPMessage.h

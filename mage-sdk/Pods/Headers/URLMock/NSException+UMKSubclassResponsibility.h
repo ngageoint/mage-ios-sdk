@@ -1,1 +1,0 @@
-../../URLMock/URLMock/Categories/NSException+UMKSubclassResponsibility.h
