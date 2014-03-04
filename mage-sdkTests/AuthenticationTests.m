@@ -8,23 +8,22 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Login.h"
+#import "LocalAuthentication.h"
 
 #import "TRVSMonitor.h"
 
 #import <URLMock/URLMock.h>
 
-@interface mage_sdkTests : XCTestCase <LoginDelegate> {
+@interface AuthenticationTests : XCTestCase <LoginDelegate> {
 	User *user;
 	TRVSMonitor *loginMonitor;
 }
 
 @end
 
-@implementation mage_sdkTests
+@implementation AuthenticationTests
 
-- (void)setUp
-{
+- (void)setUp {
 	[super setUp];
 	// Put setup code here. This method is called before the invocation of each test method in the class.
 	
@@ -35,8 +34,7 @@
 	loginMonitor = [TRVSMonitor monitor];
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
 	// Put teardown code here. This method is called after the invocation of each test method in the class.
 	[UMKMockURLProtocol setVerificationEnabled:NO];
 	[UMKMockURLProtocol disable];
@@ -44,12 +42,8 @@
 	[super tearDown];
 }
 
-- (void)testExample
-{
-}
 
-- (void)testLoginSuccess
-{
+- (void)testLoginSuccess {
 	
 	NSLog(@"Running login test");
 		
@@ -76,15 +70,18 @@
 	
 	NSDictionary *parameters =[[NSDictionary alloc] initWithObjectsAndKeys: @"test", @"username", @"12345", @"password", uid, @"uid", nil];
 	
-	Login *login = [[Login alloc] initWithURL:[NSURL URLWithString:@"https://***REMOVED***"] andParameters:parameters];
+	LocalAuthentication *login = [[LocalAuthentication alloc] initWithURL:[NSURL URLWithString:@"https://***REMOVED***"] andParameters:parameters];
 	login.delegate = self;
 	[login login];
 	
 	[loginMonitor waitWithTimeout:5];
 	
-//	STAssertTrue([self waitForCompletion:5.0], @"Failed to login within timeout");
-	
-	NSLog(@"Done running login test");
+	XCTAssertNotNil(user, @"'user' object is nil, login was unsuccessful");
+	XCTAssertEqualObjects(user.username, @"test", @"username was not set correctly");
+	XCTAssertEqualObjects(user.firstName, @"Test", @"firstname was not set correctly");
+	XCTAssertEqualObjects(user.lastName, @"Test", @"lastname was not set correctly");
+	XCTAssertEqualObjects(user.email, @"test@test.com", @"email was not set correctly");
+	XCTAssertEqualObjects(user.phoneNumbers, ([[NSArray alloc] initWithObjects:@"333-111-4444", @"444-555-6767", nil]), @"phone numbers not set correctly");
 }
 
 - (void) loginSuccess: (User *) token {
