@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <UIKit/UIKit.h>
 
 #import "LocalAuthentication.h"
 
@@ -51,8 +52,7 @@
 	
 	NSLog(@"Running login test");
 	
-	NSString *uid = @"123"; //[[[UIDevice currentDevice] identifierForVendor] UUIDString];
-	
+	NSString *uid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 	
 	NSURL *URL = [NSURL URLWithString:@"https://***REMOVED***/api/login"];
 	id requestJSON = @{
