@@ -14,9 +14,10 @@
 
 #import <URLMock/URLMock.h>
 
-@interface AuthenticationTests : XCTestCase <LoginDelegate> {
+@interface AuthenticationTests : XCTestCase <AuthenticationDelegate> {
 	User *user;
 	TRVSMonitor *loginMonitor;
+	id<Authentication> authentication;
 }
 
 @end
@@ -32,6 +33,9 @@
 	[UMKMockURLProtocol reset];
 	
 	loginMonitor = [TRVSMonitor monitor];
+	
+	authentication = [Authentication authenticationWithType:LOCAL url:[NSURL URLWithString:@"https://***REMOVED***"]];
+	authentication.delegate = self;
 }
 
 - (void)tearDown {
@@ -52,28 +56,27 @@
 	
 	NSURL *URL = [NSURL URLWithString:@"https://***REMOVED***/api/login"];
 	id requestJSON = @{
-										 @"username": @"test",
-										 @"password": @"12345",
-										 @"uid": uid
-										 };
+		 @"username": @"test",
+		 @"password": @"12345",
+		 @"uid": uid
+	};
 	id responseJSON = @{
-											@"token": @"12345",
-											@"user" : @{ @"username" : @"test",
-																	 @"firstname" : @"Test",
-																	 @"lastname" : @"Test",
-																	 @"email" : @"test@test.com",
-																	 @"phones": @[@"333-111-4444", @"444-555-6767"]}
-											};
+		@"token": @"12345",
+		@"user" : @{ @"username" : @"test",
+								 @"firstname" : @"Test",
+								 @"lastname" : @"Test",
+								 @"email" : @"test@test.com",
+								 @"phones": @[@"333-111-4444", @"444-555-6767"]}
+	};
 	
 	[UMKMockURLProtocol expectMockHTTPPostRequestWithURL:URL requestJSON:requestJSON responseStatusCode:200 responseJSON:responseJSON];
 	
 	
 	NSDictionary *parameters =[[NSDictionary alloc] initWithObjectsAndKeys: @"test", @"username", @"12345", @"password", uid, @"uid", nil];
 	
-	LocalAuthentication *login = [[LocalAuthentication alloc] initWithURL:[NSURL URLWithString:@"https://***REMOVED***"] andParameters:parameters];
-	login.delegate = self;
-	[login login];
 	
+	[authentication loginWithParameters:parameters];
+
 	[loginMonitor waitWithTimeout:5];
 	
 	XCTAssertNotNil(user, @"'user' object is nil, login was unsuccessful");
@@ -84,12 +87,12 @@
 	XCTAssertEqualObjects(user.phoneNumbers, ([[NSArray alloc] initWithObjects:@"333-111-4444", @"444-555-6767", nil]), @"phone numbers not set correctly");
 }
 
-- (void) loginSuccess: (User *) token {
+- (void) authenticationWasSuccessful:(User *)token {
 	user = token;
 	
 	[loginMonitor signal];
 }
-- (void) loginFailure {
+- (void) authenticationHadFailure {
 	[loginMonitor signal];
 	
 }
