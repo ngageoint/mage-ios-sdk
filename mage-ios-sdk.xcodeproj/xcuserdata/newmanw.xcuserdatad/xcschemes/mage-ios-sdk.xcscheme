@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4CEBDA1218BD3FF600DDCE9C"
-               BuildableName = "libmage-sdk.a"
-               BlueprintName = "mage-sdk"
-               ReferencedContainer = "container:mage-sdk.xcodeproj">
+               BlueprintIdentifier = "4CAF957118C62E0100A41CB8"
+               BuildableName = "libmage-ios-sdk.a"
+               BlueprintName = "mage-ios-sdk"
+               ReferencedContainer = "container:mage-ios-sdk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4CEBDA2218BD3FF600DDCE9C"
-               BuildableName = "mage-sdkTests.xctest"
-               BlueprintName = "mage-sdkTests"
-               ReferencedContainer = "container:mage-sdk.xcodeproj">
+               BlueprintIdentifier = "4CAF958118C62E0100A41CB8"
+               BuildableName = "mage-ios-sdkTests.xctest"
+               BlueprintName = "mage-ios-sdkTests"
+               ReferencedContainer = "container:mage-ios-sdk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

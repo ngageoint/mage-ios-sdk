@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>mage-sdk.xcscheme</key>
+		<key>mage-ios-sdk.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4CEBDA1218BD3FF600DDCE9C</key>
+		<key>4CAF957118C62E0100A41CB8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4CEBDA2218BD3FF600DDCE9C</key>
+		<key>4CAF958118C62E0100A41CB8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

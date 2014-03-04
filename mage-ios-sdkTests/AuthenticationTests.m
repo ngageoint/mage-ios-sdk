@@ -1,8 +1,8 @@
 //
-//  mage_sdkTests.m
-//  mage-sdkTests
+//  mage_ios_sdkTests.m
+//  mage-ios-sdkTests
 //
-//  Created by Billy Newman on 2/21/14.
+//  Created by Billy Newman on 3/4/14.
 //  Copyright (c) 2014 National Geospatial-Intelligence Agency. All rights reserved.
 //
 
@@ -30,7 +30,7 @@
 	[UMKMockURLProtocol enable];
 	[UMKMockURLProtocol setVerificationEnabled:YES];
 	[UMKMockURLProtocol reset];
-
+	
 	loginMonitor = [TRVSMonitor monitor];
 }
 
@@ -46,24 +46,24 @@
 - (void)testLoginSuccess {
 	
 	NSLog(@"Running login test");
-		
+	
 	NSString *uid = @"123"; //[[[UIDevice currentDevice] identifierForVendor] UUIDString];
 	
 	
 	NSURL *URL = [NSURL URLWithString:@"https://***REMOVED***/api/login"];
 	id requestJSON = @{
-		@"username": @"test",
-		@"password": @"12345",
-		@"uid": uid
-	};
+										 @"username": @"test",
+										 @"password": @"12345",
+										 @"uid": uid
+										 };
 	id responseJSON = @{
-		@"token": @"12345",
-		@"user" : @{ @"username" : @"test",
-								@"firstname" : @"Test",
-								@"lastname" : @"Test",
-								@"email" : @"test@test.com",
-								@"phones": @[@"333-111-4444", @"444-555-6767"]}
-	};
+											@"token": @"12345",
+											@"user" : @{ @"username" : @"test",
+																	 @"firstname" : @"Test",
+																	 @"lastname" : @"Test",
+																	 @"email" : @"test@test.com",
+																	 @"phones": @[@"333-111-4444", @"444-555-6767"]}
+											};
 	
 	[UMKMockURLProtocol expectMockHTTPPostRequestWithURL:URL requestJSON:requestJSON responseStatusCode:200 responseJSON:responseJSON];
 	
@@ -91,7 +91,8 @@
 }
 - (void) loginFailure {
 	[loginMonitor signal];
-
+	
 }
 
 @end
+

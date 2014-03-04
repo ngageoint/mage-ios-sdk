@@ -1,8 +1,9 @@
 //
-//  LoginInfo.h
-//  mage-sdk
+//  User
+//  mage-ios-sdk
 //
 //  Created by Billy Newman on 2/24/14.
+//  Copyright (c) 2014 National Geospatial-Intelligence Agency. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
