@@ -5,13 +5,13 @@
 //  Created by Billy Newman on 2/24/14.
 //
 
-#import "Login.h"
+#import "LocalAuthentication.h"
 
 #import <AFNetworking/AFNetworking.h>
 
 #import "User.h"
 
-@implementation Login
+@implementation LocalAuthentication
 
 - (id) initWithURL: (NSURL *) baseURL andParameters: (NSDictionary *) parameters {
 	if (self = [super init]) {

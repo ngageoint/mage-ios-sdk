@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Login.h"
+#import "LocalAuthentication.h"
 
 #import "TRVSMonitor.h"
 
@@ -76,7 +76,7 @@
 	
 	NSDictionary *parameters =[[NSDictionary alloc] initWithObjectsAndKeys: @"test", @"username", @"12345", @"password", uid, @"uid", nil];
 	
-	Login *login = [[Login alloc] initWithURL:[NSURL URLWithString:@"https://***REMOVED***"] andParameters:parameters];
+	LocalAuthentication *login = [[LocalAuthentication alloc] initWithURL:[NSURL URLWithString:@"https://***REMOVED***"] andParameters:parameters];
 	login.delegate = self;
 	[login login];
 	

@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Authentication.h"
 #import "User.h"
 
 @protocol LoginDelegate <NSObject>
@@ -17,7 +18,7 @@
 
 @end
 
-@interface Login : NSObject
+@interface LocalAuthentication : NSObject<Authentication>
 
 - (id) initWithURL: (NSURL *) baseURL andParameters: (NSDictionary *) parameters;
 
