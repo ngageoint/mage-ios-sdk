@@ -14,40 +14,41 @@
 
 @implementation LocalAuthentication
 
-- (id) initWithURL: (NSURL *) baseURL andParameters: (NSDictionary *) parameters {
+@synthesize delegate;
+
+AFHTTPSessionManager *manager;
+
+- (id) initWithURL: (NSURL *) url {
 	if (self = [super init]) {
-		_baseURL = baseURL;
-		_parameters = parameters;
+		_baseURL = url;
+		
+		manager = [self createHTTPSessionManager:_baseURL];
 	}
 	
 	return self;
 }
 
-- (void) login {
-	NSString *username = [_parameters objectForKey:@"username"];
-	NSString *password = [_parameters objectForKey:@"password"];
-	NSString *uid = [_parameters objectForKey:@"uid"];
-	
-	NSDictionary *parameters = @{@"username": username, @"password": password, @"uid": uid};
-  
-	AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-	manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-	manager.requestSerializer = [AFJSONRequestSerializer serializerWithWritingOptions:NSJSONReadingAllowFragments];
-	
+- (void) loginWithParameters: (NSDictionary *) parameters {
 	NSString *url = [NSString stringWithFormat:@"%@/%@", [_baseURL absoluteString], @"api/login"];
-	[manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	[manager POST:url parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 		User *user = [[User alloc] initWithJSON:responseObject];
 		
-		if (_delegate) {
-			[_delegate loginSuccess:user];
+		if (delegate) {
+			[delegate authenticationWasSuccessful:user];
 		}
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		if (_delegate) {
-			[_delegate loginFailure];
+	} failure:^(NSURLSessionDataTask *task, NSError *error) {
+		if (delegate) {
+			[delegate authenticationHadFailure];
 		}
 	}];
 }
 
-
+- (AFHTTPSessionManager *) createHTTPSessionManager: (NSURL *) url {
+	AFHTTPSessionManager *m = [[AFHTTPSessionManager alloc] initWithBaseURL:url];
+	m.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+	m.requestSerializer = [AFJSONRequestSerializer serializerWithWritingOptions:NSJSONReadingAllowFragments];
+	
+	return m;
+}
 
 @end
