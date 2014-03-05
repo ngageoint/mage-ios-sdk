@@ -13,7 +13,8 @@
 
 #import "TRVSMonitor.h"
 
-#import <URLMock/URLMock.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
+#import "OHHTTPStubsResponse+JSON.h"
 
 @interface AuthenticationTests : XCTestCase <AuthenticationDelegate> {
 	User *user;
@@ -29,10 +30,6 @@
 	[super setUp];
 	// Put setup code here. This method is called before the invocation of each test method in the class.
 	
-	[UMKMockURLProtocol enable];
-	[UMKMockURLProtocol setVerificationEnabled:YES];
-	[UMKMockURLProtocol reset];
-	
 	loginMonitor = [TRVSMonitor monitor];
 	
 	authentication = [Authentication authenticationWithType:LOCAL url:[NSURL URLWithString:@"https://***REMOVED***"]];
@@ -41,9 +38,6 @@
 
 - (void)tearDown {
 	// Put teardown code here. This method is called after the invocation of each test method in the class.
-	[UMKMockURLProtocol setVerificationEnabled:NO];
-	[UMKMockURLProtocol disable];
-	
 	[super tearDown];
 }
 
@@ -54,30 +48,29 @@
 	
 	NSString *uid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 	
-	NSURL *URL = [NSURL URLWithString:@"https://***REMOVED***/api/login"];
-	id requestJSON = @{
-		 @"username": @"test",
-		 @"password": @"12345",
-		 @"uid": uid
-	};
-	id responseJSON = @{
+	NSDictionary *responseJSON = @{
 		@"token": @"12345",
-		@"user" : @{ @"username" : @"test",
-								 @"firstname" : @"Test",
-								 @"lastname" : @"Test",
-								 @"email" : @"test@test.com",
-								 @"phones": @[@"333-111-4444", @"444-555-6767"]}
+		@"user" : @{
+			@"username" : @"test",
+			@"firstname" : @"Test",
+			@"lastname" : @"Test",
+			@"email" : @"test@test.com",
+			@"phones": @[@"333-111-4444", @"444-555-6767"]
+		}
 	};
 	
-	[UMKMockURLProtocol expectMockHTTPPostRequestWithURL:URL requestJSON:requestJSON responseStatusCode:200 responseJSON:responseJSON];
-	
+	[OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+		return [request.URL.absoluteString isEqualToString:@"https://***REMOVED***/api/login"];
+	} withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+		OHHTTPStubsResponse *response = [OHHTTPStubsResponse responseWithJSONObject:responseJSON statusCode:200 headers:@{@"Content-Type":@"application/json"}];
+		return response;
+	}];
 	
 	NSDictionary *parameters =[[NSDictionary alloc] initWithObjectsAndKeys: @"test", @"username", @"12345", @"password", uid, @"uid", nil];
 	
-	
 	[authentication loginWithParameters:parameters];
 
-	[loginMonitor waitWithTimeout:5];
+	[loginMonitor waitWithTimeout:5000];
 	
 	XCTAssertNotNil(user, @"'user' object is nil, login was unsuccessful");
 	XCTAssertEqualObjects(user.username, @"test", @"username was not set correctly");
