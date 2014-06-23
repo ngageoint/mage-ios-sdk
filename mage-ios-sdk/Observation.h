@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSString * remoteId;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * userId;
-@property (nonatomic, retain) NSNumber * state;
+@property (nonatomic, retain) NSString * state;
 @property (nonatomic, retain) NSSet *attachments;
 @property (nonatomic, retain) NSSet *properties;
 @end
