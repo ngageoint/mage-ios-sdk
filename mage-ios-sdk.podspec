@@ -27,4 +27,5 @@ Pod::Spec.new do |s|
   s.resources = ['MAGE/**/*.xcdatamodeld']
   s.frameworks = 'Foundation'
   s.dependency 'AFNetworking', '~> 2.1.0'
+  s.dependency 'DateTools', '~> 1.3.0'
 end
