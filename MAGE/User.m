@@ -1,31 +1,23 @@
 //
-//  LoginInfo.m
-//  mage-ios-sdk
+//  User.m
+//  Pods
 //
-//  Created by Billy Newman on 2/24/14.
-//  Copyright (c) 2014 National Geospatial-Intelligence Agency. All rights reserved.
+//  Created by Billy Newman on 7/18/14.
+//
 //
 
 #import "User.h"
+#import "Location.h"
+
 
 @implementation User
 
-- (id) initWithJSON: (NSDictionary *) json {
-	if (self = [super init]) {
-		_token = [json objectForKey:@"token"];
-		
-		NSDictionary *user = [json objectForKey:@"user"];
-		
-		_username = [user objectForKey:@"username"];
-		_firstName = [user objectForKey:@"firstname"];
-		_lastName = [user objectForKey:@"lastname"];
-		_email = [user objectForKey:@"email"];
-		NSArray *a = [user objectForKey:@"phones"];
-		_phoneNumbers = a;
-	}
-	
-	return self;
-}
-
+@dynamic currentUser;
+@dynamic email;
+@dynamic name;
+@dynamic remoteId;
+@dynamic username;
+@dynamic phone;
+@dynamic location;
 
 @end
