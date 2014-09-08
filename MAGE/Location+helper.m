@@ -55,7 +55,8 @@
 	}
 }
 
-+ (NSOperation *) operationToPullLocationsWithManagedObjectContext: (NSManagedObjectContext *) context {
+
++ (NSOperation *) operationToPullLocationsWithManagedObjectContext: (NSManagedObjectContext *) context complete:(void (^) (BOOL success)) complete {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSURL *serverUrl = [defaults URLForKey:@"serverUrl"];
 	NSString *url = [NSString stringWithFormat:@"%@/%@", serverUrl, @"api/locations/users"];
@@ -66,6 +67,7 @@
     NSURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: nil error: nil];
     NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id userLocations) {
 		NSLog(@"Fetched locations from the server, saving to location storage");
+        User *currentUser = [User fetchCurrentUserForManagedObjectContext:context];
         
 		// Get the user ids to query
 		NSMutableArray *userIds = [[NSMutableArray alloc] init];
@@ -101,6 +103,7 @@
                 };
                 user = [User insertUserForJson:userDictionary inManagedObjectContext:context];
             };
+            if ([currentUser.remoteId isEqualToString:user.remoteId]) continue;
             
 			Location *location = user.location;
 			if (location == nil) {
@@ -121,8 +124,11 @@
             // For now if we find at least one new user let just go grab the users again
             [[User operationToFetchUsersWithManagedObjectContext:context] start];
         }
+        
+        complete(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        complete(NO);
     }];
     
     return operation;
