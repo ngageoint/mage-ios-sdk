@@ -12,9 +12,11 @@
 
 @interface Observation (helper)
 
-
-
 - (id) populateObjectFromJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context;
+
+- (CLLocation *) location;
+
+- (NSString *) sectionName;
 
 + (Observation*) observationForJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context;
 

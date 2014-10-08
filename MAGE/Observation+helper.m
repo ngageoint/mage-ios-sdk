@@ -11,18 +11,43 @@
 #import "MageEnums.h"
 #import "GeoPoint.h"
 #import "Attachment+helper.h"
+#import <NSDate+DateTools.h>
 
+@interface Observation ()
+
+@end
 
 @implementation Observation (helper)
+
+NSDictionary *_fieldNameToField;
+
+- (NSDictionary *)fieldNameToField {
+    if (_fieldNameToField != nil) {
+        return _fieldNameToField;
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *form = [defaults objectForKey:@"form"];
+    
+    NSMutableDictionary *fieldNameToFieldMap = [[NSMutableDictionary alloc] init];
+    // run through the form and map the row indexes to fields
+    for (id field in [form objectForKey:@"fields"]) {
+        [fieldNameToFieldMap setObject:field forKey:[field objectForKey:@"name"]];
+    }
+    _fieldNameToField = fieldNameToFieldMap;
+    
+    return _fieldNameToField;
+}
 
 - (id) populateObjectFromJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context {
     [self setRemoteId:[json objectForKey:@"id"]];
     [self setUserId:[json objectForKey:@"userId"]];
     [self setDeviceId:[json objectForKey:@"deviceId"]];
     NSDictionary *properties = [json objectForKey: @"properties"];
-    [self setProperties:properties];
+    
+    [self setProperties:[self generatePropertiesFromRaw:properties]];
     
     NSDateFormatter *dateFormat = [NSDateFormatter new];
+    [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     dateFormat.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     // Always use this locale when parsing fixed format date strings
     NSLocale* posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -47,6 +72,35 @@
     return self;
 }
 
+- (NSDictionary *) generatePropertiesFromRaw: (NSDictionary *) propertyJson {
+    
+    NSMutableDictionary *parsedProperties = [[NSMutableDictionary alloc] initWithDictionary:propertyJson];
+    
+    for (id key in propertyJson) {
+        id value = [propertyJson objectForKey:key];
+        id field = [[self fieldNameToField] objectForKey:key];
+        if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:[[value objectForKey:@"x"] floatValue] longitude:[[value objectForKey:@"y"] floatValue]];
+            
+            [parsedProperties setObject:[[GeoPoint alloc] initWithLocation:location] forKey:key];
+        }
+    }
+    
+    return parsedProperties;
+}
+
+- (CLLocation *) location {
+    GeoPoint *point = (GeoPoint *) self.geometry;
+    return point.location;
+}
+
+- (NSString *) sectionName {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    return [dateFormatter stringFromDate:self.timestamp];
+}
+
 + (id) observationForJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context {
     Observation *observation = [[Observation alloc] initWithEntity:[NSEntityDescription entityForName:@"Observation" inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
     [observation populateObjectFromJson:json inManagedObjectContext: context];
@@ -62,9 +116,15 @@
     NSString *url = [NSString stringWithFormat:@"%@/FeatureServer/%@/features", serverUrl, layerId];
     NSLog(@"Fetching from layer %@", layerId);
     
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    __block NSDate *lastObservationDate = [defaults objectForKey:@"lastObservationDate"];
+    if (lastObservationDate != nil) {
+        [parameters setObject:lastObservationDate forKey:@"startDate"];
+    }
+    
     HttpManager *http = [HttpManager singleton];
     
-    NSURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: nil error: nil];
+    NSURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: parameters error: nil];
     NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Observation request complete");
         NSArray *features = [responseObject objectForKey:@"features"];
@@ -113,12 +173,19 @@
                 }
                 NSLog(@"Updating object with id: %@", o.remoteId);
             }
+            
+            if ([o.timestamp isLaterThan:lastObservationDate]) {
+                lastObservationDate = o.timestamp;
+            }
         }
         
         NSError *error = nil;
         if (! [context save:&error]) {
             NSLog(@"Error inserting Observation: %@", error);
         }
+        
+        [defaults setObject:lastObservationDate forKey:@"lastObservationDate"];
+        [defaults synchronize];
         
         complete(YES);
         

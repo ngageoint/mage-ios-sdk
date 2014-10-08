@@ -12,6 +12,7 @@
 #import "User+helper.h"
 #import "GeoPoint.h"
 #import "HttpManager.h"
+#import <NSDate+DateTools.h>
 
 @implementation Location (helper)
 
@@ -23,6 +24,11 @@
 	[location populateLocationFromJson:locations];
 	
 	return location;
+}
+
+- (CLLocation *) location {
+    GeoPoint *point = (GeoPoint *) self.geometry;
+    return point.location;
 }
 
 - (void) populateLocationFromJson:(NSArray *) locations {
@@ -132,6 +138,11 @@
     }];
     
     return operation;
+}
+
+- (NSString *)sectionIdentifier
+{
+    return [self timestamp].timeAgoSinceNow;
 }
 
 
