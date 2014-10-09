@@ -173,7 +173,7 @@ NSDictionary *_fieldNameToField;
                 }
                 NSLog(@"Updating object with id: %@", o.remoteId);
             }
-            
+
             if ([o.timestamp isLaterThan:lastObservationDate]) {
                 lastObservationDate = o.timestamp;
             }
