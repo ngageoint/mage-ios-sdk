@@ -11,8 +11,9 @@
 
 @interface GPSLocation (helper)
 
-+ (GPSLocation *) gpsLocationForLocation:(CLLocation *) location inManagedObjectContext: (NSManagedObjectContext *) context;
-+ (NSArray *) fetchGPSLocationsInManagedObjectContext: (NSManagedObjectContext *) context;
++ (GPSLocation *) gpsLocationForLocation:(CLLocation *) location;
++ (NSArray *) fetchGPSLocations;
++ (NSArray *) fetchLastXGPSLocations: (NSUInteger) x;
 
 + (NSOperation *) operationToPushGPSLocations:(NSArray *) locations success:(void (^)()) success failure: (void (^)()) failure;
 

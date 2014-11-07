@@ -9,18 +9,20 @@
 #import "Observation.h"
 #import "NSManagedObjectContext+Extra.h"
 #import <CoreLocation/CoreLocation.h>
+#import <GeoPoint.h>
 
 @interface Observation (helper)
 
-- (id) populateObjectFromJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context;
+- (id) populateObjectFromJson: (NSDictionary *) json;
+- (void) initializeNewObservationWithLocation: (GeoPoint *) location;
 
 - (CLLocation *) location;
 
 - (NSString *) sectionName;
 
-+ (Observation*) observationForJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context;
++ (Observation*) observationForJson: (NSDictionary *) json;
 
-+ (NSOperation*) operationToPullObservationsWithManagedObjectContext: (NSManagedObjectContext *) context complete:(void (^) (BOOL success)) complete;
-
++ (NSOperation*) operationToPullObservations:(void (^) (BOOL success)) complete;
++ (NSOperation *) operationToPushObservation:(Observation *) observation success:(void (^)()) success failure: (void (^)()) failure;
 
 @end
