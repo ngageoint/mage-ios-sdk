@@ -10,11 +10,13 @@
 #import "HttpManager.h"
 #import "NSDate+Iso8601.h"
 #import "GeoPoint.h"
+#import "MageServer.h"
+#import "NSManagedObjectContext+MAGE.h"
 
 @implementation GPSLocation (helper)
 
-+ (GPSLocation *) gpsLocationForLocation:(CLLocation *) location inManagedObjectContext: (NSManagedObjectContext *) context {
-    GPSLocation *gpsLocation = [NSEntityDescription insertNewObjectForEntityForName:@"GPSLocation" inManagedObjectContext:context];
++ (GPSLocation *) gpsLocationForLocation:(CLLocation *) location {
+    GPSLocation *gpsLocation = [NSEntityDescription insertNewObjectForEntityForName:@"GPSLocation" inManagedObjectContext:[NSManagedObjectContext defaultManagedObjectContext]];
     gpsLocation.geometry = [[GeoPoint alloc] initWithLocation:location];
     gpsLocation.timestamp = location.timestamp;
     gpsLocation.properties = @{
@@ -28,7 +30,9 @@
     return gpsLocation;
 }
 
-+ (NSArray *) fetchGPSLocationsInManagedObjectContext: (NSManagedObjectContext *) context {
++ (NSArray *) fetchGPSLocations {
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"GPSLocation" inManagedObjectContext:context]];
     [request setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES]]];
@@ -43,10 +47,26 @@
     return locations;
 }
 
++ (NSArray *) fetchLastXGPSLocations: (NSUInteger) x {
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"GPSLocation" inManagedObjectContext:context]];
+    [request setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES]]];
+    request.fetchLimit = x;
+
+    NSError *error;
+    NSArray *locations = [context executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"Error getting user locations from database");
+    }
+    
+    return locations;
+}
+
 + (NSOperation *) operationToPushGPSLocations:(NSArray *) locations success:(void (^)()) success failure: (void (^)()) failure {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSURL *serverUrl = [defaults URLForKey:@"serverUrl"];
-	NSString *url = [NSString stringWithFormat:@"%@/%@", serverUrl, @"api/locations/"];
+	NSString *url = [NSString stringWithFormat:@"%@/%@", [MageServer baseURL], @"api/locations/"];
 	NSLog(@"Trying to push locations to server %@", url);
 	
     HttpManager *http = [HttpManager singleton];

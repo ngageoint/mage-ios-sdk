@@ -8,25 +8,30 @@
 
 #import "User+helper.h"
 #import "HttpManager.h"
+#import "MageServer.h"
+#import "NSManagedObjectContext+MAGE.h"
 
 @implementation User (helper)
 
 static User *currentUser = nil;
 
-+ (User *) insertUserForJson: (NSDictionary *) json myself:(BOOL) myself inManagedObjectContext: (NSManagedObjectContext *) context {
++ (User *) insertUserForJson: (NSDictionary *) json myself:(BOOL) myself {
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
 	User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:context];
     [user setCurrentUser:[NSNumber numberWithBool:myself]];
-	[user updateUserForJson:json inManagedObjectContext:context];
+	[user updateUserForJson:json];
     
 	return user;
 }
 
-+ (User *) insertUserForJson: (NSDictionary *) json inManagedObjectContext: (NSManagedObjectContext *) context {
-	return [User insertUserForJson:json myself:NO inManagedObjectContext:context];
++ (User *) insertUserForJson: (NSDictionary *) json  {
+	return [User insertUserForJson:json myself:NO];
 }
 
-+ (User *) fetchCurrentUserForManagedObjectContext: (NSManagedObjectContext *) context {
++ (User *) fetchCurrentUser {
     if (currentUser == nil) {
+        NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
+        
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
         [request setPredicate: [NSPredicate predicateWithFormat:@"currentUser = %@", [NSNumber numberWithBool:YES]]];
@@ -46,7 +51,9 @@ static User *currentUser = nil;
     return currentUser;
 }
 
-+ (User *) fetchUserForId:(NSString *) userId  inManagedObjectContext: (NSManagedObjectContext *) context {
++ (User *) fetchUserForId:(NSString *) userId {
+    NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
+    
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	[request setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
 	[request setPredicate: [NSPredicate predicateWithFormat:@"remoteId = %@", userId]];
@@ -63,7 +70,7 @@ static User *currentUser = nil;
 	return [users objectAtIndex:0];
 }
 
-- (void) updateUserForJson: (NSDictionary *) json  inManagedObjectContext:(NSManagedObjectContext *) context {
+- (void) updateUserForJson: (NSDictionary *) json {
 	[self setRemoteId:[json objectForKey:@"_id"]];
 	[self setUsername:[json objectForKey:@"username"]];
 	[self setEmail:[json objectForKey:@"email"]];
@@ -74,17 +81,18 @@ static User *currentUser = nil;
 		NSDictionary *phone = [phones objectAtIndex:0];
 		[self setPhone:[phone objectForKey:@"number"]];
 	}
+    
+    [self setIconUrl:[json objectForKey:@"iconUrl"]];
+    [self setAvatarUrl:[json objectForKey:@"avatarUrl"]];
 	
 	NSError *error = nil;
-	if (! [context save:&error]) {
+	if (! [[NSManagedObjectContext defaultManagedObjectContext] save:&error]) {
 		NSLog(@"Error updating User: %@", error);
 	}
 }
 
-+ (NSOperation *) operationToFetchUsersWithManagedObjectContext: (NSManagedObjectContext *) context {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSURL *serverUrl = [defaults URLForKey:@"serverUrl"];
-	NSString *url = [NSString stringWithFormat:@"%@/%@", serverUrl, @"api/users"];
++ (NSOperation *) operationToFetchUsers {
+	NSString *url = [NSString stringWithFormat:@"%@/%@", [MageServer baseURL], @"api/users"];
 	
 	NSLog(@"Trying to fetch users from server %@", url);
 	
@@ -99,6 +107,8 @@ static User *currentUser = nil;
 		}
 		
 		// Create the fetch request to get all users IDs from server response.
+        NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
+        
 		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		[fetchRequest setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
 		[fetchRequest setPredicate: [NSPredicate predicateWithFormat:@"(remoteId IN %@)", userIds]];
@@ -116,11 +126,11 @@ static User *currentUser = nil;
 			if (user == nil) {
 				// not in core data yet need to create a new managed object
 				NSLog(@"Inserting new user into database");
-				user = [User insertUserForJson:userJson inManagedObjectContext:context];
+				user = [User insertUserForJson:userJson];
 			} else {
 				// already exists in core data, lets update the object we have
 				NSLog(@"Updating user location in the database");
-				[user updateUserForJson:userJson inManagedObjectContext:context];
+				[user updateUserForJson:userJson];
 			}
         }
         
