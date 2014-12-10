@@ -19,9 +19,20 @@
 #import <Server+helper.h>
 #import <User+helper.h>
 
+
 @implementation Observation (helper)
 
+NSMutableArray *_transientAttachments;
+
 NSDictionary *_fieldNameToField;
+
+- (NSMutableArray *)transientAttachments {
+    if (_transientAttachments != nil) {
+        return _transientAttachments;
+    }
+    _transientAttachments = [NSMutableArray array];
+    return _transientAttachments;
+}
 
 - (NSDictionary *)fieldNameToField {
     if (_fieldNameToField != nil) {
@@ -92,9 +103,12 @@ NSDictionary *_fieldNameToField;
         }
     }
 
-    
     [observationJson setObject:jsonProperties forKey:@"properties"];
     return observationJson;
+}
+
+- (void) addTransientAttachment: (Attachment *) attachment {
+    [self.transientAttachments addObject:attachment];
 }
 
 - (void) initializeNewObservationWithLocation:(GeoPoint *)location {
@@ -147,7 +161,6 @@ NSDictionary *_fieldNameToField;
     CLLocation *location = [[CLLocation alloc] initWithLatitude:[[coordinates objectAtIndex:1] floatValue] longitude:[[coordinates objectAtIndex:0] floatValue]];
     
     [self setGeometry:[[GeoPoint alloc] initWithLocation:location]];
-    
     return self;
 }
 
@@ -269,15 +282,30 @@ NSDictionary *_fieldNameToField;
                 [dbObs populateObjectFromJson:feature];
                 dbObs.user = [usersMatchingIDs objectAtIndex:0];
                 NSArray *attachments = [feature objectForKey:@"attachments"];
-                // stupid but for now just do this
-                for (id oldAttachment in dbObs.attachments) {
-                    [context deleteObject:oldAttachment];
+                
+                BOOL found = NO;
+                for (id a in attachments) {
+                    NSString *remoteId = [a objectForKey:@"id"];
+                    found = NO;
+                    for (Attachment *dbAttachment in dbObs.attachments) {
+                        if (remoteId != nil && [remoteId isEqualToString:dbAttachment.remoteId]) {
+                            dbAttachment.contentType = [a objectForKey:@"contentType"];
+                            dbAttachment.name = [a objectForKey:@"name"];
+                            dbAttachment.remotePath = [a objectForKey:@"remotePath"];
+                            dbAttachment.size = [a objectForKey:@"size"];
+                            dbAttachment.url = [a objectForKey:@"url"];
+                            dbAttachment.observation = dbObs;
+                            found = YES;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        Attachment * newAttachment = [Attachment attachmentForJson:a inContext:context insertIntoContext:context];
+                        newAttachment.observation = dbObs;
+                        [dbObs addAttachmentsObject:newAttachment];
+                    }
                 }
-                for (id attachment in attachments) {
-                    Attachment * a = [Attachment attachmentForJson:attachment];
-                    [context insertObject:a];
-                    [dbObs addAttachmentsObject:a];
-                }
+
                 NSLog(@"Updating object with id: %@", o.remoteId);
             } else {
                 NSLog(@"Observation with id: %@ is dirty", o.remoteId);
@@ -304,7 +332,7 @@ NSDictionary *_fieldNameToField;
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Observation" inManagedObjectContext:context]];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"lastModified" ascending:NO]];
     request.fetchLimit = 1;
     
     NSError *error;
