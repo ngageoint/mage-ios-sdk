@@ -3,7 +3,8 @@ platform :ios, '7.0'
 
 pod "AFNetworking", "~> 2.3.1"
 pod "DateTools", "~> 1.3.0"
-pod "MagicalRecord", "~> 2.2"
+pod "MagicalRecord", :git => 'https://github.com/magicalpanda/MagicalRecord.git', :tag => 'v2.3.0-beta.5'
+
 pod 'objective-zip', '~> 0.8.3'
 
 target :"mage-ios-sdkTests" do
