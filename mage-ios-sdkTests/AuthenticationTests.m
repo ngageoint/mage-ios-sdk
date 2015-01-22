@@ -15,6 +15,7 @@
 
 #import <OHHTTPStubs/OHHTTPStubs.h>
 #import "OHHTTPStubsResponse+JSON.h"
+#import "UserUtility.h"
 
 @interface AuthenticationTests : XCTestCase <AuthenticationDelegate> {
 	User *user;
