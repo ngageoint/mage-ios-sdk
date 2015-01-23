@@ -8,8 +8,8 @@
 
 #import "ObservationPushService.h"
 #import "HttpManager.h"
-#import "NSManagedObjectContext+MAGE.h"
 #import "Observation+helper.h"
+#import "Attachment.h"
 
 NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
 
@@ -34,18 +34,12 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
                                                    options:NSKeyValueObservingOptionNew
                                                    context:NULL];
         
-        NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Observation" inManagedObjectContext:context]];
-        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:[[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO], nil]];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"dirty == YES"]];
-
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                   managedObjectContext:context
-                                                                                                     sectionNameKeyPath:@"sectionName"
-                                                                                                              cacheName:nil];
-        [self.fetchedResultsController setDelegate:self];
+        self.fetchedResultsController = [Observation MR_fetchAllSortedBy:@"timestamp"
+                                                               ascending:NO
+                                                           withPredicate:[NSPredicate predicateWithFormat:@"dirty == YES"]
+                                                                 groupBy:nil
+                                                                delegate:nil
+                                                               inContext:[NSManagedObjectContext MR_defaultContext]];
     }
     
     return self;
@@ -54,105 +48,76 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
 - (void) start {
     [self stop];
     
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        // Update to handle the error appropriately.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // Fail
-    }
+    self.fetchedResultsController.delegate = self;
+    [self pushObservations:self.fetchedResultsController.fetchedObjects];
     
-    [self pushObservations];
-    // probably not exactly correct but for now i am just going to schedule right here
-    // should wait for things to push and then schedule again maybe.
     [self scheduleTimer];
 }
 
 - (void) scheduleTimer {
-    self.observationPushTimer = [NSTimer timerWithTimeInterval:self.interval target:self selector:@selector(onTimerFire) userInfo:nil repeats:NO];
-    [[NSRunLoop mainRunLoop] addTimer:self.observationPushTimer forMode:NSRunLoopCommonModes];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.observationPushTimer = [NSTimer scheduledTimerWithTimeInterval:self.interval target:self selector:@selector(onTimerFire) userInfo:nil repeats:YES];
+    });
 }
 
 - (void) onTimerFire {
-    [self pushObservations];
-}
-
-
-//controllerWillChangeContent:
-//controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:
-//controller:didChangeSection:atIndex:forChangeType:
-//controllerDidChangeContent:
-
-- (void) controllerDidChangeContent:(NSFetchedResultsController *)controller {
-   
+    [self pushObservations:self.fetchedResultsController.fetchedObjects];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id) anObject atIndexPath:(NSIndexPath *) indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *) newIndexPath {
-    
-    
     switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        case NSFetchedResultsChangeInsert: {
             NSLog(@"observations inserted, push em");
-            [self pushObservations];
+            [self pushObservations:@[anObject]];
             break;
-            
+        }
         case NSFetchedResultsChangeDelete:
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
-        case NSFetchedResultsChangeUpdate:
-//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+        case NSFetchedResultsChangeUpdate: {
             NSLog(@"observations updated, push em");
-            [self pushObservations];
+            Observation *observation = anObject;
+            if (observation.remoteId) [self pushObservations:@[anObject]];
             break;
-            
+        }
         case NSFetchedResultsChangeMove:
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }
 
 
-- (void) pushObservations {
+- (void) pushObservations:(NSArray *) observations {
     NSLog(@"currently still pushing %lu observations", (unsigned long)self.pushingObservations.count);
-//    if (self.pushingObservations.count != 0) return;
     
     // only push observations that haven't already been told to be pushed
-    NSMutableDictionary *obsToPush = [[NSMutableDictionary alloc] init];
-    for (Observation *observation in [self.fetchedResultsController fetchedObjects]) {
+    NSMutableDictionary *observationsToPush = [[NSMutableDictionary alloc] init];
+    for (Observation *observation in observations) {
         if ([self.pushingObservations objectForKey:observation.objectID] == nil){
             [self.pushingObservations setObject:observation forKey:observation.objectID];
-            [obsToPush setObject:observation forKey:observation.objectID];
+            [observationsToPush setObject:observation forKey:observation.objectID];
         }
     }
     
-    NSLog(@"about to push an additional %lu observations", (unsigned long)obsToPush.count);
-    for (id observationId in obsToPush) {
-        // let's pull the most up to date version of this observation to push
-        NSManagedObjectContext *context = [NSManagedObjectContext defaultManagedObjectContext];
-        NSError *error;
-        Observation *observation = (Observation *)[context existingObjectWithID:observationId error:&error];
-        if (observation == nil) {
-            continue;
-        }
-        NSLog(@"submitting observation %@", observation.objectID);
+    NSLog(@"about to push an additional %lu observations", (unsigned long) observationsToPush.count);
+    __weak ObservationPushService *weakSelf = self;
+    for (Observation *observation in [observationsToPush allValues]) {
+        NSLog(@"submitting observation %@", observation);
         NSOperation *observationPushOperation = [Observation operationToPushObservation:observation success:^(id response) {
             NSLog(@"Successfully submitted observation");
-            
-            [observation populateObjectFromJson:response];
-            observation.dirty = [NSNumber numberWithBool:NO];
-            
-            NSError *error;
-            if (![observation.managedObjectContext save:&error]) {
-                NSLog(@"Error updating observation: %@", error);
-            }
-            
-            [self.pushingObservations removeObjectForKey:observation.objectID];
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                Observation *localObservation = [observation MR_inContext:localContext];
+                [localObservation populateObjectFromJson:response];
+                localObservation.dirty = [NSNumber numberWithBool:NO];
+                
+                for (Attachment *attachment in localObservation.attachments) {
+                    attachment.observationRemoteId = localObservation.remoteId;
+                }
+            } completion:^(BOOL success, NSError *error) {
+                [weakSelf.pushingObservations removeObjectForKey:observation.objectID];
+
+            }];
         } failure:^{
             NSLog(@"Error submitting observation");
-            [self.pushingObservations removeObjectForKey:observation.objectID];
+            [weakSelf.pushingObservations removeObjectForKey:observation.objectID];
         }];
         
         [[HttpManager singleton].manager.operationQueue addOperation:observationPushOperation];
@@ -160,11 +125,14 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
 }
 
 -(void) stop {
-    if ([_observationPushTimer isValid]) {
-        [_observationPushTimer invalidate];
-        _observationPushTimer = nil;
-        
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([_observationPushTimer isValid]) {
+            [_observationPushTimer invalidate];
+            _observationPushTimer = nil;
+        }
+    });
+
+    self.fetchedResultsController.delegate = nil;
 }
 
 @end

@@ -13,7 +13,8 @@
 #import "User+helper.h"
 #import "HttpManager.h"
 #import "MageServer.h"
-#import "NSManagedObjectContext+MAGE.h"
+#import "StoredPassword.h"
+
 
 @implementation LocalAuthentication
 
@@ -42,9 +43,35 @@
 
 - (void) performLogin: (NSDictionary *) parameters {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSString *username = (NSString *) [parameters objectForKey:@"username"];
+    NSString *password = (NSString *) [parameters objectForKey:@"password"];
     HttpManager *http = [HttpManager singleton];
     NSString *url = [NSString stringWithFormat:@"%@/%@", [[MageServer baseURL] absoluteString], @"api/login"];
     
+    if (![[AFNetworkReachabilityManager sharedManager] isReachable]) {
+        NSDictionary *oldLoginParameters = [defaults objectForKey:@"loginParameters"];
+        if (oldLoginParameters != nil) {
+            NSString *oldUsername = [oldLoginParameters objectForKey:@"username"];
+            NSString *oldUrl = [oldLoginParameters objectForKey:@"serverUrl"];
+            NSString *oldPassword = [StoredPassword retrieveStoredPassword];
+            if (oldUsername != nil && oldPassword != nil && [oldUsername isEqualToString:username] && [oldPassword isEqualToString:password] && [oldUrl isEqualToString:url]) {
+                NSTimeInterval tokenExpirationLength = [[defaults objectForKey:@"tokenExpirationLength"] doubleValue];
+                NSDate *oldTokenExpirationDate = [oldLoginParameters objectForKey:@"tokenExpirationDate"];
+                NSDate *newExpirationDate = [oldTokenExpirationDate dateByAddingTimeInterval:tokenExpirationLength];
+                [oldLoginParameters setValue:newExpirationDate forKey:@"tokenExpirationDate"];
+                if (delegate) {
+                    User *currentUser = [User fetchCurrentUserInManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
+                    [delegate authenticationWasSuccessful:currentUser];
+                }
+                return;
+            }
+        }
+        if (delegate) {
+            [delegate authenticationHadFailure];
+        }
+        return;
+    }
+
     [http.manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
         NSString *token = [response objectForKey:@"token"];
 		User *user = [self fetchUser:[response objectForKey:@"user"]];
@@ -58,7 +85,6 @@
         
         [http.manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
         [http.sessionManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
-
 		      
         NSDictionary *loginParameters = @{
           @"username": (NSString *) [parameters objectForKey:@"username"],
@@ -68,7 +94,10 @@
         };
     
         [defaults setObject:loginParameters forKey:@"loginParameters"];
+        NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
+        [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
         [defaults synchronize];
+        [StoredPassword persistPasswordToKeyChain:password];
         
 		if (delegate) {
 			[delegate authenticationWasSuccessful:user];
@@ -111,8 +140,8 @@
 	NSString *userId = [userJson objectForKey:@"_id"];
 	User *user = [User fetchUserForId:userId];
 	
-	if (!user) {
-		user = [User insertUserForJson:userJson myself:YES];
+    if (!user) {
+		user = [User insertUserForJson:userJson myself:YES inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
 	}
 		
 	return user;
