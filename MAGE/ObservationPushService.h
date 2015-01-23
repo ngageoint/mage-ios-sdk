@@ -10,8 +10,6 @@
 
 @interface ObservationPushService : NSObject
 
-- (id) init;
-
 - (void) start;
 - (void) stop;
 

@@ -10,8 +10,6 @@
 
 @interface AttachmentPushService : NSObject
 
-- (id) init;
-
 - (void) start;
 - (void) stop;
 
