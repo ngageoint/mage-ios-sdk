@@ -10,31 +10,59 @@
 #import <NSDate+DateTools.h>
 #import "HttpManager.h"
 
+@interface UserUtility()
+
+@property BOOL expired;
+
+@end
+
 @implementation UserUtility
 
-+ (BOOL) isTokenExpired {
++ (id) singleton {
+    static UserUtility *userUtility = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        userUtility = [[self alloc] init];
+    });
+    return userUtility;
+}
+
+- (id) init {
+    if (self = [super init]) {
+        self.expired = NO;
+    }
+    return self;
+}
+
+- (void) resetExpiration {
+    self.expired = NO;
+}
+
+- (BOOL) isTokenExpired{
+    if (self.expired) return YES;
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *loginParameters = [defaults objectForKey:@"loginParameters"];
-    
-    NSString *token = [loginParameters objectForKey:@"token"];
-    if ([token length] == 0) {
-        return YES;
-    }
     
     NSDate *tokenExpirationDate = [loginParameters objectForKey:@"tokenExpirationDate"];
     if (tokenExpirationDate != nil && [tokenExpirationDate isKindOfClass:NSDate.class]) {
         NSDate *currentDate = [NSDate date];
         NSLog(@"current date %@ token expiration %@", currentDate, tokenExpirationDate);
-        return [currentDate isLaterThan:tokenExpirationDate];
+        self.expired = [currentDate isLaterThan:tokenExpirationDate];
+        if (self.expired) {
+            [self expireToken];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MAGETokenExpiredNotification object:nil];
+        }
+        return self.expired;
     }
-    return YES;
+    self.expired = YES;
+    return self.expired;
 }
 
-+ (void) expireToken {
+- (void) expireToken {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *loginParameters = [[defaults objectForKey:@"loginParameters"] mutableCopy];
     
-    [loginParameters removeObjectForKey:@"token"];
     [loginParameters removeObjectForKey:@"tokenExpirationDate"];
     
     HttpManager *http = [HttpManager singleton];
@@ -44,6 +72,7 @@
     [defaults setObject:loginParameters forKey:@"loginParameters"];
     
     [defaults synchronize];
+    self.expired = YES;
 }
 
 @end
