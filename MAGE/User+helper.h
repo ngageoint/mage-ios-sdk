@@ -12,9 +12,10 @@
 
 + (User *) insertUserForJson: (NSDictionary *) json inManagedObjectContext:(NSManagedObjectContext *) context;
 + (User *) insertUserForJson: (NSDictionary *) json myself:(BOOL) myself inManagedObjectContext:(NSManagedObjectContext *) context;
-+ (User *) fetchUserForId:(NSString *) userId;
++ (User *) fetchUserForId:(NSString *) userId inManagedObjectContext: (NSManagedObjectContext *) context;
 + (User *) fetchCurrentUserInManagedObjectContext:(NSManagedObjectContext *) managedObjectContext;
-+ (NSOperation *) operationToFetchUsers;
++ (NSOperation *) operationToFetchMyselfWithSuccess: (void(^)()) success failure: (void(^)(NSError *)) failure;
++ (NSOperation *) operationToFetchUsersWithSuccess: (void(^)()) success failure: (void(^)(NSError *)) failure;
 
 - (void) updateUserForJson: (NSDictionary *) json;
 
