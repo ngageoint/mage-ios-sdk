@@ -15,6 +15,7 @@
 #import "MageServer.h"
 #import <NSDate+DateTools.h>
 #import "NSDate+Iso8601.h"
+#import "Server+helper.h"
 
 @implementation Location (helper)
 
@@ -43,9 +44,9 @@
 - (void) populateLocationFromJson:(NSArray *) locations {
 	if (locations.count) {
 		for (NSDictionary* jsonLocation in locations) {
-			[self setRemoteId:[jsonLocation objectForKey:@"_id"]];
+			[self setRemoteId:[jsonLocation objectForKey:@"id"]];
 			[self setType:[jsonLocation objectForKey:@"type"]];
-			
+            [self setEventId:[jsonLocation objectForKey:@"eventId"]];
 			NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 			[dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
 			[dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
@@ -71,8 +72,8 @@
 }
 
 
-+ (NSOperation *) operationToPullLocations:(void (^) (BOOL success)) complete {
-    NSString *url = [NSString stringWithFormat:@"%@/%@", [MageServer baseURL], @"api/locations/users"];
++ (NSOperation *) operationToPullLocationsWithSuccess: (void (^)()) success failure: (void (^)(NSError *)) failure {
+    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/locations/users", [MageServer baseURL], [Server currentEventId]];
 	NSLog(@"Trying to fetch locations from server %@", url);
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -84,15 +85,15 @@
     HttpManager *http = [HttpManager singleton];
     
     NSURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters:parameters error:nil];
-    NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id userLocations) {
+    NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id allUserLocations) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            NSLog(@"Fetched %lu locations from the server, saving to location storage", (unsigned long)[userLocations count]);
+            NSLog(@"Fetched %lu locations from the server, saving to location storage", (unsigned long)[allUserLocations count]);
             User *currentUser = [User fetchCurrentUserInManagedObjectContext:localContext];
             
             // Get the user ids to query
             NSMutableArray *userIds = [[NSMutableArray alloc] init];
-            for (NSDictionary *userLocation in userLocations) {
-                [userIds addObject:[userLocation objectForKey:@"user"]];
+            for (NSDictionary *user in allUserLocations) {
+                [userIds addObject:[user objectForKey:@"id"]];
             }
             
             NSArray *usersMatchingIDs = [User MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId IN %@)", userIds] inContext:localContext];
@@ -102,22 +103,22 @@
             }
             
             BOOL newUserFound = NO;
-            for (NSDictionary *userLocation in userLocations) {
+            for (NSDictionary *userJson in allUserLocations) {
                 // pull from query map
-                NSString *userId = [userLocation objectForKey:@"user"];
-                NSArray *locations = [userLocation objectForKey:@"locations"];
+                NSString *userId = [userJson objectForKey:@"id"];
+                NSArray *locations = [userJson objectForKey:@"locations"];
                 User *user = [userIdMap objectForKey:userId];
                 if (user == nil && [locations count] != 0) {
                     NSLog(@"Could not find user for id");
                     newUserFound = YES;
                     NSDictionary *userDictionary = @{
-                         @"_id": userId,
+                         @"id": userId,
                          @"username": userId,
                          @"firstname": @"unknown",
                          @"lastname": @"unkown"
                      };
                     
-                    user = [User MR_createInContext:localContext];
+                    user = [User MR_createEntityInContext:localContext];
                     user = [User insertUserForJson:userDictionary inManagedObjectContext:localContext];
                 };
                 if ([currentUser.remoteId isEqualToString:user.remoteId]) continue;
@@ -125,8 +126,8 @@
                 Location *location = user.location;
                 if (location == nil) {
                     // not in core data yet need to create a new managed object
-                    location = [Location MR_createInContext:localContext];
-                    NSArray *locations = [userLocation objectForKey:@"locations"];
+                    location = [Location MR_createEntityInContext:localContext];
+                    NSArray *locations = [userJson objectForKey:@"locations"];
                     [location populateLocationFromJson:locations];
                     user.location = location;
                 } else {
@@ -137,14 +138,22 @@
             
             if (newUserFound) {
                 // For now if we find at least one new user let just go grab the users again
-                [[User operationToFetchUsers] start];
+                [[User operationToFetchUsersWithSuccess:nil failure:nil] start];
+            }
+        } completion:^(BOOL contextDidSave, NSError *error) {
+            if (error) {
+                if (failure) {
+                    failure(error);
+                }
+            } else if (success){
+                success();
             }
         }];
-        
-        complete(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        complete(NO);
+        if (failure) {
+            failure(error);
+        }
     }];
     
     return operation;

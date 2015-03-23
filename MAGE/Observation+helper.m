@@ -16,16 +16,18 @@
 #import "MageServer.h"
 #import "Server+helper.h"
 #import "User+helper.h"
+#import "Event+helper.h"
 
 @implementation Observation (helper)
 
 NSMutableArray *_transientAttachments;
 
 NSDictionary *_fieldNameToField;
+NSNumber *_currentEventId;
 
 
 + (Observation *) observationWithLocation:(GeoPoint *) location inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
-    Observation *observation = [Observation MR_createInContext:mangedObjectContext];
+    Observation *observation = [Observation MR_createEntityInContext:mangedObjectContext];
     
     NSDateFormatter *dateFormat = [NSDateFormatter new];
     [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
@@ -43,7 +45,7 @@ NSDictionary *_fieldNameToField;
     [observation setGeometry:location];
     [observation setDirty:[NSNumber numberWithBool:NO]];
     [observation setState:[NSNumber numberWithInt:(int)[@"active" StateEnumFromString]]];
-    
+    [observation setEventId:[Server currentEventId]];
     return observation;
 }
 
@@ -66,11 +68,12 @@ NSDictionary *_fieldNameToField;
 }
 
 - (NSDictionary *)fieldNameToField {
-    if (_fieldNameToField != nil) {
+    if (_fieldNameToField != nil && [_currentEventId isEqualToNumber:[Server currentEventId]]) {
         return _fieldNameToField;
     }
-    NSDictionary *form = [Server observationForm];
-    
+    _currentEventId = [Server currentEventId];
+    Event *currentEvent = [Event MR_findFirstByAttribute:@"remoteId" withValue:_currentEventId];
+    NSDictionary *form = currentEvent.form;
     NSMutableDictionary *fieldNameToFieldMap = [[NSMutableDictionary alloc] init];
     // run through the form and map the row indexes to fields
     for (id field in [form objectForKey:@"fields"]) {
@@ -203,9 +206,9 @@ NSDictionary *_fieldNameToField;
     return [dateFormatter stringFromDate:self.timestamp];
 }
 
-+ (NSOperation *) operationToPushObservation:(Observation *) observation success:(void (^)()) success failure: (void (^)()) failure {
-    NSNumber *layerId = [Server observationLayerId];
-    NSString *url = [NSString stringWithFormat:@"%@/FeatureServer/%@/features", [MageServer baseURL], layerId];
++ (NSOperation *) operationToPushObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
+    NSNumber *eventId = [Server currentEventId];
+    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations", [MageServer baseURL], eventId];
     NSLog(@"Trying to push observation to server %@", url);
     
     HttpManager *http = [HttpManager singleton];
@@ -221,20 +224,22 @@ NSDictionary *_fieldNameToField;
     
     NSMutableURLRequest *request = [http.manager.requestSerializer requestWithMethod:requestMethod URLString:url parameters:json error: nil];
     NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id response) {
-        success(response);
+        if (success) {
+            success(response);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        failure();
+        failure(error);
     }];
     
     return operation;
 }
 
-+ (NSOperation *) operationToPullObservations:(void (^) (BOOL success)) complete {
++ (NSOperation *) operationToPullObservationsWithSuccess:(void (^)())success failure:(void (^)(NSError *))failure {
 
-    NSNumber *layerId = [Server observationLayerId];
-    NSString *url = [NSString stringWithFormat:@"%@/FeatureServer/%@/features", [MageServer baseURL], layerId];
-    NSLog(@"Fetching from layer %@", layerId);
+    __block NSNumber *eventId = [Server currentEventId];
+    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations", [MageServer baseURL], eventId];
+    NSLog(@"Fetching observations from event %@", eventId);
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     __block NSDate *lastObservationDate = [Observation fetchLastObservationDate];
@@ -245,10 +250,9 @@ NSDictionary *_fieldNameToField;
     HttpManager *http = [HttpManager singleton];
     
     NSURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: parameters error: nil];
-    NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id features) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSLog(@"Observation request complete");
-            NSArray *features = [responseObject objectForKey:@"features"];
             
             for (id feature in features) {
                 NSString *remoteId = [Observation observationIdFromJson:feature];
@@ -261,14 +265,14 @@ NSDictionary *_fieldNameToField;
                     [existingObservation MR_deleteEntity];
                 } else if (state != Archive && !existingObservation) {
                     // if the observation doesn't exist, insert it
-                    Observation *observation = [Observation MR_createInContext:localContext];
+                    Observation *observation = [Observation MR_createEntityInContext:localContext];
                     [observation populateObjectFromJson:feature];
                     observation.user = [User MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId = %@)", observation.userId] inContext:localContext];
                     for (id attachmentJson in [feature objectForKey:@"attachments"]) {
                         Attachment *attachment = [Attachment attachmentForJson:attachmentJson inContext:localContext];
                         [observation addAttachmentsObject:attachment];
                     }
-                    
+                    [observation setEventId:eventId];
                     NSLog(@"Saving new observation with id: %@", observation.remoteId);
                 } else if (state != Archive && ![existingObservation.dirty boolValue]) {
                     // if the observation is not dirty, update it
@@ -296,19 +300,27 @@ NSDictionary *_fieldNameToField;
                             [existingObservation addAttachmentsObject:newAttachment];
                         }
                     }
-                    
+                    [existingObservation setEventId:eventId];
                     NSLog(@"Updating object with id: %@", existingObservation.remoteId);
                 } else {
                     NSLog(@"Observation with id: %@ is dirty", remoteId);
                 }
             }
-        } completion:^(BOOL success, NSError *error) {
-            complete(success);
+        } completion:^(BOOL successful, NSError *error) {
+            if (!successful) {
+                if (failure) {
+                    failure(error);
+                }
+            } else if (success) {
+                success();
+            }
         }];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        complete(NO);
+        if (failure) {
+            failure(error);
+        }
     }];
     
     return operation;
@@ -316,7 +328,9 @@ NSDictionary *_fieldNameToField;
 
 + (NSDate *) fetchLastObservationDate {
     NSDate *date = nil;
-    Observation *observation = [Observation MR_findFirstOrderedByAttribute:@"lastModified" ascending:NO];
+    Observation *observation = [Observation MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"eventId == %@", [Server currentEventId]]
+                                                             sortedBy:@"lastModified"
+                                                            ascending:NO];
     if (observation) {
         date = observation.lastModified;
     }

@@ -1,22 +1,22 @@
 //
-//  Layer.m
+//  Team.m
 //  mage-ios-sdk
 //
 //  Created by Dan Barela on 3/12/15.
 //  Copyright (c) 2015 National Geospatial-Intelligence Agency. All rights reserved.
 //
 
-#import "Layer.h"
+#import "Team.h"
+#import "Event.h"
+#import "User.h"
 
 
-@implementation Layer
+@implementation Team
 
-@dynamic eventId;
-@dynamic formId;
-@dynamic loaded;
 @dynamic name;
 @dynamic remoteId;
-@dynamic type;
-@dynamic url;
+@dynamic teamDescription;
+@dynamic users;
+@dynamic events;
 
 @end

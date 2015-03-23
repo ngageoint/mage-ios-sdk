@@ -10,8 +10,11 @@
 
 @interface Layer (helper)
 
-- (id) populateObjectFromJson: (NSDictionary *) json;
+extern NSString * const LayerFetched;
 
-+ (NSOperation *) operationToPullLayers:(void (^) (BOOL success)) complete;
++ (NSString *) layerTypeFromJson:(NSDictionary *) json;
+- (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId;
++ (NSOperation *) operationToPullLayersForEvent: (NSNumber *) eventId success: (void (^)()) success failure: (void (^)(NSError *)) failure;
++ (void) refreshLayersForEvent: (NSNumber *) eventId;
 
 @end

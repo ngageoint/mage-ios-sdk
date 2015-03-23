@@ -18,28 +18,12 @@
     [Server setProperty:serverUrl forKey:@"serverUrl"];
 }
 
-+(NSNumber *) observationLayerId {
-    return [Server getPropertyForKey:@"observationLayerId"];
++(NSNumber *) currentEventId {
+    return [Server getPropertyForKey:@"currentEventId"];
 }
 
-+(void) setObservationLayerId:(NSNumber *) observationLayerId  {
-    [Server setProperty:observationLayerId forKey:@"observationLayerId"];
-}
-
-+(NSString *) observationFormId {
-    return [Server getPropertyForKey:@"observationFormId"];
-}
-
-+(void) setObservationFormId:(NSString *) observationFormId {
-    [Server setProperty:observationFormId forKey:@"observationFormId"];
-}
-
-+(NSDictionary *) observationForm {
-    return [Server getPropertyForKey:@"observationForm"];
-}
-
-+(void) setObservationForm:(NSDictionary *) observationForm {
-    [Server setProperty:observationForm forKey:@"observationForm"];
++(void) setCurrentEventId: (NSNumber *) eventId {
+    [Server setProperty:eventId forKey:@"currentEventId"];
 }
 
 +(id) getPropertyForKey:(NSString *) key {
