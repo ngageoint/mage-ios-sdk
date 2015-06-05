@@ -12,14 +12,7 @@
 
 +(NSString *) serverUrl;
 +(void) setServerUrl:(NSString *) serverUrl;
-
-+(NSNumber *) observationLayerId;
-+(void) setObservationLayerId:(NSNumber *) observationLayerId;
-
-+(NSString *) observationFormId;
-+(void) setObservationFormId:(NSString *) observationFormId;
-
-+(NSDictionary *) observationForm;
-+(void) setObservationForm:(NSDictionary *) observationForm;
++(NSNumber *) currentEventId;
++(void) setCurrentEventId:(NSNumber *) eventId;
 
 @end

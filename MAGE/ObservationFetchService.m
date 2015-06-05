@@ -22,6 +22,15 @@ NSString * const kObservationFetchFrequencyKey = @"observationFetchFrequency";
 
 @implementation ObservationFetchService
 
++ (instancetype) singleton {
+    static ObservationFetchService *fetchService = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fetchService = [[self alloc] init];
+    });
+    return fetchService;
+}
+
 - (id) init {
     if (self = [super init]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -39,26 +48,7 @@ NSString * const kObservationFetchFrequencyKey = @"observationFetchFrequency";
 
 - (void) start {
     [self stop];
-    
-    HttpManager *http = [HttpManager singleton];
-    NSOperation *layerPullOperation = [Layer operationToPullLayers:^(BOOL success) {
-        if (success) {
-            NSOperation* formPullOp = [Form operationToPullForm:^(BOOL success) {
-                if (success) {
-                    // Layers and Form pulled, lets start the observation fetch
-                    [self pullObservations];
-                } else {
-                    // TODO error
-                }
-            }];
-            
-            [http.manager.operationQueue addOperation:formPullOp];
-        } else {
-            // TODO error
-        }
-    }];
-    
-    [http.manager.operationQueue addOperation:layerPullOperation];
+    [self pullObservations];    
 }
 
 - (void) scheduleTimer {
@@ -74,7 +64,11 @@ NSString * const kObservationFetchFrequencyKey = @"observationFetchFrequency";
 }
 
 - (void) pullObservations {
-    NSOperation *observationFetchOperation = [Observation operationToPullObservations:^(BOOL success) {
+    NSOperation *observationFetchOperation = [Observation operationToPullObservationsWithSuccess:^{
+        if (![[UserUtility singleton] isTokenExpired]) {
+            [self scheduleTimer];
+        }
+    } failure:^(NSError* error) {
         if (![[UserUtility singleton] isTokenExpired]) {
             [self scheduleTimer];
         }

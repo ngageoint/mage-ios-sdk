@@ -12,7 +12,7 @@
 @implementation Attachment (helper)
 
 + (Attachment *) attachmentForJson: (NSDictionary *) json inContext: (NSManagedObjectContext *) context {
-    Attachment *attachment = [Attachment MR_createInContext:context];
+    Attachment *attachment = [Attachment MR_createEntityInContext:context];
     [attachment populateFromJson:json];
     return attachment;
 }
@@ -44,6 +44,15 @@
         [self setLastModified:[NSDate date]];
     }
     return self;
+}
+
+- (NSURL *) sourceURL {
+    if (self.localPath) {
+        return [NSURL fileURLWithPath:self.localPath];
+    } else {
+        NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+        return [NSURL URLWithString:[NSString stringWithFormat:@"%@?access_token=%@", self.url, [defaults valueForKeyPath:@"loginParameters.token"]]];
+    }
 }
 
 @end

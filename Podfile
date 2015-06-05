@@ -1,6 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '7.0'
 
+inhibit_all_warnings!
+
 pod "AFNetworking", "~> 2.3.1"
 pod "DateTools", "~> 1.3.0"
 pod "MagicalRecord", :git => 'https://github.com/magicalpanda/MagicalRecord.git', :tag => 'v2.3.0-beta.5'
