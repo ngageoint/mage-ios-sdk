@@ -11,6 +11,7 @@
 #import "NSDate+Iso8601.h"
 #import "GeoPoint.h"
 #import "MageServer.h"
+#import "Server+helper.h"
 
 @implementation GPSLocation (helper)
 
@@ -19,6 +20,7 @@
     
     gpsLocation.geometry = [[GeoPoint alloc] initWithLocation:location];
     gpsLocation.timestamp = location.timestamp;
+    gpsLocation.eventId = [Server currentEventId];
     gpsLocation.properties = @{
         @"altitude": [NSNumber numberWithDouble:location.altitude],
         @"accuracy": [NSNumber numberWithDouble:location.horizontalAccuracy],
@@ -41,8 +43,8 @@
     return [GPSLocation MR_executeFetchRequest:fetchRequest];
 }
 
-+ (NSOperation *) operationToPushGPSLocations:(NSArray *) locations success:(void (^)()) success failure: (void (^)()) failure {
-	NSString *url = [NSString stringWithFormat:@"%@/%@", [MageServer baseURL], @"api/locations/"];
++ (NSOperation *) operationToPushGPSLocations:(NSArray *) locations success:(void (^)()) success failure: (void (^)(NSError *)) failure {
+	NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/locations", [MageServer baseURL], [Server currentEventId]];
 	NSLog(@"Trying to push locations to server %@", url);
 	
     HttpManager *http = [HttpManager singleton];
@@ -59,11 +61,19 @@
     }
     
     NSMutableURLRequest *request = [http.manager.requestSerializer requestWithMethod:@"POST" URLString:url parameters:parameters error: nil];
-    NSOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id response) {
-        success();
+    AFHTTPRequestOperation *operation = [http.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id response) {
+        if (success) {
+            success();
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        failure();
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        NSLog(@"Failed to push location after entering background");
     }];
     
     return operation;
