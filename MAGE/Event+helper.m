@@ -10,7 +10,7 @@
 #import "MageServer.h"
 #import "HttpManager.h"
 #import "User+helper.h"
-#import <Server+helper.h>
+#import "Server+helper.h"
 #import "Team+helper.h"
 #import "Layer+helper.h"
 #import "StaticLayer+helper.h"
@@ -88,9 +88,12 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 - (BOOL) isUserInEvent: (User *) user {
     for (Team *t in user.teams) {
-        if ([self.teams containsObject:t]) {
-            NSLog(@"User %@ is in event %@", user.name, self.name);
-            return true;
+        // doing this because chcking if the team is in the set didn't work
+        for(Team* eventTeam in self.teams) {
+            if ([eventTeam.remoteId isEqualToString:t.remoteId]) {
+                NSLog(@"User %@ is in event %@", user.name, self.name);
+                return true;
+            }
         }
     }
     NSLog(@"User %@ is not in the event %@", user.name, self.name);

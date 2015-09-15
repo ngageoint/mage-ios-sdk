@@ -12,6 +12,7 @@
 #import "MageServer.h"
 #import "User+helper.h"
 #import "UserUtility.h"
+#import "NSDate+iso8601.h"
 
 @implementation ServerAuthentication
 
@@ -55,7 +56,7 @@
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             User *user = [User fetchUserForId:userId inManagedObjectContext:localContext];
             if (!user) {
-                user = [User insertUserForJson:userJson myself:YES inManagedObjectContext:localContext];
+                user = [User insertUserForJson:userJson inManagedObjectContext:localContext];
             } else {
                 [user updateUserForJson:userJson];
             }
@@ -64,10 +65,21 @@
             [self finishLoginForParameters: parameters withResponse:response];
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error logging in: %@", error);
-        // try to register again
-        [defaults setBool:NO forKey:@"deviceRegistered"];
-        [self registerDevice:parameters];
+        // if the error was a network error try to login with the local auth module
+        if ([error.domain isEqualToString:NSURLErrorDomain]
+        && (error.code == NSURLErrorCannotConnectToHost
+            || error.code == NSURLErrorNetworkConnectionLost
+            || error.code == NSURLErrorNotConnectedToInternet)) {
+            id<Authentication> local = [Authentication authenticationWithType:LOCAL];
+            [local setDelegate: delegate];
+            [local loginWithParameters:parameters];
+        } else {
+            NSLog(@"Error logging in: %@", error);
+            // try to register again
+            [defaults setBool:NO forKey:@"deviceRegistered"];
+            [self registerDevice:parameters];
+        }
+        
     }];
 
 }
@@ -77,12 +89,8 @@
     NSString *token = [response objectForKey:@"token"];
     NSString *username = (NSString *) [parameters objectForKey:@"username"];
     NSString *password = (NSString *) [parameters objectForKey:@"password"];
-    NSDateFormatter *dateFormat = [NSDateFormatter new];
-    dateFormat.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     // Always use this locale when parsing fixed format date strings
-    NSLocale* posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormat.locale = posix;
-    NSDate* tokenExpirationDate = [dateFormat dateFromString:[response objectForKey:@"expirationDate"]];
+    NSDate* tokenExpirationDate = [NSDate dateFromIso8601String:[response objectForKey:@"expirationDate"]];
     HttpManager *http = [HttpManager singleton];
 
     [http.manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
@@ -97,6 +105,11 @@
                                    };
 
     [defaults setObject:loginParameters forKey:@"loginParameters"];
+    
+    NSDictionary *userJson = [response objectForKey:@"user"];
+    NSString *userId = [userJson objectForKey:@"id"];
+    [defaults setObject: userId forKey:@"currentUserId"];
+    
     NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
     [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
     [defaults synchronize];
