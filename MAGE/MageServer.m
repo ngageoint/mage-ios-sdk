@@ -9,6 +9,9 @@
 #import "MageServer.h"
 #import "HttpManager.h"
 
+NSString * const kServerMajorVersionKey = @"serverMajorVersion";
+NSString * const kServerMinorVersionKey = @"serverMinorVersion";
+
 NSString * const kBaseServerUrlKey = @"baseServerUrl";
 
 @implementation MageServer
@@ -31,21 +34,21 @@ static MageServer *sharedSingleton = nil;
 }
 
 - (id) setupServerWithURL:(NSURL *) url success:(void (^) ()) success  failure:(void (^) (NSError *error)) failure {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[url absoluteString] forKey:kBaseServerUrlKey];
-    [defaults synchronize];
+    
+    if (!url || !url.scheme || !url.host) {
+        failure([NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:[NSDictionary dictionaryWithObject:@"Invalid URL" forKey:NSLocalizedDescriptionKey]]);
+        return self;
+    }
     
     self.reachabilityManager = [AFNetworkReachabilityManager managerForDomain:url.host];
-    
-// TODO see if I can get this to work for IP address
-//    struct sockaddr_in address;
-//    address.sin_len = sizeof(address);
-//    address.sin_family = AF_INET;
-//    address.sin_port = htons(url.port);
-//    address.sin_addr.s_addr = inet_addr([url.host UTF8String]);
-//    self.reachabilityManager = [AFNetworkReachabilityManager managerForAddress:&address];
-    
     [self.reachabilityManager startMonitoring];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([url.absoluteString isEqualToString:[defaults valueForKey:kBaseServerUrlKey]] && self.authentication) {
+        success();
+        return self;
+    }
     
     HttpManager *http = [HttpManager singleton];
     NSString *apiURL = [NSString stringWithFormat:@"%@/%@", [url absoluteString], @"api"];
@@ -55,8 +58,27 @@ static MageServer *sharedSingleton = nil;
         self.authentication = [Authentication authenticationWithType:SERVER];
         
         // TODO check server version
+        NSNumber *serverCompatibilityMajorVersion = [defaults valueForKey:kServerMajorVersionKey];
+        NSNumber *serverCompatibilityMinorVersion = [defaults valueForKey:kServerMinorVersionKey];
+
+        NSNumber *serverMajorVersion = [response valueForKeyPath:@"version.major"];
+        NSNumber *serverMinorVersion = [response valueForKeyPath:@"version.minor"];
         
-        success();
+        [defaults setObject:[response valueForKeyPath:@"disclaimer.show"] forKey:@"showDisclaimer"];
+        [defaults setObject:[response valueForKeyPath:@"disclaimer.text"] forKey:@"disclaimerText"];
+        [defaults setObject:[response valueForKeyPath:@"disclaimer.title"] forKey:@"disclaimerTitle"];
+        
+        [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"showDisclaimer"];
+
+        [defaults synchronize];
+
+        if (serverCompatibilityMajorVersion == serverMajorVersion && serverCompatibilityMinorVersion <= serverMinorVersion) {
+            [defaults setObject:[url absoluteString] forKey:kBaseServerUrlKey];
+            [defaults synchronize];
+            success();
+        } else {
+            failure([[NSError alloc] initWithDomain:@"MAGE" code:1 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"This version of the app is not compatible with version %@.%@.%@ of the server.", [response valueForKeyPath:@"version.major"], [response valueForKeyPath:@"version.minor"], [response valueForKeyPath:@"version.micro"]]  forKey:NSLocalizedDescriptionKey]]);
+        }
     } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
         // check if the error indicates that the network is unavailable
         // and return a local authentication module
