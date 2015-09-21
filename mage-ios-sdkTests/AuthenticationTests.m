@@ -2,8 +2,6 @@
 //  mage_ios_sdkTests.m
 //  mage-ios-sdkTests
 //
-//  Created by Billy Newman on 3/4/14.
-//  Copyright (c) 2014 National Geospatial-Intelligence Agency. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
