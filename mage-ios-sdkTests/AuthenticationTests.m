@@ -59,7 +59,7 @@
 	};
 	
 	[OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-		return [request.URL.absoluteString isEqualToString:@"https://***REMOVED***/api/login"];
+		return [request.URL.absoluteString isEqualToString:@"https://mage.geointapps.org/api/login"];
 	} withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
 		OHHTTPStubsResponse *response = [OHHTTPStubsResponse responseWithJSONObject:responseJSON statusCode:200 headers:@{@"Content-Type":@"application/json"}];
 		return response;
