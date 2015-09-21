@@ -1,6 +1,20 @@
+.DS_Store
+*.swp
+*~.nib
 
-Podfile.lock
+build/
 
-Pods
+*.pbxuser
+*.perspective
+*.perspectivev3
+
+*.mode1v3
+*.mode2v3
+
+xcuserdata
+*.xcuserstate
 
 mage-ios-sdk.xcworkspace
+
+Podfile.lock
+Pods
