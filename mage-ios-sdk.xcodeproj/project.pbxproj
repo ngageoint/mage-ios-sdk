@@ -1,0 +1,914 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BFE443F328EC1014528B566 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7448CD41E33240EA8ADADCAF /* libPods.a */; };
+		0FB180B41FF34E928684A5ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7448CD41E33240EA8ADADCAF /* libPods.a */; };
+		2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01652C199D1C6D00C4862B /* LocationFetchService.m */; };
+		2F01653319A2A88D00C4862B /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653219A2A88D00C4862B /* LocationService.m */; };
+		2F01653A19A4F11E00C4862B /* NSDate+Iso8601.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */; };
+		2F01654319A5047600C4862B /* GPSLocation+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01654219A5047600C4862B /* GPSLocation+helper.m */; };
+		2F2A76EB19A7DE8D0008E7DD /* ObservationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A76EA19A7DE8D0008E7DD /* ObservationFetchService.m */; };
+		2F3D608D1AE803A7008BF36C /* Observation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D608C1AE803A7008BF36C /* Observation.m */; };
+		2F3D60901AE803A8008BF36C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D608F1AE803A8008BF36C /* User.m */; };
+		2F3D60931AE803A8008BF36C /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60921AE803A8008BF36C /* Location.m */; };
+		2F3D60961AE803A8008BF36C /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60951AE803A8008BF36C /* Team.m */; };
+		2F3D60991AE803A8008BF36C /* GPSLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60981AE803A8008BF36C /* GPSLocation.m */; };
+		2F3D609C1AE803A8008BF36C /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D609B1AE803A8008BF36C /* Attachment.m */; };
+		2F3D609F1AE803A8008BF36C /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D609E1AE803A8008BF36C /* Event.m */; };
+		2F3D60A21AE803A8008BF36C /* Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A11AE803A8008BF36C /* Layer.m */; };
+		2F3D60A51AE803A8008BF36C /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A41AE803A8008BF36C /* Server.m */; };
+		2F3D60A81AE803A8008BF36C /* StaticLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A71AE803A8008BF36C /* StaticLayer.m */; };
+		2FA70A8919F81EF600243F4A /* Server+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA70A8819F81EF600243F4A /* Server+helper.m */; };
+		2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */; };
+		2FFE499819EC347300BC8922 /* MageServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE499719EC347300BC8922 /* MageServer.m */; };
+		4C390F48197D9F1300AB3CCB /* User+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C390F47197D9F1300AB3CCB /* User+helper.m */; };
+		4C546FCC19537631000CF230 /* Location+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C546FCB19537631000CF230 /* Location+helper.m */; };
+		4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF957518C62E0100A41CB8 /* Foundation.framework */; };
+		4CAF958418C62E0100A41CB8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF958318C62E0100A41CB8 /* XCTest.framework */; };
+		4CAF958518C62E0100A41CB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF957518C62E0100A41CB8 /* Foundation.framework */; };
+		4CAF958718C62E0100A41CB8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF958618C62E0100A41CB8 /* UIKit.framework */; };
+		4CAF958A18C62E0100A41CB8 /* libmage-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF957218C62E0100A41CB8 /* libmage-ios-sdk.a */; };
+		4CAF959018C62E0100A41CB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAF958E18C62E0100A41CB8 /* InfoPlist.strings */; };
+		4CAF959218C62E0100A41CB8 /* AuthenticationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF959118C62E0100A41CB8 /* AuthenticationTests.m */; };
+		4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */; };
+		4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF95A218C6616300A41CB8 /* Authentication.m */; };
+		DC60A150C17F48CB9750FE39 /* libPods-mage-ios-sdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6B303D58044552B6770497 /* libPods-mage-ios-sdkTests.a */; };
+		F70E6EF619785985002D66F6 /* Attachment+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F70E6EF519785985002D66F6 /* Attachment+helper.m */; };
+		F739EFF11AB0C813003A6E4B /* Team+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F739EFF01AB0C813003A6E4B /* Team+helper.m */; };
+		F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */ = {isa = PBXBuildFile; fileRef = F75DD3191A9F9F230007FA3F /* NSString+Contains.m */; };
+		F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F76655851A30EAEB00558EBB /* AttachmentPushService.m */; };
+		F768E9C8191D095B003287E3 /* ObservationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9C7191D095B003287E3 /* ObservationTests.m */; };
+		F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */; };
+		F768E9CE191D1C7B003287E3 /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CD191D1C7B003287E3 /* HttpManager.m */; };
+		F76949121AA5230E00CB680B /* Event+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F76949111AA5230E00CB680B /* Event+helper.m */; };
+		F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F7971BD51A03F50D001505F0 /* ObservationPushService.m */; };
+		F7A87F351AA51695001AEDF4 /* Mage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A87F341AA51695001AEDF4 /* Mage.m */; };
+		F7B25E1F191AA21900589E5B /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B25E1E191AA21900589E5B /* Geometry.m */; };
+		F7B25E22191AA8CE00589E5B /* GeoPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B25E21191AA8CE00589E5B /* GeoPoint.m */; };
+		F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B25E23191AB5A900589E5B /* CoreLocation.framework */; };
+		F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */; };
+		F7B679751959CF2D0035596A /* MageEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B679741959CF2D0035596A /* MageEnums.m */; };
+		F7C5FB78195DDFDE0065379C /* Layer+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C5FB76195DDFDE0065379C /* Layer+helper.m */; };
+		F7C5FB7B195DDFF30065379C /* Form.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C5FB7A195DDFF30065379C /* Form.m */; };
+		F7C80C4A1A72AFE00024EB7F /* StaticLayer+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C80C491A72AFE00024EB7F /* StaticLayer+helper.m */; };
+		F7E35849191BECBC004EA79D /* Observation+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E35848191BECBC004EA79D /* Observation+helper.m */; };
+		F7F133621975857000E79762 /* UserUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F133611975857000E79762 /* UserUtility.m */; };
+		F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CAF958818C62E0100A41CB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CAF956A18C62E0100A41CB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CAF957118C62E0100A41CB8;
+			remoteInfo = "mage-ios-sdk";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4CAF957018C62E0100A41CB8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0B43815519D5CF6AF74F5F61 /* Pods-mage-ios-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2C6B303D58044552B6770497 /* libPods-mage-ios-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F01652B199D1C6D00C4862B /* LocationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationFetchService.h; path = MAGE/LocationFetchService.h; sourceTree = SOURCE_ROOT; };
+		2F01652C199D1C6D00C4862B /* LocationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationFetchService.m; path = MAGE/LocationFetchService.m; sourceTree = SOURCE_ROOT; };
+		2F01653119A2A88D00C4862B /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationService.h; path = MAGE/LocationService.h; sourceTree = SOURCE_ROOT; };
+		2F01653219A2A88D00C4862B /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationService.m; path = MAGE/LocationService.m; sourceTree = SOURCE_ROOT; };
+		2F01653819A4F11E00C4862B /* NSDate+Iso8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Iso8601.h"; path = "MAGE/NSDate+Iso8601.h"; sourceTree = SOURCE_ROOT; };
+		2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Iso8601.m"; path = "MAGE/NSDate+Iso8601.m"; sourceTree = SOURCE_ROOT; };
+		2F01654119A5047600C4862B /* GPSLocation+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GPSLocation+helper.h"; path = "MAGE/GPSLocation+helper.h"; sourceTree = SOURCE_ROOT; };
+		2F01654219A5047600C4862B /* GPSLocation+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GPSLocation+helper.m"; path = "MAGE/GPSLocation+helper.m"; sourceTree = SOURCE_ROOT; };
+		2F2A76E919A7DE8D0008E7DD /* ObservationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationFetchService.h; path = MAGE/ObservationFetchService.h; sourceTree = SOURCE_ROOT; };
+		2F2A76EA19A7DE8D0008E7DD /* ObservationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationFetchService.m; path = MAGE/ObservationFetchService.m; sourceTree = SOURCE_ROOT; };
+		2F3D608B1AE803A7008BF36C /* Observation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Observation.h; path = MAGE/Observation.h; sourceTree = SOURCE_ROOT; };
+		2F3D608C1AE803A7008BF36C /* Observation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Observation.m; path = MAGE/Observation.m; sourceTree = SOURCE_ROOT; };
+		2F3D608E1AE803A8008BF36C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = MAGE/User.h; sourceTree = SOURCE_ROOT; };
+		2F3D608F1AE803A8008BF36C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = MAGE/User.m; sourceTree = SOURCE_ROOT; };
+		2F3D60911AE803A8008BF36C /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = MAGE/Location.h; sourceTree = SOURCE_ROOT; };
+		2F3D60921AE803A8008BF36C /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = MAGE/Location.m; sourceTree = SOURCE_ROOT; };
+		2F3D60941AE803A8008BF36C /* Team.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Team.h; path = MAGE/Team.h; sourceTree = SOURCE_ROOT; };
+		2F3D60951AE803A8008BF36C /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Team.m; path = MAGE/Team.m; sourceTree = SOURCE_ROOT; };
+		2F3D60971AE803A8008BF36C /* GPSLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPSLocation.h; path = MAGE/GPSLocation.h; sourceTree = SOURCE_ROOT; };
+		2F3D60981AE803A8008BF36C /* GPSLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPSLocation.m; path = MAGE/GPSLocation.m; sourceTree = SOURCE_ROOT; };
+		2F3D609A1AE803A8008BF36C /* Attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Attachment.h; path = MAGE/Attachment.h; sourceTree = SOURCE_ROOT; };
+		2F3D609B1AE803A8008BF36C /* Attachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Attachment.m; path = MAGE/Attachment.m; sourceTree = SOURCE_ROOT; };
+		2F3D609D1AE803A8008BF36C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = MAGE/Event.h; sourceTree = SOURCE_ROOT; };
+		2F3D609E1AE803A8008BF36C /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = MAGE/Event.m; sourceTree = SOURCE_ROOT; };
+		2F3D60A01AE803A8008BF36C /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Layer.h; path = MAGE/Layer.h; sourceTree = SOURCE_ROOT; };
+		2F3D60A11AE803A8008BF36C /* Layer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Layer.m; path = MAGE/Layer.m; sourceTree = SOURCE_ROOT; };
+		2F3D60A31AE803A8008BF36C /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = MAGE/Server.h; sourceTree = SOURCE_ROOT; };
+		2F3D60A41AE803A8008BF36C /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Server.m; path = MAGE/Server.m; sourceTree = SOURCE_ROOT; };
+		2F3D60A61AE803A8008BF36C /* StaticLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticLayer.h; path = MAGE/StaticLayer.h; sourceTree = SOURCE_ROOT; };
+		2F3D60A71AE803A8008BF36C /* StaticLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLayer.m; path = MAGE/StaticLayer.m; sourceTree = SOURCE_ROOT; };
+		2FA70A8719F81EF600243F4A /* Server+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Server+helper.h"; path = "MAGE/Server+helper.h"; sourceTree = SOURCE_ROOT; };
+		2FA70A8819F81EF600243F4A /* Server+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Server+helper.m"; path = "MAGE/Server+helper.m"; sourceTree = SOURCE_ROOT; };
+		2FC308011A3F83DF00FBD2BA /* mage-ios-sdk-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "mage-ios-sdk-Prefix.pch"; path = "MAGE/mage-ios-sdk-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		2FC308031A3F91D000FBD2BA /* MagicalRecord+delete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MagicalRecord+delete.h"; path = "MAGE/MagicalRecord+delete.h"; sourceTree = SOURCE_ROOT; };
+		2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MagicalRecord+delete.m"; path = "MAGE/MagicalRecord+delete.m"; sourceTree = SOURCE_ROOT; };
+		2FFE499619EC347300BC8922 /* MageServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageServer.h; path = MAGE/MageServer.h; sourceTree = SOURCE_ROOT; };
+		2FFE499719EC347300BC8922 /* MageServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageServer.m; path = MAGE/MageServer.m; sourceTree = SOURCE_ROOT; };
+		420659603566C15B6C6D5621 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		4C390F46197D9F1300AB3CCB /* User+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+helper.h"; path = "MAGE/User+helper.h"; sourceTree = SOURCE_ROOT; };
+		4C390F47197D9F1300AB3CCB /* User+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "User+helper.m"; path = "MAGE/User+helper.m"; sourceTree = SOURCE_ROOT; };
+		4C546FCA19537631000CF230 /* Location+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Location+helper.h"; path = "MAGE/Location+helper.h"; sourceTree = SOURCE_ROOT; };
+		4C546FCB19537631000CF230 /* Location+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Location+helper.m"; path = "MAGE/Location+helper.m"; sourceTree = SOURCE_ROOT; };
+		4CAF957218C62E0100A41CB8 /* libmage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CAF957518C62E0100A41CB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4CAF958218C62E0100A41CB8 /* mage-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mage-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CAF958318C62E0100A41CB8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4CAF958618C62E0100A41CB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		4CAF958D18C62E0100A41CB8 /* mage-ios-sdkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mage-ios-sdkTests-Info.plist"; sourceTree = "<group>"; };
+		4CAF958F18C62E0100A41CB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CAF959118C62E0100A41CB8 /* AuthenticationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthenticationTests.m; sourceTree = "<group>"; };
+		4CAF959E18C62F7C00A41CB8 /* LocalAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalAuthentication.h; path = MAGE/LocalAuthentication.h; sourceTree = SOURCE_ROOT; };
+		4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalAuthentication.m; path = MAGE/LocalAuthentication.m; sourceTree = SOURCE_ROOT; };
+		4CAF95A118C62FA000A41CB8 /* Authentication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Authentication.h; path = MAGE/Authentication.h; sourceTree = SOURCE_ROOT; };
+		4CAF95A218C6616300A41CB8 /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Authentication.m; path = MAGE/Authentication.m; sourceTree = SOURCE_ROOT; };
+		7448CD41E33240EA8ADADCAF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C10ECB13D9EB8312ECFFD635 /* libPods-mage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF92406987D799C2D14562A9 /* Pods-mage-ios-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		F70E6EF419785985002D66F6 /* Attachment+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Attachment+helper.h"; path = "MAGE/Attachment+helper.h"; sourceTree = SOURCE_ROOT; };
+		F70E6EF519785985002D66F6 /* Attachment+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Attachment+helper.m"; path = "MAGE/Attachment+helper.m"; sourceTree = SOURCE_ROOT; };
+		F739EFEF1AB0C813003A6E4B /* Team+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Team+helper.h"; path = "MAGE/Team+helper.h"; sourceTree = SOURCE_ROOT; };
+		F739EFF01AB0C813003A6E4B /* Team+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Team+helper.m"; path = "MAGE/Team+helper.m"; sourceTree = SOURCE_ROOT; };
+		F75DD3181A9F9F230007FA3F /* NSString+Contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Contains.h"; path = "MAGE/NSString+Contains.h"; sourceTree = SOURCE_ROOT; };
+		F75DD3191A9F9F230007FA3F /* NSString+Contains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Contains.m"; path = "MAGE/NSString+Contains.m"; sourceTree = SOURCE_ROOT; };
+		F76655841A30EAEB00558EBB /* AttachmentPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentPushService.h; path = MAGE/AttachmentPushService.h; sourceTree = SOURCE_ROOT; };
+		F76655851A30EAEB00558EBB /* AttachmentPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentPushService.m; path = MAGE/AttachmentPushService.m; sourceTree = SOURCE_ROOT; };
+		F768E9C7191D095B003287E3 /* ObservationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationTests.m; sourceTree = "<group>"; };
+		F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerAuthentication.h; path = MAGE/ServerAuthentication.h; sourceTree = SOURCE_ROOT; };
+		F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerAuthentication.m; path = MAGE/ServerAuthentication.m; sourceTree = SOURCE_ROOT; };
+		F768E9CC191D1C7B003287E3 /* HttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpManager.h; path = MAGE/HttpManager.h; sourceTree = SOURCE_ROOT; };
+		F768E9CD191D1C7B003287E3 /* HttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpManager.m; path = MAGE/HttpManager.m; sourceTree = SOURCE_ROOT; };
+		F76949101AA5230E00CB680B /* Event+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Event+helper.h"; path = "MAGE/Event+helper.h"; sourceTree = SOURCE_ROOT; };
+		F76949111AA5230E00CB680B /* Event+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Event+helper.m"; path = "MAGE/Event+helper.m"; sourceTree = SOURCE_ROOT; };
+		F7971BD41A03F50D001505F0 /* ObservationPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationPushService.h; path = MAGE/ObservationPushService.h; sourceTree = SOURCE_ROOT; };
+		F7971BD51A03F50D001505F0 /* ObservationPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationPushService.m; path = MAGE/ObservationPushService.m; sourceTree = SOURCE_ROOT; };
+		F7A87F331AA51695001AEDF4 /* Mage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mage.h; path = MAGE/Mage.h; sourceTree = SOURCE_ROOT; };
+		F7A87F341AA51695001AEDF4 /* Mage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mage.m; path = MAGE/Mage.m; sourceTree = SOURCE_ROOT; };
+		F7B25E1D191AA21900589E5B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = MAGE/Geometry.h; sourceTree = SOURCE_ROOT; };
+		F7B25E1E191AA21900589E5B /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geometry.m; path = MAGE/Geometry.m; sourceTree = SOURCE_ROOT; };
+		F7B25E20191AA8CE00589E5B /* GeoPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeoPoint.h; path = MAGE/GeoPoint.h; sourceTree = SOURCE_ROOT; };
+		F7B25E21191AA8CE00589E5B /* GeoPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeoPoint.m; path = MAGE/GeoPoint.m; sourceTree = SOURCE_ROOT; };
+		F7B25E23191AB5A900589E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F7B275531AA108F000DD72DE /* mage-ios-sdk 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 2.xcdatamodel"; sourceTree = "<group>"; };
+		F7B275541AA108F000DD72DE /* mage-ios-sdk 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 3.xcdatamodel"; sourceTree = "<group>"; };
+		F7B275551AA108F000DD72DE /* mage-ios-sdk 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 4.xcdatamodel"; sourceTree = "<group>"; };
+		F7B275561AA108F000DD72DE /* mage-ios-sdk 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 5.xcdatamodel"; sourceTree = "<group>"; };
+		F7B275571AA108F000DD72DE /* mage-ios-sdk 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 6.xcdatamodel"; sourceTree = "<group>"; };
+		F7B275581AA108F000DD72DE /* mage-ios-sdk.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk.xcdatamodel"; sourceTree = "<group>"; };
+		F7B2755A1AA4D91B00DD72DE /* mage-ios-sdk 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 7.xcdatamodel"; sourceTree = "<group>"; };
+		F7B679731959CF2D0035596A /* MageEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageEnums.h; path = MAGE/MageEnums.h; sourceTree = SOURCE_ROOT; };
+		F7B679741959CF2D0035596A /* MageEnums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageEnums.m; path = MAGE/MageEnums.m; sourceTree = SOURCE_ROOT; };
+		F7C5FB75195DDFDE0065379C /* Layer+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Layer+helper.h"; path = "MAGE/Layer+helper.h"; sourceTree = SOURCE_ROOT; };
+		F7C5FB76195DDFDE0065379C /* Layer+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Layer+helper.m"; path = "MAGE/Layer+helper.m"; sourceTree = SOURCE_ROOT; };
+		F7C5FB79195DDFF30065379C /* Form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Form.h; path = MAGE/Form.h; sourceTree = SOURCE_ROOT; };
+		F7C5FB7A195DDFF30065379C /* Form.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Form.m; path = MAGE/Form.m; sourceTree = SOURCE_ROOT; };
+		F7C80C481A72AFE00024EB7F /* StaticLayer+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StaticLayer+helper.h"; path = "MAGE/StaticLayer+helper.h"; sourceTree = SOURCE_ROOT; };
+		F7C80C491A72AFE00024EB7F /* StaticLayer+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "StaticLayer+helper.m"; path = "MAGE/StaticLayer+helper.m"; sourceTree = SOURCE_ROOT; };
+		F7DEF9251912BD2D0026B9D0 /* preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = preferences.plist; path = MAGE/preferences.plist; sourceTree = SOURCE_ROOT; };
+		F7E35847191BECBC004EA79D /* Observation+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Observation+helper.h"; path = "MAGE/Observation+helper.h"; sourceTree = SOURCE_ROOT; };
+		F7E35848191BECBC004EA79D /* Observation+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Observation+helper.m"; path = "MAGE/Observation+helper.m"; sourceTree = SOURCE_ROOT; };
+		F7F133601975857000E79762 /* UserUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserUtility.h; path = MAGE/UserUtility.h; sourceTree = SOURCE_ROOT; };
+		F7F133611975857000E79762 /* UserUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserUtility.m; path = MAGE/UserUtility.m; sourceTree = SOURCE_ROOT; };
+		F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredPassword.h; path = MAGE/StoredPassword.h; sourceTree = SOURCE_ROOT; };
+		F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredPassword.m; path = MAGE/StoredPassword.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CAF956F18C62E0100A41CB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */,
+				4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */,
+				0FB180B41FF34E928684A5ED /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CAF957F18C62E0100A41CB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CAF958518C62E0100A41CB8 /* Foundation.framework in Frameworks */,
+				4CAF958418C62E0100A41CB8 /* XCTest.framework in Frameworks */,
+				0BFE443F328EC1014528B566 /* libPods.a in Frameworks */,
+				4CAF958A18C62E0100A41CB8 /* libmage-ios-sdk.a in Frameworks */,
+				4CAF958718C62E0100A41CB8 /* UIKit.framework in Frameworks */,
+				DC60A150C17F48CB9750FE39 /* libPods-mage-ios-sdkTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E9719FF0451A9B76EBB780F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				420659603566C15B6C6D5621 /* Pods.debug.xcconfig */,
+				1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */,
+				0B43815519D5CF6AF74F5F61 /* Pods-mage-ios-sdkTests.debug.xcconfig */,
+				CF92406987D799C2D14562A9 /* Pods-mage-ios-sdkTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		2F016527199CF36E00C4862B /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				2F01652B199D1C6D00C4862B /* LocationFetchService.h */,
+				2F01652C199D1C6D00C4862B /* LocationFetchService.m */,
+				2F01653119A2A88D00C4862B /* LocationService.h */,
+				2F01653219A2A88D00C4862B /* LocationService.m */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		2F01653719A4EFB000C4862B /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				2F01653819A4F11E00C4862B /* NSDate+Iso8601.h */,
+				2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */,
+			);
+			name = Date;
+			sourceTree = "<group>";
+		};
+		2F2A76E819A7DE770008E7DD /* Observation */ = {
+			isa = PBXGroup;
+			children = (
+				2F2A76E919A7DE8D0008E7DD /* ObservationFetchService.h */,
+				2F2A76EA19A7DE8D0008E7DD /* ObservationFetchService.m */,
+				F7971BD41A03F50D001505F0 /* ObservationPushService.h */,
+				F7971BD51A03F50D001505F0 /* ObservationPushService.m */,
+				F76655841A30EAEB00558EBB /* AttachmentPushService.h */,
+				F76655851A30EAEB00558EBB /* AttachmentPushService.m */,
+			);
+			name = Observation;
+			sourceTree = "<group>";
+		};
+		2FC308021A3F916600FBD2BA /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2FC308031A3F91D000FBD2BA /* MagicalRecord+delete.h */,
+				2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */,
+				F75DD3181A9F9F230007FA3F /* NSString+Contains.h */,
+				F75DD3191A9F9F230007FA3F /* NSString+Contains.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		4CAF956918C62E0100A41CB8 = {
+			isa = PBXGroup;
+			children = (
+				F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */,
+				4CAF957718C62E0100A41CB8 /* MAGE */,
+				4CAF957818C62E0100A41CB8 /* Supporting Files */,
+				4CAF958B18C62E0100A41CB8 /* Tests */,
+				4CAF957418C62E0100A41CB8 /* Frameworks */,
+				4CAF957318C62E0100A41CB8 /* Products */,
+				0E9719FF0451A9B76EBB780F /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		4CAF957318C62E0100A41CB8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CAF957218C62E0100A41CB8 /* libmage-ios-sdk.a */,
+				4CAF958218C62E0100A41CB8 /* mage-ios-sdkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CAF957418C62E0100A41CB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7B25E23191AB5A900589E5B /* CoreLocation.framework */,
+				4CAF957518C62E0100A41CB8 /* Foundation.framework */,
+				4CAF958318C62E0100A41CB8 /* XCTest.framework */,
+				4CAF958618C62E0100A41CB8 /* UIKit.framework */,
+				7448CD41E33240EA8ADADCAF /* libPods.a */,
+				2C6B303D58044552B6770497 /* libPods-mage-ios-sdkTests.a */,
+				C10ECB13D9EB8312ECFFD635 /* libPods-mage-ios-sdk.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CAF957718C62E0100A41CB8 /* MAGE */ = {
+			isa = PBXGroup;
+			children = (
+				2FC308021A3F916600FBD2BA /* Categories */,
+				2F2A76E819A7DE770008E7DD /* Observation */,
+				2F01653719A4EFB000C4862B /* Date */,
+				2F016527199CF36E00C4862B /* Location */,
+				F7F1335F1975855200E79762 /* Utilities */,
+				F7E35845191BDF3B004EA79D /* Geo */,
+				F7E35844191BDF29004EA79D /* Models */,
+				4CAF95A118C62FA000A41CB8 /* Authentication.h */,
+				4CAF95A218C6616300A41CB8 /* Authentication.m */,
+				4CAF959E18C62F7C00A41CB8 /* LocalAuthentication.h */,
+				4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */,
+				F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */,
+				F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */,
+				F768E9CC191D1C7B003287E3 /* HttpManager.h */,
+				F768E9CD191D1C7B003287E3 /* HttpManager.m */,
+				2FFE499619EC347300BC8922 /* MageServer.h */,
+				2FFE499719EC347300BC8922 /* MageServer.m */,
+				F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */,
+				F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */,
+				F7A87F331AA51695001AEDF4 /* Mage.h */,
+				F7A87F341AA51695001AEDF4 /* Mage.m */,
+			);
+			name = MAGE;
+			path = "mage-ios-sdk";
+			sourceTree = "<group>";
+		};
+		4CAF957818C62E0100A41CB8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2FC308011A3F83DF00FBD2BA /* mage-ios-sdk-Prefix.pch */,
+				F7DEF9251912BD2D0026B9D0 /* preferences.plist */,
+			);
+			name = "Supporting Files";
+			path = "mage-ios-sdk";
+			sourceTree = "<group>";
+		};
+		4CAF958B18C62E0100A41CB8 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4CAF959118C62E0100A41CB8 /* AuthenticationTests.m */,
+				F768E9C7191D095B003287E3 /* ObservationTests.m */,
+				4CAF958C18C62E0100A41CB8 /* Supporting Files */,
+			);
+			name = Tests;
+			path = "mage-ios-sdkTests";
+			sourceTree = "<group>";
+		};
+		4CAF958C18C62E0100A41CB8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CAF958D18C62E0100A41CB8 /* mage-ios-sdkTests-Info.plist */,
+				4CAF958E18C62E0100A41CB8 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F739EFF21AB1E3F0003A6E4B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F70E6EF419785985002D66F6 /* Attachment+helper.h */,
+				F70E6EF519785985002D66F6 /* Attachment+helper.m */,
+				4C390F46197D9F1300AB3CCB /* User+helper.h */,
+				4C390F47197D9F1300AB3CCB /* User+helper.m */,
+				F7C5FB75195DDFDE0065379C /* Layer+helper.h */,
+				F7C5FB76195DDFDE0065379C /* Layer+helper.m */,
+				4C546FCA19537631000CF230 /* Location+helper.h */,
+				4C546FCB19537631000CF230 /* Location+helper.m */,
+				2F01654119A5047600C4862B /* GPSLocation+helper.h */,
+				2F01654219A5047600C4862B /* GPSLocation+helper.m */,
+				2FA70A8719F81EF600243F4A /* Server+helper.h */,
+				2FA70A8819F81EF600243F4A /* Server+helper.m */,
+				F7E35847191BECBC004EA79D /* Observation+helper.h */,
+				F7E35848191BECBC004EA79D /* Observation+helper.m */,
+				F7C80C481A72AFE00024EB7F /* StaticLayer+helper.h */,
+				F7C80C491A72AFE00024EB7F /* StaticLayer+helper.m */,
+				F76949101AA5230E00CB680B /* Event+helper.h */,
+				F76949111AA5230E00CB680B /* Event+helper.m */,
+				F739EFEF1AB0C813003A6E4B /* Team+helper.h */,
+				F739EFF01AB0C813003A6E4B /* Team+helper.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		F739EFF31AB1E41E003A6E4B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2F3D60A61AE803A8008BF36C /* StaticLayer.h */,
+				2F3D60A71AE803A8008BF36C /* StaticLayer.m */,
+				2F3D60A31AE803A8008BF36C /* Server.h */,
+				2F3D60A41AE803A8008BF36C /* Server.m */,
+				2F3D60A01AE803A8008BF36C /* Layer.h */,
+				2F3D60A11AE803A8008BF36C /* Layer.m */,
+				2F3D609D1AE803A8008BF36C /* Event.h */,
+				2F3D609E1AE803A8008BF36C /* Event.m */,
+				2F3D609A1AE803A8008BF36C /* Attachment.h */,
+				2F3D609B1AE803A8008BF36C /* Attachment.m */,
+				2F3D60971AE803A8008BF36C /* GPSLocation.h */,
+				2F3D60981AE803A8008BF36C /* GPSLocation.m */,
+				2F3D60941AE803A8008BF36C /* Team.h */,
+				2F3D60951AE803A8008BF36C /* Team.m */,
+				2F3D60911AE803A8008BF36C /* Location.h */,
+				2F3D60921AE803A8008BF36C /* Location.m */,
+				2F3D608E1AE803A8008BF36C /* User.h */,
+				2F3D608F1AE803A8008BF36C /* User.m */,
+				2F3D608B1AE803A7008BF36C /* Observation.h */,
+				2F3D608C1AE803A7008BF36C /* Observation.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		F7E35844191BDF29004EA79D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F739EFF31AB1E41E003A6E4B /* CoreData */,
+				F739EFF21AB1E3F0003A6E4B /* Categories */,
+				F7C5FB79195DDFF30065379C /* Form.h */,
+				F7C5FB7A195DDFF30065379C /* Form.m */,
+				F7B679731959CF2D0035596A /* MageEnums.h */,
+				F7B679741959CF2D0035596A /* MageEnums.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F7E35845191BDF3B004EA79D /* Geo */ = {
+			isa = PBXGroup;
+			children = (
+				F7B25E1D191AA21900589E5B /* Geometry.h */,
+				F7B25E1E191AA21900589E5B /* Geometry.m */,
+				F7B25E20191AA8CE00589E5B /* GeoPoint.h */,
+				F7B25E21191AA8CE00589E5B /* GeoPoint.m */,
+			);
+			name = Geo;
+			sourceTree = "<group>";
+		};
+		F7F1335F1975855200E79762 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F7F133601975857000E79762 /* UserUtility.h */,
+				F7F133611975857000E79762 /* UserUtility.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CAF957118C62E0100A41CB8 /* mage-ios-sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CAF959518C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdk" */;
+			buildPhases = (
+				CEB7D5DA02F14DA6A8F72D28 /* Check Pods Manifest.lock */,
+				4CAF956E18C62E0100A41CB8 /* Sources */,
+				4CAF956F18C62E0100A41CB8 /* Frameworks */,
+				4CAF957018C62E0100A41CB8 /* CopyFiles */,
+				2F13A3D225A843E1AFCBF9AC /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "mage-ios-sdk";
+			productName = "mage-ios-sdk";
+			productReference = 4CAF957218C62E0100A41CB8 /* libmage-ios-sdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		4CAF958118C62E0100A41CB8 /* mage-ios-sdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CAF959818C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdkTests" */;
+			buildPhases = (
+				9F0ED94149BE42F9A95F6F9A /* Check Pods Manifest.lock */,
+				4CAF957E18C62E0100A41CB8 /* Sources */,
+				4CAF957F18C62E0100A41CB8 /* Frameworks */,
+				4CAF958018C62E0100A41CB8 /* Resources */,
+				4EEDD4E54E09461995939811 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CAF958918C62E0100A41CB8 /* PBXTargetDependency */,
+			);
+			name = "mage-ios-sdkTests";
+			productName = "mage-ios-sdkTests";
+			productReference = 4CAF958218C62E0100A41CB8 /* mage-ios-sdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CAF956A18C62E0100A41CB8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "National Geospatial-Intelligence Agency";
+			};
+			buildConfigurationList = 4CAF956D18C62E0100A41CB8 /* Build configuration list for PBXProject "mage-ios-sdk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4CAF956918C62E0100A41CB8;
+			productRefGroup = 4CAF957318C62E0100A41CB8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CAF957118C62E0100A41CB8 /* mage-ios-sdk */,
+				4CAF958118C62E0100A41CB8 /* mage-ios-sdkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CAF958018C62E0100A41CB8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CAF959018C62E0100A41CB8 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2F13A3D225A843E1AFCBF9AC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4EEDD4E54E09461995939811 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F0ED94149BE42F9A95F6F9A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CEB7D5DA02F14DA6A8F72D28 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CAF956E18C62E0100A41CB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F2A76EB19A7DE8D0008E7DD /* ObservationFetchService.m in Sources */,
+				4C546FCC19537631000CF230 /* Location+helper.m in Sources */,
+				2FFE499819EC347300BC8922 /* MageServer.m in Sources */,
+				2F3D60A21AE803A8008BF36C /* Layer.m in Sources */,
+				2F3D609C1AE803A8008BF36C /* Attachment.m in Sources */,
+				F7F133621975857000E79762 /* UserUtility.m in Sources */,
+				F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */,
+				2F3D609F1AE803A8008BF36C /* Event.m in Sources */,
+				2F3D60961AE803A8008BF36C /* Team.m in Sources */,
+				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
+				F70E6EF619785985002D66F6 /* Attachment+helper.m in Sources */,
+				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
+				2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */,
+				F7C5FB78195DDFDE0065379C /* Layer+helper.m in Sources */,
+				F7B25E1F191AA21900589E5B /* Geometry.m in Sources */,
+				4C390F48197D9F1300AB3CCB /* User+helper.m in Sources */,
+				F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */,
+				F7C80C4A1A72AFE00024EB7F /* StaticLayer+helper.m in Sources */,
+				2FA70A8919F81EF600243F4A /* Server+helper.m in Sources */,
+				2F01654319A5047600C4862B /* GPSLocation+helper.m in Sources */,
+				F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */,
+				2F3D60901AE803A8008BF36C /* User.m in Sources */,
+				2F3D60991AE803A8008BF36C /* GPSLocation.m in Sources */,
+				F768E9CE191D1C7B003287E3 /* HttpManager.m in Sources */,
+				F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */,
+				F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */,
+				2F3D608D1AE803A7008BF36C /* Observation.m in Sources */,
+				F7B679751959CF2D0035596A /* MageEnums.m in Sources */,
+				F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */,
+				F76949121AA5230E00CB680B /* Event+helper.m in Sources */,
+				4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */,
+				F7B25E22191AA8CE00589E5B /* GeoPoint.m in Sources */,
+				F7E35849191BECBC004EA79D /* Observation+helper.m in Sources */,
+				2F3D60A81AE803A8008BF36C /* StaticLayer.m in Sources */,
+				2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */,
+				2F3D60A51AE803A8008BF36C /* Server.m in Sources */,
+				F739EFF11AB0C813003A6E4B /* Team+helper.m in Sources */,
+				F7C5FB7B195DDFF30065379C /* Form.m in Sources */,
+				4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */,
+				2F3D60931AE803A8008BF36C /* Location.m in Sources */,
+				2F01653A19A4F11E00C4862B /* NSDate+Iso8601.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CAF957E18C62E0100A41CB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F768E9C8191D095B003287E3 /* ObservationTests.m in Sources */,
+				4CAF959218C62E0100A41CB8 /* AuthenticationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CAF958918C62E0100A41CB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CAF957118C62E0100A41CB8 /* mage-ios-sdk */;
+			targetProxy = 4CAF958818C62E0100A41CB8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4CAF958E18C62E0100A41CB8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CAF958F18C62E0100A41CB8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CAF959318C62E0100A41CB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4CAF959418C62E0100A41CB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4CAF959618C62E0100A41CB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 420659603566C15B6C6D5621 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/mage_ios_sdk.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MAGE/mage-ios-sdk-Prefix.pch";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4CAF959718C62E0100A41CB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/mage_ios_sdk.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MAGE/mage-ios-sdk-Prefix.pch";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		4CAF959918C62E0100A41CB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B43815519D5CF6AF74F5F61 /* Pods-mage-ios-sdkTests.debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MAGE/mage-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "mage-ios-sdkTests/mage-ios-sdkTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-l\"Pods-mage-ios-sdkTests-AFNetworking\"",
+					"-l\"Pods-mage-ios-sdkTests-DateTools\"",
+					"-l\"Pods-mage-ios-sdkTests-MagicalRecord\"",
+					"-l\"Pods-mage-ios-sdkTests-OHHTTPStubs\"",
+					"-l\"Pods-mage-ios-sdkTests-TRVSMonitor\"",
+					"-l\"Pods-mage-ios-sdkTests-objective-zip\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		4CAF959A18C62E0100A41CB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF92406987D799C2D14562A9 /* Pods-mage-ios-sdkTests.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MAGE/mage-ios-sdk-Prefix.pch";
+				INFOPLIST_FILE = "mage-ios-sdkTests/mage-ios-sdkTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-l\"Pods-mage-ios-sdkTests-AFNetworking\"",
+					"-l\"Pods-mage-ios-sdkTests-DateTools\"",
+					"-l\"Pods-mage-ios-sdkTests-MagicalRecord\"",
+					"-l\"Pods-mage-ios-sdkTests-OHHTTPStubs\"",
+					"-l\"Pods-mage-ios-sdkTests-TRVSMonitor\"",
+					"-l\"Pods-mage-ios-sdkTests-objective-zip\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CAF956D18C62E0100A41CB8 /* Build configuration list for PBXProject "mage-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAF959318C62E0100A41CB8 /* Debug */,
+				4CAF959418C62E0100A41CB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CAF959518C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAF959618C62E0100A41CB8 /* Debug */,
+				4CAF959718C62E0100A41CB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CAF959818C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAF959918C62E0100A41CB8 /* Debug */,
+				4CAF959A18C62E0100A41CB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F7B2755A1AA4D91B00DD72DE /* mage-ios-sdk 7.xcdatamodel */,
+				F7B275531AA108F000DD72DE /* mage-ios-sdk 2.xcdatamodel */,
+				F7B275541AA108F000DD72DE /* mage-ios-sdk 3.xcdatamodel */,
+				F7B275551AA108F000DD72DE /* mage-ios-sdk 4.xcdatamodel */,
+				F7B275561AA108F000DD72DE /* mage-ios-sdk 5.xcdatamodel */,
+				F7B275571AA108F000DD72DE /* mage-ios-sdk 6.xcdatamodel */,
+				F7B275581AA108F000DD72DE /* mage-ios-sdk.xcdatamodel */,
+			);
+			currentVersion = F7B2755A1AA4D91B00DD72DE /* mage-ios-sdk 7.xcdatamodel */;
+			name = "mage-ios-sdk.xcdatamodeld";
+			path = "MAGE/mage-ios-sdk.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4CAF956A18C62E0100A41CB8 /* Project object */;
+}
