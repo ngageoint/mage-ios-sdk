@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://www.nga.mil"
   s.license          = 'DOD'
   s.author           = { "NGA" => "newmanw@bit-sys.com" }
-  s.source           = { :git => "https://git.geointapps.org/mage/mage-ios-sdk.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/ngageoint/mage-ios-sdk.git", :tag => s.version.to_s }
 
   s.platform         = :ios, '7.0'
   s.ios.deployment_target = '7.0'
