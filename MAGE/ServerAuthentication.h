@@ -7,8 +7,6 @@
 #import <Foundation/Foundation.h>
 #import "Authentication.h"
 
-@interface ServerAuthentication : NSObject <Authentication>
-
-- (void) loginWithParameters: (NSDictionary *) parameters;
+@interface ServerAuthentication : NSObject<Authentication>
 
 @end
