@@ -488,6 +488,7 @@
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
 				4CAF958018C62E0100A41CB8 /* Resources */,
 				4EEDD4E54E09461995939811 /* Copy Pods Resources */,
+				5897928D1350363980231A2B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -566,6 +567,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5897928D1350363980231A2B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9F0ED94149BE42F9A95F6F9A /* Check Pods Manifest.lock */ = {
