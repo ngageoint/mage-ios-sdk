@@ -24,6 +24,8 @@
 		2F3D60A21AE803A8008BF36C /* Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A11AE803A8008BF36C /* Layer.m */; };
 		2F3D60A51AE803A8008BF36C /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A41AE803A8008BF36C /* Server.m */; };
 		2F3D60A81AE803A8008BF36C /* StaticLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D60A71AE803A8008BF36C /* StaticLayer.m */; };
+		2F58BC261BFBBFE500B3B09D /* OAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */; };
+		2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */; };
 		2FA70A8919F81EF600243F4A /* Server+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA70A8819F81EF600243F4A /* Server+helper.m */; };
 		2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */; };
 		2FFE499819EC347300BC8922 /* MageServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE499719EC347300BC8922 /* MageServer.m */; };
@@ -118,6 +120,10 @@
 		2F3D60A41AE803A8008BF36C /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Server.m; path = MAGE/Server.m; sourceTree = SOURCE_ROOT; };
 		2F3D60A61AE803A8008BF36C /* StaticLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticLayer.h; path = MAGE/StaticLayer.h; sourceTree = SOURCE_ROOT; };
 		2F3D60A71AE803A8008BF36C /* StaticLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLayer.m; path = MAGE/StaticLayer.m; sourceTree = SOURCE_ROOT; };
+		2F58BC241BFBBFE500B3B09D /* OAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OAuthAuthentication.h; path = MAGE/OAuthAuthentication.h; sourceTree = SOURCE_ROOT; };
+		2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OAuthAuthentication.m; path = MAGE/OAuthAuthentication.m; sourceTree = SOURCE_ROOT; };
+		2F58BC271BFBF64000B3B09D /* MagicalRecord+MAGE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MagicalRecord+MAGE.h"; path = "MAGE/MagicalRecord+MAGE.h"; sourceTree = SOURCE_ROOT; };
+		2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MagicalRecord+MAGE.m"; path = "MAGE/MagicalRecord+MAGE.m"; sourceTree = SOURCE_ROOT; };
 		2FA70A8719F81EF600243F4A /* Server+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Server+helper.h"; path = "MAGE/Server+helper.h"; sourceTree = SOURCE_ROOT; };
 		2FA70A8819F81EF600243F4A /* Server+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Server+helper.m"; path = "MAGE/Server+helper.m"; sourceTree = SOURCE_ROOT; };
 		2FC308011A3F83DF00FBD2BA /* mage-ios-sdk-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "mage-ios-sdk-Prefix.pch"; path = "MAGE/mage-ios-sdk-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -271,8 +277,25 @@
 				2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */,
 				F75DD3181A9F9F230007FA3F /* NSString+Contains.h */,
 				F75DD3191A9F9F230007FA3F /* NSString+Contains.m */,
+				2F58BC271BFBF64000B3B09D /* MagicalRecord+MAGE.h */,
+				2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		2FF74A4E1BEBFD3A00416090 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				4CAF95A118C62FA000A41CB8 /* Authentication.h */,
+				4CAF95A218C6616300A41CB8 /* Authentication.m */,
+				4CAF959E18C62F7C00A41CB8 /* LocalAuthentication.h */,
+				4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */,
+				F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */,
+				F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */,
+				2F58BC241BFBBFE500B3B09D /* OAuthAuthentication.h */,
+				2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */,
+			);
+			name = Authentication;
 			sourceTree = "<group>";
 		};
 		4CAF956918C62E0100A41CB8 = {
@@ -314,6 +337,7 @@
 		4CAF957718C62E0100A41CB8 /* MAGE */ = {
 			isa = PBXGroup;
 			children = (
+				2FF74A4E1BEBFD3A00416090 /* Authentication */,
 				2FC308021A3F916600FBD2BA /* Categories */,
 				2F2A76E819A7DE770008E7DD /* Observation */,
 				2F01653719A4EFB000C4862B /* Date */,
@@ -321,12 +345,6 @@
 				F7F1335F1975855200E79762 /* Utilities */,
 				F7E35845191BDF3B004EA79D /* Geo */,
 				F7E35844191BDF29004EA79D /* Models */,
-				4CAF95A118C62FA000A41CB8 /* Authentication.h */,
-				4CAF95A218C6616300A41CB8 /* Authentication.m */,
-				4CAF959E18C62F7C00A41CB8 /* LocalAuthentication.h */,
-				4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */,
-				F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */,
-				F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */,
 				F768E9CC191D1C7B003287E3 /* HttpManager.h */,
 				F768E9CD191D1C7B003287E3 /* HttpManager.m */,
 				2FFE499619EC347300BC8922 /* MageServer.h */,
@@ -488,7 +506,7 @@
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
 				4CAF958018C62E0100A41CB8 /* Resources */,
 				4EEDD4E54E09461995939811 /* Copy Pods Resources */,
-				5897928D1350363980231A2B /* Embed Pods Frameworks */,
+				673FB5CC7E534AACB44A1CD8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -630,6 +648,7 @@
 				F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */,
 				2F3D609F1AE803A8008BF36C /* Event.m in Sources */,
 				2F3D60961AE803A8008BF36C /* Team.m in Sources */,
+				2F58BC261BFBBFE500B3B09D /* OAuthAuthentication.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
 				F70E6EF619785985002D66F6 /* Attachment+helper.m in Sources */,
 				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
@@ -639,6 +658,7 @@
 				4C390F48197D9F1300AB3CCB /* User+helper.m in Sources */,
 				F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */,
 				F7C80C4A1A72AFE00024EB7F /* StaticLayer+helper.m in Sources */,
+				2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */,
 				2FA70A8919F81EF600243F4A /* Server+helper.m in Sources */,
 				2F01654319A5047600C4862B /* GPSLocation+helper.m in Sources */,
 				F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */,
