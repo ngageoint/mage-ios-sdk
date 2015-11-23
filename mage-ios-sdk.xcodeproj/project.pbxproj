@@ -587,7 +587,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		673FB5CC7E534AACB44A1CD8 /* Embed Pods Frameworks */ = {
+		5897928D1350363980231A2B /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
