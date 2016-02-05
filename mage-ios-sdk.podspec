@@ -29,6 +29,6 @@ Pod::Spec.new do |s|
   s.frameworks = 'Foundation'
   s.dependency 'AFNetworking', '~> 2.3.1'
   s.dependency 'DateTools', '~> 1.3.0'
-  s.dependency 'MagicalRecord', '~> 2.3.0'
+  s.dependency 'MagicalRecord', '~> 2.3.2'
   s.dependency 'objective-zip', '~> 0.8.3'
 end
