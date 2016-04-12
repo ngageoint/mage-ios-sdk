@@ -3,7 +3,7 @@ platform :ios, '8.0'
 
 inhibit_all_warnings!
 
-pod "AFNetworking", "~> 3.0.4"
+pod "AFNetworking", "~> 2.3.1"
 pod "DateTools", "~> 1.3.0"
 pod "MagicalRecord", "~> 2.3.2"
 

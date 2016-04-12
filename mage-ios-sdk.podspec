@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "mage-ios-sdk"
-  s.version          = "2.0.0"
+  s.version          = "1.0.0"
   s.summary          = "iOS SDK for MAGE"
   s.description      = <<-DESC
                        iOS SDK for MAGE, assist with:
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.resource_bundle = { 'MageSDK' => ['MAGE/**/*.plist'] }
   s.resources = ['MAGE/**/*.xcdatamodeld']
   s.frameworks = 'Foundation'
-  s.dependency 'AFNetworking', '~> 3.0.4'
+  s.dependency 'AFNetworking', '~> 2.3.1'
   s.dependency 'DateTools', '~> 1.3.0'
   s.dependency 'MagicalRecord', '~> 2.3.2'
   s.dependency 'objective-zip', '~> 0.8.3'
