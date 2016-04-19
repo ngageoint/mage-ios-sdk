@@ -848,6 +848,7 @@
 					"\"Security\"",
 					"-framework",
 					"\"SystemConfiguration\"",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
@@ -888,6 +889,7 @@
 					"\"Security\"",
 					"-framework",
 					"\"SystemConfiguration\"",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
