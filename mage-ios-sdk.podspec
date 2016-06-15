@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
                        * MAGE location services
                        DESC
   s.homepage         = "https://www.nga.mil"
-  s.license          = 'DOD'
-  s.author           = { "NGA" => "newmanw@bit-sys.com" }
+  s.license          = 'Apace 2.0'
+  s.author           = { "NGA" => "winewman@caci.com" }
   s.source           = { :git => "https://github.com/ngageoint/mage-ios-sdk.git", :tag => s.version.to_s }
 
   s.platform         = :ios, '8.0'
