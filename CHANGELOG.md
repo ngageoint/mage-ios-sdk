@@ -3,9 +3,23 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.1.1 (TBD)
+## 1.1.4 (TBD)
 
 ##### Features
+
+##### Bug Fixes
+
+## [1.1.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.1.3) (09-21-2016)
+
+##### Features
+
+##### Bug Fixes
+* Fix bug in location refresh not pulling new user locations after event switch
+
+## [1.1.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.1.2) (08-18-2016)
+
+##### Features
+* Parse and format generic geometry property as GeoJson.
 
 ##### Bug Fixes
 
