@@ -3,9 +3,16 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.1.4 (TBD)
+## 1.1.5 (TBD)
 
 ##### Features
+
+##### Bug Fixes
+
+## [1.1.4](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.1.4) (12-06-2016)
+
+##### Features
+* Prevent MAGE database files from being backed up to iCloud and iTunes
 
 ##### Bug Fixes
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0BFE443F328EC1014528B566 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7448CD41E33240EA8ADADCAF /* libPods.a */; };
-		0FB180B41FF34E928684A5ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7448CD41E33240EA8ADADCAF /* libPods.a */; };
 		2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01652C199D1C6D00C4862B /* LocationFetchService.m */; };
 		2F01653319A2A88D00C4862B /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653219A2A88D00C4862B /* LocationService.m */; };
 		2F01653A19A4F11E00C4862B /* NSDate+Iso8601.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */; };
@@ -90,7 +89,6 @@
 
 /* Begin PBXFileReference section */
 		0B43815519D5CF6AF74F5F61 /* Pods-mage-ios-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
-		1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2C6B303D58044552B6770497 /* libPods-mage-ios-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F01652B199D1C6D00C4862B /* LocationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationFetchService.h; path = MAGE/LocationFetchService.h; sourceTree = SOURCE_ROOT; };
 		2F01652C199D1C6D00C4862B /* LocationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationFetchService.m; path = MAGE/LocationFetchService.m; sourceTree = SOURCE_ROOT; };
@@ -154,7 +152,6 @@
 		2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MagicalRecord+delete.m"; path = "MAGE/MagicalRecord+delete.m"; sourceTree = SOURCE_ROOT; };
 		2FFE499619EC347300BC8922 /* MageServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageServer.h; path = MAGE/MageServer.h; sourceTree = SOURCE_ROOT; };
 		2FFE499719EC347300BC8922 /* MageServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageServer.m; path = MAGE/MageServer.m; sourceTree = SOURCE_ROOT; };
-		420659603566C15B6C6D5621 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4CAF957218C62E0100A41CB8 /* libmage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAF957518C62E0100A41CB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4CAF958218C62E0100A41CB8 /* mage-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mage-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,7 +210,6 @@
 			files = (
 				F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */,
 				4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */,
-				0FB180B41FF34E928684A5ED /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,8 +232,6 @@
 		0E9719FF0451A9B76EBB780F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				420659603566C15B6C6D5621 /* Pods.debug.xcconfig */,
-				1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */,
 				0B43815519D5CF6AF74F5F61 /* Pods-mage-ios-sdkTests.debug.xcconfig */,
 				CF92406987D799C2D14562A9 /* Pods-mage-ios-sdkTests.release.xcconfig */,
 			);
@@ -485,11 +479,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CAF959518C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdk" */;
 			buildPhases = (
-				CEB7D5DA02F14DA6A8F72D28 /* Check Pods Manifest.lock */,
 				4CAF956E18C62E0100A41CB8 /* Sources */,
 				4CAF956F18C62E0100A41CB8 /* Frameworks */,
 				4CAF957018C62E0100A41CB8 /* CopyFiles */,
-				2F13A3D225A843E1AFCBF9AC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -504,12 +496,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CAF959818C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdkTests" */;
 			buildPhases = (
-				9F0ED94149BE42F9A95F6F9A /* Check Pods Manifest.lock */,
+				9F0ED94149BE42F9A95F6F9A /* [CP] Check Pods Manifest.lock */,
 				4CAF957E18C62E0100A41CB8 /* Sources */,
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
 				4CAF958018C62E0100A41CB8 /* Resources */,
-				4EEDD4E54E09461995939811 /* Copy Pods Resources */,
-				CE1B223D09CCAE1B6F1B28D6 /* Embed Pods Frameworks */,
+				4EEDD4E54E09461995939811 /* [CP] Copy Pods Resources */,
+				CE1B223D09CCAE1B6F1B28D6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -560,29 +552,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2F13A3D225A843E1AFCBF9AC /* Copy Pods Resources */ = {
+		4EEDD4E54E09461995939811 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4EEDD4E54E09461995939811 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,49 +567,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9F0ED94149BE42F9A95F6F9A /* Check Pods Manifest.lock */ = {
+		9F0ED94149BE42F9A95F6F9A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		CE1B223D09CCAE1B6F1B28D6 /* Embed Pods Frameworks */ = {
+		CE1B223D09CCAE1B6F1B28D6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CEB7D5DA02F14DA6A8F72D28 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -791,7 +753,6 @@
 		};
 		4CAF959618C62E0100A41CB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 420659603566C15B6C6D5621 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/mage_ios_sdk.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -804,7 +765,6 @@
 		};
 		4CAF959718C62E0100A41CB8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FFAEE42C21F68388710D523 /* Pods.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/mage_ios_sdk.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
