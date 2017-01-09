@@ -3,9 +3,19 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.1.5 (TBD)
+## 1.2.1 (TBD)
 
 ##### Features
+
+##### Bug Fixes
+
+## [1.2.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.1.3) (11-03-2016)
+
+##### Features
+* Observation important and favorites
+
+- new data model for favorite and important entities
+- incorporated favorites and important in push and pull services
 
 ##### Bug Fixes
 
