@@ -51,6 +51,7 @@
 		4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */; };
 		4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF95A218C6616300A41CB8 /* Authentication.m */; };
 		4DD0FBCF215EA177D40046F8 /* libPods-mage-ios-sdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */; };
+		C233DBBDBFDBC8A8173E8835 /* libPods-mage-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */; };
 		F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */ = {isa = PBXBuildFile; fileRef = F75DD3191A9F9F230007FA3F /* NSString+Contains.m */; };
 		F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F76655851A30EAEB00558EBB /* AttachmentPushService.m */; };
 		F768E9C8191D095B003287E3 /* ObservationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9C7191D095B003287E3 /* ObservationTests.m */; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F01652B199D1C6D00C4862B /* LocationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationFetchService.h; path = MAGE/LocationFetchService.h; sourceTree = SOURCE_ROOT; };
 		2F01652C199D1C6D00C4862B /* LocationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationFetchService.m; path = MAGE/LocationFetchService.m; sourceTree = SOURCE_ROOT; };
 		2F01653119A2A88D00C4862B /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationService.h; path = MAGE/LocationService.h; sourceTree = SOURCE_ROOT; };
@@ -175,6 +177,8 @@
 		4CAF95A118C62FA000A41CB8 /* Authentication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Authentication.h; path = MAGE/Authentication.h; sourceTree = SOURCE_ROOT; };
 		4CAF95A218C6616300A41CB8 /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Authentication.m; path = MAGE/Authentication.m; sourceTree = SOURCE_ROOT; };
 		595D169C90A86905653E937D /* Pods-mage-ios-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5EB6050198AAD2B29ED45ACD /* Pods-mage-ios-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk.debug.xcconfig"; sourceTree = "<group>"; };
+		660A743D10C89FF65CE337F3 /* Pods-mage-ios-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk.release.xcconfig"; sourceTree = "<group>"; };
 		CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED58FFB6E12F877BD465D73F /* Pods-mage-ios-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		F75DD3181A9F9F230007FA3F /* NSString+Contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Contains.h"; path = "MAGE/NSString+Contains.h"; sourceTree = SOURCE_ROOT; };
@@ -220,6 +224,7 @@
 			files = (
 				F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */,
 				4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */,
+				C233DBBDBFDBC8A8173E8835 /* libPods-mage-ios-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +334,7 @@
 				4CAF958318C62E0100A41CB8 /* XCTest.framework */,
 				4CAF958618C62E0100A41CB8 /* UIKit.framework */,
 				CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */,
+				14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,6 +398,8 @@
 			children = (
 				595D169C90A86905653E937D /* Pods-mage-ios-sdkTests.debug.xcconfig */,
 				ED58FFB6E12F877BD465D73F /* Pods-mage-ios-sdkTests.release.xcconfig */,
+				5EB6050198AAD2B29ED45ACD /* Pods-mage-ios-sdk.debug.xcconfig */,
+				660A743D10C89FF65CE337F3 /* Pods-mage-ios-sdk.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -494,9 +502,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CAF959518C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdk" */;
 			buildPhases = (
+				4461E2209F748E49902E6C38 /* [CP] Check Pods Manifest.lock */,
 				4CAF956E18C62E0100A41CB8 /* Sources */,
 				4CAF956F18C62E0100A41CB8 /* Frameworks */,
 				4CAF957018C62E0100A41CB8 /* CopyFiles */,
+				DE6E58D12CC9F50DAF85A900 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -511,7 +521,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CAF959818C62E0100A41CB8 /* Build configuration list for PBXNativeTarget "mage-ios-sdkTests" */;
 			buildPhases = (
-				5153441CB01B5A28A441C8FF /* 📦 Check Pods Manifest.lock */,
+				5153441CB01B5A28A441C8FF /* [CP] Check Pods Manifest.lock */,
 				BB7E186987DD093C5A950B50 /* [CP] Check Pods Manifest.lock */,
 				4CAF957E18C62E0100A41CB8 /* Sources */,
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
@@ -630,19 +640,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5153441CB01B5A28A441C8FF /* 📦 Check Pods Manifest.lock */ = {
+		4461E2209F748E49902E6C38 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5153441CB01B5A28A441C8FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BB7E186987DD093C5A950B50 /* [CP] Check Pods Manifest.lock */ = {
@@ -658,6 +683,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE6E58D12CC9F50DAF85A900 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -820,6 +860,7 @@
 		};
 		4CAF959618C62E0100A41CB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EB6050198AAD2B29ED45ACD /* Pods-mage-ios-sdk.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/mage_ios_sdk.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -832,6 +873,7 @@
 		};
 		4CAF959718C62E0100A41CB8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 660A743D10C89FF65CE337F3 /* Pods-mage-ios-sdk.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/mage_ios_sdk.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
