@@ -56,7 +56,7 @@
 		F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F76655851A30EAEB00558EBB /* AttachmentPushService.m */; };
 		F768E9C8191D095B003287E3 /* ObservationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9C7191D095B003287E3 /* ObservationTests.m */; };
 		F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */; };
-		F768E9CE191D1C7B003287E3 /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CD191D1C7B003287E3 /* HttpManager.m */; };
+		F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CD191D1C7B003287E3 /* MageSessionManager.m */; };
 		F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F7971BD51A03F50D001505F0 /* ObservationPushService.m */; };
 		F7A87F351AA51695001AEDF4 /* Mage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A87F341AA51695001AEDF4 /* Mage.m */; };
 		F7B25E1F191AA21900589E5B /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B25E1E191AA21900589E5B /* Geometry.m */; };
@@ -188,8 +188,8 @@
 		F768E9C7191D095B003287E3 /* ObservationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationTests.m; sourceTree = "<group>"; };
 		F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerAuthentication.h; path = MAGE/ServerAuthentication.h; sourceTree = SOURCE_ROOT; };
 		F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerAuthentication.m; path = MAGE/ServerAuthentication.m; sourceTree = SOURCE_ROOT; };
-		F768E9CC191D1C7B003287E3 /* HttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpManager.h; path = MAGE/HttpManager.h; sourceTree = SOURCE_ROOT; };
-		F768E9CD191D1C7B003287E3 /* HttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HttpManager.m; path = MAGE/HttpManager.m; sourceTree = SOURCE_ROOT; };
+		F768E9CC191D1C7B003287E3 /* MageSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageSessionManager.h; path = MAGE/MageSessionManager.h; sourceTree = SOURCE_ROOT; };
+		F768E9CD191D1C7B003287E3 /* MageSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageSessionManager.m; path = MAGE/MageSessionManager.m; sourceTree = SOURCE_ROOT; };
 		F7971BD41A03F50D001505F0 /* ObservationPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationPushService.h; path = MAGE/ObservationPushService.h; sourceTree = SOURCE_ROOT; };
 		F7971BD51A03F50D001505F0 /* ObservationPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationPushService.m; path = MAGE/ObservationPushService.m; sourceTree = SOURCE_ROOT; };
 		F7A87F331AA51695001AEDF4 /* Mage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mage.h; path = MAGE/Mage.h; sourceTree = SOURCE_ROOT; };
@@ -350,8 +350,8 @@
 				F7F1335F1975855200E79762 /* Utilities */,
 				F7E35845191BDF3B004EA79D /* Geo */,
 				F7E35844191BDF29004EA79D /* Models */,
-				F768E9CC191D1C7B003287E3 /* HttpManager.h */,
-				F768E9CD191D1C7B003287E3 /* HttpManager.m */,
+				F768E9CC191D1C7B003287E3 /* MageSessionManager.h */,
+				F768E9CD191D1C7B003287E3 /* MageSessionManager.m */,
 				2FFE499619EC347300BC8922 /* MageServer.h */,
 				2FFE499719EC347300BC8922 /* MageServer.m */,
 				F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */,
@@ -727,7 +727,7 @@
 				2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */,
 				2F5332DB1CC557F3006E92E1 /* User+CoreDataProperties.m in Sources */,
 				F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */,
-				F768E9CE191D1C7B003287E3 /* HttpManager.m in Sources */,
+				F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */,
 				F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */,
 				2F5332D81CC557F3006E92E1 /* Role+CoreDataProperties.m in Sources */,
 				F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */,
