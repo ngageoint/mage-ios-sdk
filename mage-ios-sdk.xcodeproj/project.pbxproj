@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C65491E53A9FB005F4FA4 /* SessionTaskQueue.m */; };
+		049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C654C1E53B571005F4FA4 /* SessionTask.m */; };
+		049C65501E55E60E005F4FA4 /* TaskSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C654F1E55E60E005F4FA4 /* TaskSessionManager.m */; };
 		2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01652C199D1C6D00C4862B /* LocationFetchService.m */; };
 		2F01653319A2A88D00C4862B /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653219A2A88D00C4862B /* LocationService.m */; };
 		2F01653A19A4F11E00C4862B /* NSDate+Iso8601.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */; };
@@ -92,6 +95,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		049C65481E53A9FB005F4FA4 /* SessionTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionTaskQueue.h; path = MAGE/Networking/SessionTaskQueue.h; sourceTree = SOURCE_ROOT; };
+		049C65491E53A9FB005F4FA4 /* SessionTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionTaskQueue.m; path = MAGE/Networking/SessionTaskQueue.m; sourceTree = SOURCE_ROOT; };
+		049C654B1E53B571005F4FA4 /* SessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionTask.h; path = MAGE/Networking/SessionTask.h; sourceTree = SOURCE_ROOT; };
+		049C654C1E53B571005F4FA4 /* SessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionTask.m; path = MAGE/Networking/SessionTask.m; sourceTree = SOURCE_ROOT; };
+		049C654E1E55E60E005F4FA4 /* TaskSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaskSessionManager.h; path = MAGE/Networking/TaskSessionManager.h; sourceTree = SOURCE_ROOT; };
+		049C654F1E55E60E005F4FA4 /* TaskSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaskSessionManager.m; path = MAGE/Networking/TaskSessionManager.m; sourceTree = SOURCE_ROOT; };
 		14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F01652B199D1C6D00C4862B /* LocationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationFetchService.h; path = MAGE/LocationFetchService.h; sourceTree = SOURCE_ROOT; };
 		2F01652C199D1C6D00C4862B /* LocationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationFetchService.m; path = MAGE/LocationFetchService.m; sourceTree = SOURCE_ROOT; };
@@ -188,8 +197,8 @@
 		F768E9C7191D095B003287E3 /* ObservationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationTests.m; sourceTree = "<group>"; };
 		F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerAuthentication.h; path = MAGE/ServerAuthentication.h; sourceTree = SOURCE_ROOT; };
 		F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerAuthentication.m; path = MAGE/ServerAuthentication.m; sourceTree = SOURCE_ROOT; };
-		F768E9CC191D1C7B003287E3 /* MageSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageSessionManager.h; path = MAGE/MageSessionManager.h; sourceTree = SOURCE_ROOT; };
-		F768E9CD191D1C7B003287E3 /* MageSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageSessionManager.m; path = MAGE/MageSessionManager.m; sourceTree = SOURCE_ROOT; };
+		F768E9CC191D1C7B003287E3 /* MageSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MageSessionManager.h; path = MAGE/Networking/MageSessionManager.h; sourceTree = SOURCE_ROOT; };
+		F768E9CD191D1C7B003287E3 /* MageSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageSessionManager.m; path = MAGE/Networking/MageSessionManager.m; sourceTree = SOURCE_ROOT; };
 		F7971BD41A03F50D001505F0 /* ObservationPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationPushService.h; path = MAGE/ObservationPushService.h; sourceTree = SOURCE_ROOT; };
 		F7971BD51A03F50D001505F0 /* ObservationPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationPushService.m; path = MAGE/ObservationPushService.m; sourceTree = SOURCE_ROOT; };
 		F7A87F331AA51695001AEDF4 /* Mage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mage.h; path = MAGE/Mage.h; sourceTree = SOURCE_ROOT; };
@@ -243,6 +252,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		049C65511E55F7C9005F4FA4 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F768E9CC191D1C7B003287E3 /* MageSessionManager.h */,
+				F768E9CD191D1C7B003287E3 /* MageSessionManager.m */,
+				049C654E1E55E60E005F4FA4 /* TaskSessionManager.h */,
+				049C654F1E55E60E005F4FA4 /* TaskSessionManager.m */,
+				049C65481E53A9FB005F4FA4 /* SessionTaskQueue.h */,
+				049C65491E53A9FB005F4FA4 /* SessionTaskQueue.m */,
+				049C654B1E53B571005F4FA4 /* SessionTask.h */,
+				049C654C1E53B571005F4FA4 /* SessionTask.m */,
+			);
+			name = Networking;
+			path = MAGE/Networking;
+			sourceTree = "<group>";
+		};
 		2F016527199CF36E00C4862B /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,8 +375,7 @@
 				F7F1335F1975855200E79762 /* Utilities */,
 				F7E35845191BDF3B004EA79D /* Geo */,
 				F7E35844191BDF29004EA79D /* Models */,
-				F768E9CC191D1C7B003287E3 /* MageSessionManager.h */,
-				F768E9CD191D1C7B003287E3 /* MageSessionManager.m */,
+				049C65511E55F7C9005F4FA4 /* Networking */,
 				2FFE499619EC347300BC8922 /* MageServer.h */,
 				2FFE499719EC347300BC8922 /* MageServer.m */,
 				F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */,
@@ -716,9 +740,11 @@
 				F7F133621975857000E79762 /* UserUtility.m in Sources */,
 				F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */,
 				2F58BC261BFBBFE500B3B09D /* OAuthAuthentication.m in Sources */,
+				049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
 				2F53326E1CC154C3006E92E1 /* Observation.m in Sources */,
 				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
+				049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */,
 				2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */,
 				2F5332641CC154C3006E92E1 /* Attachment.m in Sources */,
 				F7B25E1F191AA21900589E5B /* Geometry.m in Sources */,
@@ -734,6 +760,7 @@
 				2F5332DA1CC557F3006E92E1 /* Team+CoreDataProperties.m in Sources */,
 				2F5332DF1CC557F3006E92E1 /* Layer+CoreDataProperties.m in Sources */,
 				2F5332661CC154C3006E92E1 /* Event.m in Sources */,
+				049C65501E55E60E005F4FA4 /* TaskSessionManager.m in Sources */,
 				2F5332701CC154C3006E92E1 /* Role.m in Sources */,
 				2F5332D51CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m in Sources */,
 				2F5332D71CC557F3006E92E1 /* Attachment+CoreDataProperties.m in Sources */,
