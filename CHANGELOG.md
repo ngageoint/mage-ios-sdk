@@ -6,6 +6,8 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ## 1.2.2 (TBD)
 
 ##### Features
+* AFNetworking upgrade to 3.1.0
+* Network Session and Task Managers
 
 ##### Bug Fixes
 
