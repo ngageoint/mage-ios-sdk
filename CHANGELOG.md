@@ -3,7 +3,13 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.2.2 (TBD)
+## 1.3.1 (TBD)
+
+##### Features
+
+##### Bug Fixes
+
+## [1.3.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.3.0) (03-28-2017)
 
 ##### Features
 * AFNetworking upgrade to 3.1.0
