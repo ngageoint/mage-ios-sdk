@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040B51BF1EAE82500025E7D9 /* GeometryDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 040B51BE1EAE82500025E7D9 /* GeometryDeserializer.m */; };
+		048E23D51EAFACDF0001DB3E /* GeometryUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E23D41EAFACDF0001DB3E /* GeometryUtility.m */; };
+		048E23D81EAFD8B40001DB3E /* GeometrySerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E23D71EAFD8B40001DB3E /* GeometrySerializer.m */; };
 		049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C65491E53A9FB005F4FA4 /* SessionTaskQueue.m */; };
 		049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C654C1E53B571005F4FA4 /* SessionTask.m */; };
 		049C65501E55E60E005F4FA4 /* TaskSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 049C654F1E55E60E005F4FA4 /* TaskSessionManager.m */; };
@@ -95,6 +98,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		040B51BD1EAE82500025E7D9 /* GeometryDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeometryDeserializer.h; path = MAGE/GeometryDeserializer.h; sourceTree = SOURCE_ROOT; };
+		040B51BE1EAE82500025E7D9 /* GeometryDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeometryDeserializer.m; path = MAGE/GeometryDeserializer.m; sourceTree = SOURCE_ROOT; };
+		048E23D31EAFACDF0001DB3E /* GeometryUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeometryUtility.h; path = MAGE/GeometryUtility.h; sourceTree = SOURCE_ROOT; };
+		048E23D41EAFACDF0001DB3E /* GeometryUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeometryUtility.m; path = MAGE/GeometryUtility.m; sourceTree = SOURCE_ROOT; };
+		048E23D61EAFD8B40001DB3E /* GeometrySerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeometrySerializer.h; path = MAGE/GeometrySerializer.h; sourceTree = SOURCE_ROOT; };
+		048E23D71EAFD8B40001DB3E /* GeometrySerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeometrySerializer.m; path = MAGE/GeometrySerializer.m; sourceTree = SOURCE_ROOT; };
 		049C65481E53A9FB005F4FA4 /* SessionTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionTaskQueue.h; path = MAGE/Networking/SessionTaskQueue.h; sourceTree = SOURCE_ROOT; };
 		049C65491E53A9FB005F4FA4 /* SessionTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionTaskQueue.m; path = MAGE/Networking/SessionTaskQueue.m; sourceTree = SOURCE_ROOT; };
 		049C654B1E53B571005F4FA4 /* SessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionTask.h; path = MAGE/Networking/SessionTask.h; sourceTree = SOURCE_ROOT; };
@@ -297,6 +306,10 @@
 				F7971BD51A03F50D001505F0 /* ObservationPushService.m */,
 				F76655841A30EAEB00558EBB /* AttachmentPushService.h */,
 				F76655851A30EAEB00558EBB /* AttachmentPushService.m */,
+				040B51BD1EAE82500025E7D9 /* GeometryDeserializer.h */,
+				040B51BE1EAE82500025E7D9 /* GeometryDeserializer.m */,
+				048E23D61EAFD8B40001DB3E /* GeometrySerializer.h */,
+				048E23D71EAFD8B40001DB3E /* GeometrySerializer.m */,
 			);
 			name = Observation;
 			sourceTree = "<group>";
@@ -515,6 +528,8 @@
 			children = (
 				F7F133601975857000E79762 /* UserUtility.h */,
 				F7F133611975857000E79762 /* UserUtility.m */,
+				048E23D31EAFACDF0001DB3E /* GeometryUtility.h */,
+				048E23D41EAFACDF0001DB3E /* GeometryUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -676,7 +691,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5153441CB01B5A28A441C8FF /* [CP] Check Pods Manifest.lock */ = {
@@ -691,7 +706,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BB7E186987DD093C5A950B50 /* [CP] Check Pods Manifest.lock */ = {
@@ -733,6 +748,7 @@
 			files = (
 				2F2A76EB19A7DE8D0008E7DD /* ObservationFetchService.m in Sources */,
 				2F5332DC1CC557F3006E92E1 /* Location+CoreDataProperties.m in Sources */,
+				040B51BF1EAE82500025E7D9 /* GeometryDeserializer.m in Sources */,
 				2F92D10F1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m in Sources */,
 				2FFE499819EC347300BC8922 /* MageServer.m in Sources */,
 				2F5332681CC154C3006E92E1 /* GPSLocation.m in Sources */,
@@ -753,6 +769,7 @@
 				2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */,
 				2F5332DB1CC557F3006E92E1 /* User+CoreDataProperties.m in Sources */,
 				F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */,
+				048E23D81EAFD8B40001DB3E /* GeometrySerializer.m in Sources */,
 				F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */,
 				F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */,
 				2F5332D81CC557F3006E92E1 /* Role+CoreDataProperties.m in Sources */,
@@ -774,6 +791,7 @@
 				2FA5712D1D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m in Sources */,
 				2F5332741CC154C3006E92E1 /* StaticLayer.m in Sources */,
 				2F5332721CC154C3006E92E1 /* Server.m in Sources */,
+				048E23D51EAFACDF0001DB3E /* GeometryUtility.m in Sources */,
 				2F5332DE1CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m in Sources */,
 				4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */,
 				F7B25E22191AA8CE00589E5B /* GeoPoint.m in Sources */,
