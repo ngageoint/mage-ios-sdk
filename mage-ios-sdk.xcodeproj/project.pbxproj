@@ -65,8 +65,6 @@
 		F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CD191D1C7B003287E3 /* MageSessionManager.m */; };
 		F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F7971BD51A03F50D001505F0 /* ObservationPushService.m */; };
 		F7A87F351AA51695001AEDF4 /* Mage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A87F341AA51695001AEDF4 /* Mage.m */; };
-		F7B25E1F191AA21900589E5B /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B25E1E191AA21900589E5B /* Geometry.m */; };
-		F7B25E22191AA8CE00589E5B /* GeoPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B25E21191AA8CE00589E5B /* GeoPoint.m */; };
 		F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B25E23191AB5A900589E5B /* CoreLocation.framework */; };
 		F7B275591AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */; };
 		F7B679751959CF2D0035596A /* MageEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B679741959CF2D0035596A /* MageEnums.m */; };
@@ -212,10 +210,6 @@
 		F7971BD51A03F50D001505F0 /* ObservationPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationPushService.m; path = MAGE/ObservationPushService.m; sourceTree = SOURCE_ROOT; };
 		F7A87F331AA51695001AEDF4 /* Mage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mage.h; path = MAGE/Mage.h; sourceTree = SOURCE_ROOT; };
 		F7A87F341AA51695001AEDF4 /* Mage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mage.m; path = MAGE/Mage.m; sourceTree = SOURCE_ROOT; };
-		F7B25E1D191AA21900589E5B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geometry.h; path = MAGE/Geometry.h; sourceTree = SOURCE_ROOT; };
-		F7B25E1E191AA21900589E5B /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geometry.m; path = MAGE/Geometry.m; sourceTree = SOURCE_ROOT; };
-		F7B25E20191AA8CE00589E5B /* GeoPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeoPoint.h; path = MAGE/GeoPoint.h; sourceTree = SOURCE_ROOT; };
-		F7B25E21191AA8CE00589E5B /* GeoPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeoPoint.m; path = MAGE/GeoPoint.m; sourceTree = SOURCE_ROOT; };
 		F7B25E23191AB5A900589E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F7B275531AA108F000DD72DE /* mage-ios-sdk 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 2.xcdatamodel"; sourceTree = "<group>"; };
 		F7B275541AA108F000DD72DE /* mage-ios-sdk 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -386,7 +380,6 @@
 				2F01653719A4EFB000C4862B /* Date */,
 				2F016527199CF36E00C4862B /* Location */,
 				F7F1335F1975855200E79762 /* Utilities */,
-				F7E35845191BDF3B004EA79D /* Geo */,
 				F7E35844191BDF29004EA79D /* Models */,
 				049C65511E55F7C9005F4FA4 /* Networking */,
 				2FFE499619EC347300BC8922 /* MageServer.h */,
@@ -510,17 +503,6 @@
 				F7B679741959CF2D0035596A /* MageEnums.m */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		F7E35845191BDF3B004EA79D /* Geo */ = {
-			isa = PBXGroup;
-			children = (
-				F7B25E1D191AA21900589E5B /* Geometry.h */,
-				F7B25E1E191AA21900589E5B /* Geometry.m */,
-				F7B25E20191AA8CE00589E5B /* GeoPoint.h */,
-				F7B25E21191AA8CE00589E5B /* GeoPoint.m */,
-			);
-			name = Geo;
 			sourceTree = "<group>";
 		};
 		F7F1335F1975855200E79762 /* Utilities */ = {
@@ -763,7 +745,6 @@
 				049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */,
 				2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */,
 				2F5332641CC154C3006E92E1 /* Attachment.m in Sources */,
-				F7B25E1F191AA21900589E5B /* Geometry.m in Sources */,
 				F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */,
 				2FA5712C1D904D4A00B2F0CE /* ObservationImportant.m in Sources */,
 				2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */,
@@ -794,7 +775,6 @@
 				048E23D51EAFACDF0001DB3E /* GeometryUtility.m in Sources */,
 				2F5332DE1CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m in Sources */,
 				4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */,
-				F7B25E22191AA8CE00589E5B /* GeoPoint.m in Sources */,
 				2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */,
 				F7C5FB7B195DDFF30065379C /* Form.m in Sources */,
 				4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */,
