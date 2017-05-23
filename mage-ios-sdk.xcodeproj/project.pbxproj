@@ -26,7 +26,6 @@
 		2F5332761CC154C3006E92E1 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F53325D1CC154C3006E92E1 /* Team.m */; };
 		2F5332781CC154C3006E92E1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332611CC154C3006E92E1 /* User.m */; };
 		2F5332D51CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332C01CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m */; };
-		2F5332D61CC557F3006E92E1 /* Observation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332C21CC557F3006E92E1 /* Observation+CoreDataProperties.m */; };
 		2F5332D71CC557F3006E92E1 /* Attachment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332C41CC557F3006E92E1 /* Attachment+CoreDataProperties.m */; };
 		2F5332D81CC557F3006E92E1 /* Role+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332C61CC557F3006E92E1 /* Role+CoreDataProperties.m */; };
 		2F5332D91CC557F3006E92E1 /* Event+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332C81CC557F3006E92E1 /* Event+CoreDataProperties.m */; };
@@ -40,6 +39,7 @@
 		2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */; };
 		2F92D10E1D91CD6900CC0149 /* ObservationFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F92D10A1D91CD6900CC0149 /* ObservationFavorite.m */; };
 		2F92D10F1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F92D10C1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m */; };
+		2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */; };
 		2FA5712C1D904D4A00B2F0CE /* ObservationImportant.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571271D904D4A00B2F0CE /* ObservationImportant.m */; };
 		2FA5712D1D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571291D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m */; };
 		2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */; };
@@ -108,6 +108,7 @@
 		2F01653219A2A88D00C4862B /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationService.m; path = MAGE/LocationService.m; sourceTree = SOURCE_ROOT; };
 		2F01653819A4F11E00C4862B /* NSDate+Iso8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Iso8601.h"; path = "MAGE/NSDate+Iso8601.h"; sourceTree = SOURCE_ROOT; };
 		2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Iso8601.m"; path = "MAGE/NSDate+Iso8601.m"; sourceTree = SOURCE_ROOT; };
+		2F09C8B71EA16B8000547F37 /* mage-ios-sdk 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 10.xcdatamodel"; sourceTree = "<group>"; };
 		2F2A76E919A7DE8D0008E7DD /* ObservationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationFetchService.h; path = MAGE/ObservationFetchService.h; sourceTree = SOURCE_ROOT; };
 		2F2A76EA19A7DE8D0008E7DD /* ObservationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationFetchService.m; path = MAGE/ObservationFetchService.m; sourceTree = SOURCE_ROOT; };
 		2F3A26451CBF1A6E00BE50D3 /* mage-ios-sdk 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -135,8 +136,6 @@
 		2F5332611CC154C3006E92E1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = MAGE/User.m; sourceTree = SOURCE_ROOT; };
 		2F5332BF1CC557F3006E92E1 /* GPSLocation+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GPSLocation+CoreDataProperties.h"; path = "MAGE/GPSLocation+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2F5332C01CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GPSLocation+CoreDataProperties.m"; path = "MAGE/GPSLocation+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
-		2F5332C11CC557F3006E92E1 /* Observation+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Observation+CoreDataProperties.h"; path = "MAGE/Observation+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
-		2F5332C21CC557F3006E92E1 /* Observation+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Observation+CoreDataProperties.m"; path = "MAGE/Observation+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		2F5332C31CC557F3006E92E1 /* Attachment+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Attachment+CoreDataProperties.h"; path = "MAGE/Attachment+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2F5332C41CC557F3006E92E1 /* Attachment+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Attachment+CoreDataProperties.m"; path = "MAGE/Attachment+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		2F5332C51CC557F3006E92E1 /* Role+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Role+CoreDataProperties.h"; path = "MAGE/Role+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
@@ -163,6 +162,8 @@
 		2F92D10A1D91CD6900CC0149 /* ObservationFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationFavorite.m; path = MAGE/ObservationFavorite.m; sourceTree = SOURCE_ROOT; };
 		2F92D10B1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ObservationFavorite+CoreDataProperties.h"; path = "MAGE/ObservationFavorite+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2F92D10C1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ObservationFavorite+CoreDataProperties.m"; path = "MAGE/ObservationFavorite+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
+		2FA2C7EA1EA2AAD80074C8B3 /* Observation+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Observation+CoreDataProperties.h"; path = "MAGE/Observation+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
+		2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Observation+CoreDataProperties.m"; path = "MAGE/Observation+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		2FA571191D904C9E00B2F0CE /* mage-ios-sdk 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 9.xcdatamodel"; sourceTree = "<group>"; };
 		2FA571261D904D4A00B2F0CE /* ObservationImportant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationImportant.h; path = MAGE/ObservationImportant.h; sourceTree = SOURCE_ROOT; };
 		2FA571271D904D4A00B2F0CE /* ObservationImportant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationImportant.m; path = MAGE/ObservationImportant.m; sourceTree = SOURCE_ROOT; };
@@ -453,8 +454,8 @@
 				2F5332CE1CC557F3006E92E1 /* Location+CoreDataProperties.m */,
 				2F53324C1CC154C3006E92E1 /* Observation.h */,
 				2F53324D1CC154C3006E92E1 /* Observation.m */,
-				2F5332C11CC557F3006E92E1 /* Observation+CoreDataProperties.h */,
-				2F5332C21CC557F3006E92E1 /* Observation+CoreDataProperties.m */,
+				2FA2C7EA1EA2AAD80074C8B3 /* Observation+CoreDataProperties.h */,
+				2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */,
 				2F92D1091D91CD6900CC0149 /* ObservationFavorite.h */,
 				2F92D10A1D91CD6900CC0149 /* ObservationFavorite.m */,
 				2F92D10B1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.h */,
@@ -743,6 +744,7 @@
 				049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
 				2F53326E1CC154C3006E92E1 /* Observation.m in Sources */,
+				2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */,
 				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
 				049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */,
 				2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */,
@@ -767,7 +769,6 @@
 				F7B679751959CF2D0035596A /* MageEnums.m in Sources */,
 				2F5332781CC154C3006E92E1 /* User.m in Sources */,
 				2F5332D91CC557F3006E92E1 /* Event+CoreDataProperties.m in Sources */,
-				2F5332D61CC557F3006E92E1 /* Observation+CoreDataProperties.m in Sources */,
 				2F92D10E1D91CD6900CC0149 /* ObservationFavorite.m in Sources */,
 				2F53326A1CC154C3006E92E1 /* Layer.m in Sources */,
 				F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */,
@@ -1033,6 +1034,7 @@
 		F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2F09C8B71EA16B8000547F37 /* mage-ios-sdk 10.xcdatamodel */,
 				2FA571191D904C9E00B2F0CE /* mage-ios-sdk 9.xcdatamodel */,
 				2F3A26451CBF1A6E00BE50D3 /* mage-ios-sdk 8.xcdatamodel */,
 				F7B2755A1AA4D91B00DD72DE /* mage-ios-sdk 7.xcdatamodel */,
@@ -1043,7 +1045,7 @@
 				F7B275571AA108F000DD72DE /* mage-ios-sdk 6.xcdatamodel */,
 				F7B275581AA108F000DD72DE /* mage-ios-sdk.xcdatamodel */,
 			);
-			currentVersion = 2FA571191D904C9E00B2F0CE /* mage-ios-sdk 9.xcdatamodel */;
+			currentVersion = 2F09C8B71EA16B8000547F37 /* mage-ios-sdk 10.xcdatamodel */;
 			name = "mage-ios-sdk.xcdatamodeld";
 			path = "MAGE/mage-ios-sdk.xcdatamodeld";
 			sourceTree = "<group>";
