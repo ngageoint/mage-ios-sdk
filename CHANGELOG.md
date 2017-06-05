@@ -3,9 +3,18 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.3.1 (TBD)
+## 1.4.1 (TBD)
 
 ##### Features
+
+##### Bug Fixes
+
+## [1.4.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.4.0) (05-26-2017)
+
+##### Features
+* Use new 4.5 MAGE server API to get observation id before sending observation contents.  This will prevent observation duplicates in the case that
+  a successful creation response is dropped by the client and the client sends another.
+* Added CoreData properties for observation sync and error status.
 
 ##### Bug Fixes
 
