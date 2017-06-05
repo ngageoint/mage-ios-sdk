@@ -45,7 +45,6 @@
 		2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */; };
 		2FA5712C1D904D4A00B2F0CE /* ObservationImportant.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571271D904D4A00B2F0CE /* ObservationImportant.m */; };
 		2FA5712D1D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571291D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m */; };
-		2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC308041A3F91D000FBD2BA /* MagicalRecord+delete.m */; };
 		2FFE499819EC347300BC8922 /* MageServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE499719EC347300BC8922 /* MageServer.m */; };
 		4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF957518C62E0100A41CB8 /* Foundation.framework */; };
 		4CAF958418C62E0100A41CB8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAF958318C62E0100A41CB8 /* XCTest.framework */; };
@@ -776,7 +775,6 @@
 				048E23D51EAFACDF0001DB3E /* GeometryUtility.m in Sources */,
 				2F5332DE1CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m in Sources */,
 				4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */,
-				2FC308051A3F91D000FBD2BA /* MagicalRecord+delete.m in Sources */,
 				F7C5FB7B195DDFF30065379C /* Form.m in Sources */,
 				4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */,
 				2F53326C1CC154C3006E92E1 /* Location.m in Sources */,
