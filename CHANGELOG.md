@@ -6,6 +6,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ## 1.4.1 (TBD)
 
 ##### Features
+* Use iOS background upload for attachments.  This will continue to upload MAGE attachments even if app is backgrounded or suspended.
 
 ##### Bug Fixes
 
