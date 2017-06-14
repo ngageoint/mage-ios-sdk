@@ -168,6 +168,7 @@
 		2F92D10A1D91CD6900CC0149 /* ObservationFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationFavorite.m; path = MAGE/ObservationFavorite.m; sourceTree = SOURCE_ROOT; };
 		2F92D10B1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ObservationFavorite+CoreDataProperties.h"; path = "MAGE/ObservationFavorite+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2F92D10C1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ObservationFavorite+CoreDataProperties.m"; path = "MAGE/ObservationFavorite+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
+		2F99D0AA1EE6EDE4007ADE4D /* mage-ios-sdk 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 11.xcdatamodel"; sourceTree = "<group>"; };
 		2FA2C7EA1EA2AAD80074C8B3 /* Observation+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Observation+CoreDataProperties.h"; path = "MAGE/Observation+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Observation+CoreDataProperties.m"; path = "MAGE/Observation+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		2FA571191D904C9E00B2F0CE /* mage-ios-sdk 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 9.xcdatamodel"; sourceTree = "<group>"; };
@@ -1030,6 +1031,7 @@
 		F7B275521AA108F000DD72DE /* mage-ios-sdk.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2F99D0AA1EE6EDE4007ADE4D /* mage-ios-sdk 11.xcdatamodel */,
 				2F09C8B71EA16B8000547F37 /* mage-ios-sdk 10.xcdatamodel */,
 				2FA571191D904C9E00B2F0CE /* mage-ios-sdk 9.xcdatamodel */,
 				2F3A26451CBF1A6E00BE50D3 /* mage-ios-sdk 8.xcdatamodel */,
@@ -1041,7 +1043,7 @@
 				F7B275571AA108F000DD72DE /* mage-ios-sdk 6.xcdatamodel */,
 				F7B275581AA108F000DD72DE /* mage-ios-sdk.xcdatamodel */,
 			);
-			currentVersion = 2F09C8B71EA16B8000547F37 /* mage-ios-sdk 10.xcdatamodel */;
+			currentVersion = 2F99D0AA1EE6EDE4007ADE4D /* mage-ios-sdk 11.xcdatamodel */;
 			name = "mage-ios-sdk.xcdatamodeld";
 			path = "MAGE/mage-ios-sdk.xcdatamodeld";
 			sourceTree = "<group>";
