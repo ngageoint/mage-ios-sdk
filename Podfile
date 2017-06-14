@@ -8,6 +8,7 @@ target 'mage-ios-sdk' do
   pod "DateTools", "~> 1.3.0"
   pod "MagicalRecord", "~> 2.3.2"
   pod 'objective-zip', '~> 1.0.2'
+  pod 'geopackage-ios', '~> 1.2.2'
 end
 
 target :"mage-ios-sdkTests" do
