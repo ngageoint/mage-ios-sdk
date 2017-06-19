@@ -7,6 +7,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Features
 * Use iOS background upload for attachments.  This will continue to upload MAGE attachments even if app is backgrounded or suspended.
+* Observation geometry support for lines and polygons
 
 ##### Bug Fixes
 
