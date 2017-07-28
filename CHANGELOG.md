@@ -3,11 +3,18 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.4.1 (TBD)
+## 1.4.2 (TBD)
 
 ##### Features
 
 ##### Bug Fixes
+
+## [1.4.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.4.1) (07-28-2017)
+
+##### Features
+
+##### Bug Fixes
+* Fixed DateFormatter bad memory crash
 
 ## [1.4.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/1.4.0) (05-26-2017)
 
