@@ -31,5 +31,5 @@ Pod::Spec.new do |s|
   s.dependency 'DateTools', '~> 1.3.0'
   s.dependency 'MagicalRecord', '~> 2.3.2'
   s.dependency 'objective-zip', '~> 1.0.2'
-  s.dependency 'geopackage-ios', '~> 1.2.2'
+  s.dependency 'geopackage-ios', '~> 1.3.0'
 end
