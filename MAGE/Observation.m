@@ -72,19 +72,26 @@ NSNumber *_currentEventId;
     return _transientAttachments;
 }
 
-- (NSDictionary *)fieldNameToFieldForEvent:(Event *) event {
+- (NSDictionary *)fieldNameToFieldForEvent:(Event *) event andFormId: (id) formId {
     if (_fieldNameToField != nil && [_currentEventId isEqualToNumber:event.remoteId]) {
-        return _fieldNameToField;
+        return [_fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
     }
 
     _currentEventId = event.remoteId;
-    NSDictionary *form = event.form;
-    NSMutableDictionary *fieldNameToFieldMap = [[NSMutableDictionary alloc] init];
-    // run through the form and map the row indexes to fields
-    for (id field in [form objectForKey:@"fields"]) {
-        [fieldNameToFieldMap setObject:field forKey:[field objectForKey:@"name"]];
+    NSArray *forms = event.forms;
+    
+    NSMutableDictionary *formFieldMap = [[NSMutableDictionary alloc] init];
+    
+    for (NSDictionary *form in forms) {
+        NSMutableDictionary *fieldNameToFieldMap = [[NSMutableDictionary alloc] init];
+        // run through the form and map the row indexes to fields
+        for (id field in [form objectForKey:@"fields"]) {
+            [fieldNameToFieldMap setObject:field forKey:[field objectForKey:@"name"]];
+        }
+        [formFieldMap setObject:fieldNameToFieldMap forKey:[form objectForKey:@"id"]];
     }
-    _fieldNameToField = fieldNameToFieldMap;
+    
+    _fieldNameToField = formFieldMap;
 
     return _fieldNameToField;
 }
@@ -129,7 +136,7 @@ NSNumber *_currentEventId;
 
     for (id key in self.properties) {
         id value = [self.properties objectForKey:key];
-        id field = [[self fieldNameToFieldForEvent:event] objectForKey:key];
+        id field = [[self fieldNameToFieldForEvent:event andFormId:0] objectForKey:key];
         if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
             WKBGeometry *fieldGeometry = value;
             [jsonProperties setObject:[GeometrySerializer serializeGeometry:fieldGeometry] forKey:key];
@@ -173,15 +180,31 @@ NSNumber *_currentEventId;
 - (NSDictionary *) generatePropertiesFromRaw: (NSDictionary *) propertyJson {
     Event *event = [Event getCurrentEventInContext:self.managedObjectContext];
 
-    NSMutableDictionary *parsedProperties = [[NSMutableDictionary alloc] initWithDictionary:propertyJson];
+    NSMutableDictionary *parsedProperties = [[NSMutableDictionary alloc] init];
+//property json has some properties and a property alled forms which is an array of the forms
+    for (NSString* key in propertyJson) {
+        
+        if ([key isEqualToString:@"forms"]) {
+            NSMutableArray *forms = [[NSMutableArray alloc] init];
+            for (NSDictionary *formProperties in [propertyJson objectForKey:key]) {
+                NSMutableDictionary *parsedFormProperties = [[NSMutableDictionary alloc] initWithDictionary:formProperties];
+                NSDictionary *fields = [self fieldNameToFieldForEvent:event andFormId:[formProperties objectForKey:@"formId"]];
+                for (id formKey in formProperties) {
+                    id value = [formProperties objectForKey:formKey];
+                    id field = [fields objectForKey:formKey];
+                    if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
+                        WKBGeometry * geometry = [GeometryDeserializer parseGeometry:value];
+                        [parsedFormProperties setObject:geometry forKey:formKey];
+                    }
+                }
+                [forms addObject:parsedFormProperties];
 
-    for (id key in propertyJson) {
-        id value = [propertyJson objectForKey:key];
-        id field = [[self fieldNameToFieldForEvent:event] objectForKey:key];
-        if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
-            WKBGeometry * geometry = [GeometryDeserializer parseGeometry:value];
-            [parsedProperties setObject:geometry forKey:key];
+            }
+            [parsedProperties setObject:forms forKey:key];
+        } else {
+            [parsedProperties setObject:[propertyJson objectForKey:key] forKey:key];
         }
+        
     }
 
     return parsedProperties;
@@ -612,7 +635,8 @@ NSNumber *_currentEventId;
 
 - (NSString *) observationText {
     Event *event = [Event MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@", self.eventId]];
-    NSDictionary *form = event.form;
+    
+    NSDictionary *form = [event formForObservation:self];
     NSMutableArray *generalFields = [NSMutableArray arrayWithObjects:@"timestamp", @"geometry", @"type", nil];
 
     NSMutableString *text = [[NSMutableString alloc] init];

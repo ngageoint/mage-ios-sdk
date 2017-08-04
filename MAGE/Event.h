@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Observation.h"
 
 @class User;
 @class Team;
@@ -21,6 +22,8 @@ extern NSString * const MAGEEventsFetched;
 + (void) sendRecentEvent;
 + (Event *) getCurrentEventInContext:(NSManagedObjectContext *) context;
 - (BOOL) isUserInEvent: (User *) user;
+- (NSDictionary *) formForObservation: (Observation *) observation;
+- (NSDictionary *) formWithId: (long) id;
 
 @end
 

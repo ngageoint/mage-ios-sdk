@@ -54,7 +54,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     [self setRemoteId:[json objectForKey:@"id"]];
     [self setName:[json objectForKey:@"name"]];
     [self setEventDescription:[json objectForKey:@"description"]];
-    [self setForm:AFJSONObjectByRemovingKeysWithNullValues([json objectForKey:@"form"], NSJSONReadingAllowFragments)];
+    [self setForms:AFJSONObjectByRemovingKeysWithNullValues([json objectForKey:@"forms"], NSJSONReadingAllowFragments)];
     for (NSDictionary *teamJson in [json objectForKey:@"teams"]) {
         NSSet *filteredTeams = [self.teams filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@", [teamJson objectForKey:@"id"]]];
         if (filteredTeams.count == 1) {
@@ -94,6 +94,19 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     
     NSLog(@"User %@ is not in the event %@", user.name, self.name);
     return false;
+}
+
+- (NSDictionary *) formForObservation: (Observation *) observation {
+    return [((NSArray *) self.forms) objectAtIndex:0];
+}
+
+- (NSDictionary *) formWithId: (long) formId {
+    for (NSDictionary *form in self.forms) {
+        if ((long)[form objectForKey:@"id"] == formId) {
+            return form;
+        }
+    }
+    return nil;
 }
 
 + (NSURLSessionDataTask *) operationToFetchEventsWithSuccess: (void (^)()) success failure: (void (^)(NSError *)) failure {

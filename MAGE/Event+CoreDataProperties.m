@@ -14,7 +14,7 @@
 @implementation Event (CoreDataProperties)
 
 @dynamic eventDescription;
-@dynamic form;
+@dynamic forms;
 @dynamic name;
 @dynamic recentSortOrder;
 @dynamic remoteId;
