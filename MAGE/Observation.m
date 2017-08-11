@@ -44,6 +44,7 @@ NSNumber *_currentEventId;
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
 
     [properties setObject:[observation.timestamp iso8601String] forKey:@"timestamp"];
+    [properties setObject:[[NSMutableArray alloc] init] forKey:@"forms"];
 
     [observation setProperties:properties];
     [observation setUser:[User fetchCurrentUserInManagedObjectContext:mangedObjectContext]];
