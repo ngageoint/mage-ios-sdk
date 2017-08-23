@@ -14,7 +14,22 @@
 #import "StoredPassword.h"
 #import "UserUtility.h"
 
+@interface LocalAuthentication()
+
+@property (strong, nonatomic) NSDictionary* parameters;
+
+@end
+
 @implementation LocalAuthentication
+
+- (instancetype) initWithParameters:(NSDictionary *)parameters {
+    self = [super init];
+    if (self == nil) return nil;
+    
+    self.parameters = parameters;
+    
+    return self;
+}
 
 - (NSDictionary *) loginParameters {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];

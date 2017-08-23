@@ -12,7 +12,22 @@
 #import "UserUtility.h"
 #import "NSDate+Iso8601.h"
 
+@interface ServerAuthentication()
+
+@property (strong, nonatomic) NSDictionary* parameters;
+
+@end
+
 @implementation ServerAuthentication
+
+- (instancetype) initWithParameters:(NSDictionary *)parameters {
+    self = [super init];
+    if (self == nil) return nil;
+    
+    self.parameters = parameters;
+    
+    return self;
+}
 
 - (NSDictionary *) loginParameters {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
