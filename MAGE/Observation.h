@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (Boolean) isDirty;
 - (Boolean) isImportant;
 - (Boolean) isDeletableByCurrentUser;
+- (Boolean) currentUserCanUpdateImportant;
 - (Boolean) hasValidationError;
 - (NSString *) errorMessage;
 

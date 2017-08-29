@@ -721,6 +721,29 @@ NSNumber *_currentEventId;
     return self.observationImportant != nil && [self.observationImportant.important isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 
+- (Boolean) currentUserCanUpdateImportant {
+    User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
+    
+    // if the user has update on the event
+    Event *event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
+    NSDictionary *acl = event.acl;
+    NSDictionary *userAcl = [acl objectForKey:currentUser.remoteId];
+    if (userAcl != nil) {
+        if ([[userAcl objectForKey:@"permissions"] containsObject:@"update"]) {
+            return YES;
+        }
+    }
+    
+    // if the user has DELETE_OBSERVATION permission
+    Role *role = currentUser.role;
+    NSArray *permissions = role.permissions;
+    if ([permissions containsObject:@"UPDATE_EVENT"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (Boolean) isDeletableByCurrentUser {
         
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
@@ -815,6 +838,12 @@ NSNumber *_currentEventId;
 }
 
 - (void) flagImportantWithDescription:(NSString *) description completion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion {
+    if (![self currentUserCanUpdateImportant]) {
+        if (completion) {
+            completion(NO, nil);
+        };
+        return;
+    }
     NSManagedObjectContext *context = self.managedObjectContext;
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:context];
 
@@ -842,6 +871,12 @@ NSNumber *_currentEventId;
 }
 
 - (void) removeImportantWithCompletion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion {
+    if (![self currentUserCanUpdateImportant]) {
+        if (completion) {
+            completion(NO, nil);
+        };
+        return;
+    }
     NSManagedObjectContext *context = self.managedObjectContext;
 
     ObservationImportant *important = self.observationImportant;
