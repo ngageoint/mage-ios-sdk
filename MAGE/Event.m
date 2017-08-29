@@ -54,6 +54,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     [self setRemoteId:[json objectForKey:@"id"]];
     [self setName:[json objectForKey:@"name"]];
     [self setEventDescription:[json objectForKey:@"description"]];
+    [self setAcl:AFJSONObjectByRemovingKeysWithNullValues([json objectForKey:@"acl"], NSJSONReadingAllowFragments)];
     [self setForms:AFJSONObjectByRemovingKeysWithNullValues([json objectForKey:@"forms"], NSJSONReadingAllowFragments)];
     for (NSDictionary *teamJson in [json objectForKey:@"teams"]) {
         NSSet *filteredTeams = [self.teams filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@", [teamJson objectForKey:@"id"]]];
@@ -170,6 +171,10 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 + (Event *) getCurrentEventInContext:(NSManagedObjectContext *) context {
     return [Event MR_findFirstByAttribute:@"remoteId" withValue:[Server currentEventId] inContext:context];
+}
+
++ (Event *) getEventById: (id) eventId inContext: (NSManagedObjectContext *) context {
+    return [Event MR_findFirstByAttribute:@"remoteId" withValue:eventId inContext:context];
 }
 
 @end

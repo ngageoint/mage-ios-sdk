@@ -11,6 +11,7 @@
 #import "ObservationFavorite.h"
 #import "Attachment.h"
 #import "User.h"
+#import "Role.h"
 #import "Server.h"
 #import "Event.h"
 #import "MageSessionManager.h"
@@ -182,7 +183,6 @@ NSNumber *_currentEventId;
     Event *event = [Event getCurrentEventInContext:self.managedObjectContext];
 
     NSMutableDictionary *parsedProperties = [[NSMutableDictionary alloc] init];
-//property json has some properties and a property alled forms which is an array of the forms
     for (NSString* key in propertyJson) {
         
         if ([key isEqualToString:@"forms"]) {
@@ -263,10 +263,24 @@ NSNumber *_currentEventId;
 }
 
 + (NSURLSessionDataTask *) operationToPushObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
+    BOOL archived = observation.state != Archive;
     NSURLSessionDataTask *task = observation.remoteId ?
-        [self operationToUpdateObservation:observation success:success failure:failure] :
+    (!archived ? [self operationToUpdateObservation:observation success:success failure:failure] : [self operationToDeleteObservation: observation success: success failure: failure] ):
         [self operationToCreateObservation:observation success:success failure:failure];
 
+    return task;
+}
+
++ (NSURLSessionDataTask *) operationToDeleteObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
+    NSLog(@"Trying to delete observation %@", observation.url);
+    NSURLSessionDataTask *task = [[MageSessionManager manager] POST_TASK:[NSString stringWithFormat:@"%@/states", observation.url] parameters: @{@"name":@"archive"} progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"progress");
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"success");
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failure");
+    }];
+    
     return task;
 }
 
@@ -707,6 +721,35 @@ NSNumber *_currentEventId;
     return self.observationImportant != nil && [self.observationImportant.important isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 
+- (Boolean) isDeletableByCurrentUser {
+        
+    User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
+    
+    // if the user has update on the event
+    Event *event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
+    NSDictionary *acl = event.acl;
+    NSDictionary *userAcl = [acl objectForKey:currentUser.remoteId];
+    if (userAcl != nil) {
+        if ([[userAcl objectForKey:@"permissions"] containsObject:@"update"]) {
+            return YES;
+        }
+    }
+    
+    // if the user has DELETE_OBSERVATION permission
+    Role *role = currentUser.role;
+    NSArray *permissions = role.permissions;
+    if ([permissions containsObject:@"DELETE_OBSERVATION"]) {
+        return YES;
+    }
+    
+    // If the observation was created by this user
+    if ([currentUser.remoteId isEqualToString:self.user.remoteId]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (Boolean) hasValidationError {
     return [self.error objectForKey:kObservationErrorStatusCode] != nil;
 }
@@ -718,6 +761,18 @@ NSNumber *_currentEventId;
     }
 
     return errorMessage;
+}
+
+- (void) deleteObservationWithCompletion: (nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion {
+    if ([self isDeletableByCurrentUser]) {
+        [self setState:[NSNumber numberWithInt:(int) Archive]];
+        [self setDirty:[NSNumber numberWithBool:YES]];
+        [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            if (completion) {
+                completion(contextDidSave, error);
+            }
+        }];
+    }
 }
 
 - (void) toggleFavoriteWithCompletion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion {

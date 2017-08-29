@@ -19,5 +19,6 @@
 @dynamic recentSortOrder;
 @dynamic remoteId;
 @dynamic teams;
+@dynamic acl;
 
 @end

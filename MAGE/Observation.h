@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Boolean) isDirty;
 - (Boolean) isImportant;
+- (Boolean) isDeletableByCurrentUser;
 - (Boolean) hasValidationError;
 - (NSString *) errorMessage;
 
@@ -51,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) flagImportantWithDescription:(NSString *) description completion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion;
 - (void) removeImportantWithCompletion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion;
+- (void) deleteObservationWithCompletion: (nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion;
 
 @end
 

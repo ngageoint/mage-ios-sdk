@@ -21,6 +21,7 @@ extern NSString * const MAGEEventsFetched;
 + (NSURLSessionDataTask *) operationToFetchEventsWithSuccess: (void (^)()) success failure: (void (^)(NSError *)) failure;
 + (void) sendRecentEvent;
 + (Event *) getCurrentEventInContext:(NSManagedObjectContext *) context;
++ (Event *) getEventById: (id) eventId inContext: (NSManagedObjectContext *) context;
 - (BOOL) isUserInEvent: (User *) user;
 - (NSDictionary *) formForObservation: (Observation *) observation;
 - (NSDictionary *) formWithId: (long) id;
