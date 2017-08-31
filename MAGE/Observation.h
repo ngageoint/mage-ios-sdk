@@ -48,6 +48,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (Boolean) hasValidationError;
 - (NSString *) errorMessage;
 
+- (NSDictionary *) getPrimaryForm;
+- (NSString *) getPrimaryField;
+- (NSString *) getSecondaryField;
+- (NSString *) primaryFieldText;
+- (NSString *) secondaryFieldText;
+
 - (void) toggleFavoriteWithCompletion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion;
 - (NSDictionary *) getFavoritesMap;
 

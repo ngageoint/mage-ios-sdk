@@ -26,6 +26,7 @@
 #import "WKBPolygon.h"
 #import "WKBLineString.h"
 #import "WKBGeometryUtils.h"
+#import "NotificationRequester.h"
 
 NSString * const kObservationErrorStatusCode = @"errorStatusCode";
 NSString * const kObservationErrorDescription = @"errorDescription";
@@ -64,6 +65,60 @@ NSNumber *_currentEventId;
     NSDictionary *stateJson = [json objectForKey: @"state"];
     NSString *stateName = [stateJson objectForKey: @"name"];
     return [stateName StateEnumFromString];
+}
+
+- (Event *) getEvent {
+    return [Event getEventById:self.eventId inContext:self.managedObjectContext];
+}
+
+- (NSDictionary *) getPrimaryForm {
+    Event *event = [self getEvent];
+    NSArray *forms = event.forms;
+    if (forms != nil && [forms count] > 0) {
+        NSArray *observationForms = [self.properties objectForKey:@"forms"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.id = %@", [[observationForms objectAtIndex:0] objectForKey:@"formId"]];
+        NSArray *filteredArray = [forms filteredArrayUsingPredicate:predicate];
+        
+        return [filteredArray firstObject];
+    }
+    return nil;
+}
+
+- (NSString *) getPrimaryField {
+    NSDictionary *form = [self getPrimaryForm];
+    if (form != nil) {
+        return [form objectForKey:@"primaryField"];
+    }
+    return nil;
+}
+
+- (NSString *) primaryFieldText {
+    NSString *primaryField = [self getPrimaryField];
+    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+
+    if (primaryField != nil && [observationForms count] > 0) {
+        return [[observationForms objectAtIndex:0] objectForKey:primaryField];
+    }
+    return nil;
+}
+
+- (NSString *) getSecondaryField {
+    NSDictionary *form = [self getPrimaryForm];
+    if (form != nil) {
+        return [form objectForKey:@"secondaryField"];
+    }
+    return nil;
+}
+
+- (NSString *) secondaryFieldText {
+    
+    NSString *secondaryField = [self getSecondaryField];
+    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+
+    if (secondaryField != nil && [observationForms count] > 0) {
+        return [[observationForms objectAtIndex:0] objectForKey:secondaryField];
+    }
+    return nil;
 }
 
 - (NSMutableArray *)transientAttachments {
@@ -424,7 +479,7 @@ NSNumber *_currentEventId;
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:parameters progress:nil success:^(NSURLSessionTask *task, id features) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSLog(@"Observation request complete");
-
+            
             for (id feature in features) {
                 NSString *remoteId = [Observation observationIdFromJson:feature];
                 State state = [Observation observationStateFromJson:feature];
@@ -460,6 +515,7 @@ NSNumber *_currentEventId;
 
                     [observation setEventId:eventId];
                     NSLog(@"Saving new observation with id: %@", observation.remoteId);
+                    [NotificationRequester observationPulled:observation];
                 } else if (state != Archive && ![existingObservation.dirty boolValue]) {
 
                     // if the observation is not dirty, and has been updated, update it
@@ -649,7 +705,7 @@ NSNumber *_currentEventId;
 }
 
 - (NSString *) observationText {
-    Event *event = [Event MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@", self.eventId]];
+    Event *event = [self getEvent];
     
     NSDictionary *form = [event formForObservation:self];
     NSMutableArray *generalFields = [NSMutableArray arrayWithObjects:@"timestamp", @"geometry", @"type", nil];
@@ -725,7 +781,7 @@ NSNumber *_currentEventId;
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
     
     // if the user has update on the event
-    Event *event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
+    Event *event = [self getEvent];
     NSDictionary *acl = event.acl;
     NSDictionary *userAcl = [acl objectForKey:currentUser.remoteId];
     if (userAcl != nil) {
@@ -749,7 +805,7 @@ NSNumber *_currentEventId;
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
     
     // if the user has update on the event
-    Event *event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
+    Event *event = [self getEvent];
     NSDictionary *acl = event.acl;
     NSDictionary *userAcl = [acl objectForKey:currentUser.remoteId];
     if (userAcl != nil) {

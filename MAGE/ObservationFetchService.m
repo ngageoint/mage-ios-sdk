@@ -46,7 +46,7 @@ NSString * const kObservationFetchFrequencyKey = @"observationFetchFrequency";
 
 - (void) start {
     [self stop];
-    [self pullObservations];    
+    [self pullObservations];
 }
 
 - (void) scheduleTimer {
