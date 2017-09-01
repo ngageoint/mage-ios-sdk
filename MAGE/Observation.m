@@ -462,11 +462,21 @@ NSNumber *_currentEventId;
     return task;
 }
 
++ (NSURLSessionDataTask *) operationToPullInitialObservationsWithSuccess:(void (^) ()) success failure: (void(^)(NSError *)) failure {
+    return [Observation operationToPullObservationsAsInitial:YES withSuccess:success failure:failure];
+}
+
 + (NSURLSessionDataTask *) operationToPullObservationsWithSuccess:(void (^)())success failure:(void (^)(NSError *))failure {
+    return [Observation operationToPullObservationsAsInitial:NO withSuccess:success failure:failure];
+}
+
++ (NSURLSessionDataTask *) operationToPullObservationsAsInitial: (BOOL) initialPull withSuccess:(void (^) ()) success failure: (void(^)(NSError *)) failure {
 
     __block NSNumber *eventId = [Server currentEventId];
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations", [MageServer baseURL], eventId];
     NSLog(@"Fetching observations from event %@", eventId);
+    
+    __block BOOL sendBulkNotification = initialPull;
 
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     __block NSDate *lastObservationDate = [Observation fetchLastObservationDateInContext:[NSManagedObjectContext MR_defaultContext]];
@@ -475,11 +485,14 @@ NSNumber *_currentEventId;
     }
 
     MageSessionManager *manager = [MageSessionManager manager];
+    
+    __block BOOL newData = NO;
 
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:parameters progress:nil success:^(NSURLSessionTask *task, id features) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSLog(@"Observation request complete");
-            
+            Event *event = [Event getEventById:eventId inContext:localContext];
+            NSUInteger count = 0;
             for (id feature in features) {
                 NSString *remoteId = [Observation observationIdFromJson:feature];
                 State state = [Observation observationStateFromJson:feature];
@@ -489,6 +502,7 @@ NSNumber *_currentEventId;
                 if (state == Archive && existingObservation) {
                     NSLog(@"Deleting archived observation with id: %@", remoteId);
                     [existingObservation MR_deleteEntity];
+                    newData = YES;
                 } else if (state != Archive && !existingObservation) {
                     // if the observation doesn't exist, insert it
                     Observation *observation = [Observation MR_createEntityInContext:localContext];
@@ -515,7 +529,11 @@ NSNumber *_currentEventId;
 
                     [observation setEventId:eventId];
                     NSLog(@"Saving new observation with id: %@", observation.remoteId);
-                    [NotificationRequester observationPulled:observation];
+                    count++;
+                    if (!sendBulkNotification) {
+                        [NotificationRequester observationPulled:observation];
+                    }
+                    newData = YES;
                 } else if (state != Archive && ![existingObservation.dirty boolValue]) {
 
                     // if the observation is not dirty, and has been updated, update it
@@ -580,10 +598,15 @@ NSNumber *_currentEventId;
                         }
                     }
                     [existingObservation setEventId:eventId];
+                    newData = YES;
                     NSLog(@"Updating object with id: %@", existingObservation.remoteId);
                 } else {
                     NSLog(@"Observation with id: %@ is dirty", remoteId);
                 }
+            }
+            NSLog(@"Recieved %lu new observations and send bulk is %d", count, sendBulkNotification);
+            if (sendBulkNotification && count > 0) {
+                [NotificationRequester sendBulkNotificationCount: count inEvent: event];
             }
         } completion:^(BOOL successful, NSError *error) {
             if (!successful) {
@@ -953,7 +976,7 @@ NSNumber *_currentEventId;
     User *user = [User fetchCurrentUserInManagedObjectContext:context];
     Observation *observation = [Observation MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"eventId == %@ AND user.remoteId != %@", [Server currentEventId], user.remoteId]
                                                              sortedBy:@"lastModified"
-                                                            ascending:NO];
+                                                            ascending:NO inContext:context];
     if (observation) {
         date = observation.lastModified;
     }

@@ -9,7 +9,6 @@
 #import "NotificationRequester.h"
 #import <UserNotifications/UserNotifications.h>
 #import "ObservationImage.h"
-#import "Event.h"
 
 @implementation NotificationRequester
 
@@ -56,6 +55,29 @@
     UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger
                                                   triggerWithTimeInterval:1 repeats:NO];
     UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:observation.remoteId
+                                                                          content:content trigger:trigger];
+    
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Something went wrong: %@",error);
+        }
+        NSLog(@"notification");
+    }];
+}
+
++ (void) sendBulkNotificationCount: (NSUInteger) count inEvent: (Event *) event {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString stringWithFormat: @"New Observations"];
+    content.body = [NSString stringWithFormat:@"%lu new observations were pulled for event %@", (unsigned long)count, event.name];
+    
+    content.categoryIdentifier = @"ObservationPulled";
+    content.sound = [UNNotificationSound defaultSound];
+    
+    UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger
+                                                  triggerWithTimeInterval:1 repeats:NO];
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:[NSString stringWithFormat:@"EventObservations%@",event.remoteId]
                                                                           content:content trigger:trigger];
     
     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
