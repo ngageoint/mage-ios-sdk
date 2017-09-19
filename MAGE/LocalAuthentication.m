@@ -40,7 +40,7 @@
     return [url isEqualToString:[self.loginParameters objectForKey:@"serverUrl"]];
 }
 
-- (void) loginWithParameters: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus)) complete {
+- (void) loginWithParameters: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     NSString *username = (NSString *) [parameters objectForKey:@"username"];
     NSString *password = (NSString *) [parameters objectForKey:@"password"];
@@ -61,12 +61,12 @@
             
             [MageSessionManager manager].token = [oldLoginParameters objectForKey:@"token"];
             
-            complete(AUTHENTICATION_SUCCESS);
+            complete(AUTHENTICATION_SUCCESS, nil);
             return;
         }
     }
     
-    complete(AUTHENTICATION_ERROR);
+    complete(AUTHENTICATION_ERROR, @"Error logging in");
 }
 
 @end
