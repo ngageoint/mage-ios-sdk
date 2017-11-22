@@ -407,7 +407,6 @@
 				2F2190151FC5D247001E4A84 /* NotificationRequester.m */,
 			);
 			name = MAGE;
-			path = "mage-ios-sdk";
 			sourceTree = "<group>";
 		};
 		4CAF957818C62E0100A41CB8 /* Supporting Files */ = {
@@ -417,7 +416,6 @@
 				F7DEF9251912BD2D0026B9D0 /* preferences.plist */,
 			);
 			name = "Supporting Files";
-			path = "mage-ios-sdk";
 			sourceTree = "<group>";
 		};
 		4CAF958B18C62E0100A41CB8 /* Tests */ = {
