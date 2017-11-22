@@ -3,9 +3,18 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 1.4.2 (TBD)
+## 2.0.1 (TBD)
 
 ##### Features
+
+##### Bug Fixes
+
+## [2.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0) (07-28-2017)
+
+##### Features
+* Multiple forms per event.
+* Delete observation apis
+* Pull in access control lists per event from server
 * Use iOS background upload for attachments.  This will continue to upload MAGE attachments even if app is backgrounded or suspended.
 * Observation geometry support for lines and polygons
 
