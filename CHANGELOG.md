@@ -16,6 +16,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ##### Bug Fixes
 
 * Observation class uses the correct event not the current event
+* Protect case where database is unable to be saved to when creating observations
 
 ## [2.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0) (07-28-2017)
 
