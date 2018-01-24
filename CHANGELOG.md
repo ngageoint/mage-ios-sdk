@@ -3,11 +3,19 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 2.0.1 (TBD)
+## 2.0.2 (TBD)
 
 ##### Features
 
 ##### Bug Fixes
+
+## 2.0.1 (01-24-2018)
+
+##### Features
+
+##### Bug Fixes
+
+* Observation class uses the correct event not the current event
 
 ## [2.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0) (07-28-2017)
 
