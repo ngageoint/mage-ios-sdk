@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 2.0.2 (TBD)
+## 2.0.2 (02-11-2018)
 
 ##### Features
 
+* Additional information about phone network state and battery state are sent with locations
+
 ##### Bug Fixes
+
+* Observation geometries are sent properly for location fields
+* Archived forms are now filtered out when creating a new observation
+* Location Services is not turned on in the case where the app restarts after a force stop
 
 ## 2.0.1 (01-24-2018)
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "mage-ios-sdk"
-  s.version          = "2.0.1"
+  s.version          = "2.0.2"
   s.summary          = "iOS SDK for MAGE"
   s.description      = <<-DESC
                        iOS SDK for MAGE, assist with:
