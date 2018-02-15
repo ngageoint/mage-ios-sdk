@@ -3,7 +3,14 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 2.0.2 (02-11-2018)
+## 2.0.2 (TBD)
+
+##### Features
+
+##### Bug Fixes
+
+
+## [2.0.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.1) (02-15-2018)
 
 ##### Features
 
@@ -14,15 +21,8 @@ Adheres to [Semantic Versioning](http://semver.org/).
 * Observation geometries are sent properly for location fields
 * Archived forms are now filtered out when creating a new observation
 * Location Services is not turned on in the case where the app restarts after a force stop
-
-## 2.0.1 (01-24-2018)
-
-##### Features
-
-##### Bug Fixes
-
 * Observation class uses the correct event not the current event
-* Protect case where database is unable to be saved to when creating observations
+* Fix for location in forms
 
 ## [2.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0) (07-28-2017)
 
