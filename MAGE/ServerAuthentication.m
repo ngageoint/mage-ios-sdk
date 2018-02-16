@@ -97,9 +97,7 @@
                 )) {
                 NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
                 // at this point, we might not have a connection to the server.
-                id<Authentication> local = [Authentication authenticationModuleForType:LOCAL];
-                [local loginWithParameters:parameters complete:complete];
-//                complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
+                complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
         } else {
             NSLog(@"Error logging in: %@", error);
             // try to register again
