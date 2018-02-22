@@ -97,7 +97,7 @@
             
             NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
             [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
-            [defaults setValue:@"oauth" forKey:@"loginType"];
+            [defaults setValue:[NSNumber numberWithInteger:GOOGLE] forKey:@"loginType"];
             [defaults synchronize];
             
             [StoredPassword persistTokenToKeyChain:token];
