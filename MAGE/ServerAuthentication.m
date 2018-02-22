@@ -35,19 +35,7 @@
 }
 
 - (void) loginWithParameters: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    BOOL registered = [defaults boolForKey:@"deviceRegistered"];
-    NSLog(@"registered? %d", registered);
-    
-    // if we think we need to register, go do it
-    if (![defaults boolForKey:@"deviceRegistered"]) {
-        NSLog(@"Not registered");
-        [self registerDevice:parameters complete:complete];
-    } else {
-        NSLog(@"Registered in theory, just log in");
-        [self performLogin:parameters complete:complete];
-    }
+    [self performLogin:parameters complete:complete];
 }
 
 - (BOOL) canHandleLoginToURL: (NSString *) url {
@@ -143,6 +131,7 @@
     
     NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
     [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
+    [defaults setBool:YES forKey:@"deviceRegistered"];
     [defaults synchronize];
     [StoredPassword persistPasswordToKeyChain:password];
     [StoredPassword persistTokenToKeyChain:token];
@@ -170,7 +159,17 @@
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-        complete(AUTHENTICATION_ERROR, errResponse);
+        if ([error.domain isEqualToString:NSURLErrorDomain]
+            && (error.code == NSURLErrorCannotConnectToHost
+                || error.code == NSURLErrorNotConnectedToInternet
+                ))
+        {
+            NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
+            // at this point, we might not have a connection to the server.
+            complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
+        } else {
+            complete(AUTHENTICATION_ERROR, errResponse);
+        }
     }];
     
     [manager addTask:task];
