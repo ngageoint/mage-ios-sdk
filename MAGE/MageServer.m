@@ -100,9 +100,6 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
     
     MageServer *server = [[MageServer alloc] initWithURL: url];
     
-    server.reachabilityManager = [AFNetworkReachabilityManager managerForDomain:url.host];
-    [server.reachabilityManager startMonitoring];
-    
     if ([url.absoluteString isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:kBaseServerUrlKey]] && server.authenticationModules) {
         success(server);
         return;
