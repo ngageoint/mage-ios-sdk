@@ -126,14 +126,14 @@ static MageSessionManager *managerSingleton = nil;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         // user was logged in online
-        if (SERVER == ((NSNumber *)[defaults valueForKey:@"loginType"]).integerValue) {
+        if ([[Authentication authenticationTypeToString:SERVER] isEqualToString:[defaults valueForKey:@"loginType"]]) {
             // if the user was online and the token was expired ie 401 we should force them to the login screen
             if (![[UserUtility singleton] isTokenExpired] && responseStatusCode == 401) {
                 [[UserUtility singleton] expireToken];
                 [[NSNotificationCenter defaultCenter] postNotificationName:MAGETokenExpiredNotification object:response];
                 return;
             }
-        } else if (LOCAL == ((NSNumber *)[defaults valueForKey:@"loginType"]).integerValue) {
+        } else if ([[Authentication authenticationTypeToString:LOCAL] isEqualToString:[defaults valueForKey:@"loginType"]]) {
             // if the user was logged in offline and a request makes it, we should tell them that they can try to login again
             if (responseStatusCode == 401) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:MAGEServerContactedAfterOfflineLogin object:response];

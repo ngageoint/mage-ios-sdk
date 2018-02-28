@@ -70,7 +70,7 @@
     NSMutableDictionary *newLoginParameters = [NSMutableDictionary dictionaryWithDictionary:oldLoginParameters];
     [newLoginParameters setValue:newExpirationDate forKey:@"tokenExpirationDate"];
     [defaults setObject:newLoginParameters forKey:@"loginParameters"];
-    [defaults setValue:[NSNumber numberWithInteger:LOCAL] forKey:@"loginType"];
+    [defaults setValue:[Authentication authenticationTypeToString:LOCAL] forKey:@"loginType"];
     [defaults synchronize];
     [[UserUtility singleton] resetExpiration];
     

@@ -125,7 +125,7 @@
         NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
         [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
         [defaults setBool:YES forKey:@"deviceRegistered"];
-        [defaults setValue:[NSNumber numberWithInteger:SERVER] forKey:@"loginType"];
+        [defaults setValue:[Authentication authenticationTypeToString:SERVER] forKey:@"loginType"];
         [defaults synchronize];
         [StoredPassword persistPasswordToKeyChain:password];
         [StoredPassword persistTokenToKeyChain:token];
@@ -182,7 +182,7 @@
         NSTimeInterval tokenExpirationLength = [tokenExpirationDate timeIntervalSinceNow];
         [defaults setObject:[NSNumber numberWithDouble:tokenExpirationLength] forKey:@"tokenExpirationLength"];
         [defaults setBool:YES forKey:@"deviceRegistered"];
-        [defaults setValue:[NSNumber numberWithInteger:SERVER] forKey:@"loginType"];
+        [defaults setValue:[Authentication authenticationTypeToString:SERVER] forKey:@"loginType"];
         [defaults synchronize];
         [StoredPassword persistPasswordToKeyChain:password];
         [StoredPassword persistTokenToKeyChain:token];
