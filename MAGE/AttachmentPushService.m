@@ -206,28 +206,34 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
     
     NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
-    attachment.dirty = [NSNumber numberWithBool:NO];
-    attachment.remoteId = [response valueForKey:@"id"];
-    attachment.name = [response valueForKey:@"name"];
-    attachment.url = [response valueForKey:@"url"];
-    attachment.taskIdentifier = nil;
-    NSString *dateString = [response valueForKey:@"lastModified"];
-    if (dateString != nil) {
-        NSDate *date = [NSDate dateFromIso8601String:dateString];
-        [attachment setLastModified:date];
-    }
-    
-    __weak __typeof__(self) weakSelf = self;
-
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
-        [weakSelf.pushTasks removeObject:[NSNumber numberWithLong:task.taskIdentifier]];
-        NSURL *attachmentUrl = [NSURL fileURLWithPath:tmpFileLocation];
-        NSError *removeError;
-        NSLog(@"ATTACHMENT - Deleting tmp multi part file for attachment upload %@", attachmentUrl);
-        if (![[NSFileManager defaultManager] removeItemAtURL:attachmentUrl error:&removeError]) {
-            NSLog(@"ATTACHMENT - Error removing temporary attachment upload file %@", removeError);
+        attachment.dirty = [NSNumber numberWithBool:NO];
+        attachment.remoteId = [response valueForKey:@"id"];
+        attachment.name = [response valueForKey:@"name"];
+        attachment.url = [response valueForKey:@"url"];
+        attachment.taskIdentifier = nil;
+        NSString *dateString = [response valueForKey:@"lastModified"];
+        if (dateString != nil) {
+            NSDate *date = [NSDate dateFromIso8601String:dateString];
+            [attachment setLastModified:date];
         }
-    }];
+    
+    if (attachment.url) {
+        __weak __typeof__(self) weakSelf = self;
+
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            [weakSelf.pushTasks removeObject:[NSNumber numberWithLong:task.taskIdentifier]];
+
+            NSURL *attachmentUrl = [NSURL fileURLWithPath:tmpFileLocation];
+            NSError *removeError;
+            NSLog(@"ATTACHMENT - Deleting tmp multi part file for attachment upload %@", attachmentUrl);
+            if (![[NSFileManager defaultManager] removeItemAtURL:attachmentUrl error:&removeError]) {
+                NSLog(@"ATTACHMENT - Error removing temporary attachment upload file %@", removeError);
+            }
+        }];
+    } else {
+        // try again
+        [self.pushTasks removeObject:[NSNumber numberWithLong:task.taskIdentifier]];
+    }
 }
 
 - (void) configureTaskReceivedData {
