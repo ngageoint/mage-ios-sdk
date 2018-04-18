@@ -3,12 +3,26 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## 2.0.2 (TBD)
-
-##### Features
+## [2.0.4](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.4) (04-18-2018)
 
 ##### Bug Fixes
 
+* When events are fetched and the connection fails, try to fetch the forms for all known events
+  which could potentially work in an area of limited connectivity 
+
+## [2.0.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.3) (04-16-2018)
+
+##### Bug Fixes
+
+* Sends the app version on the authorize call
+
+## [2.0.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.2) (04-13-2018) 
+
+##### Features
+
+* Adds support for themes
+* Improves disconnected login
+* Adds login.gov support
 
 ## [2.0.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.1) (02-15-2018)
 
