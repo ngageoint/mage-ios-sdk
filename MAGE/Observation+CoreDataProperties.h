@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *url;
 @property (nullable, nonatomic, copy) NSString *userId;
 @property (nonatomic) BOOL syncing;
+@property (nullable, nonatomic, copy) NSDate *attachmentsLastUpdated;
 @property (nullable, nonatomic, retain) NSSet<Attachment *> *attachments;
 @property (nullable, nonatomic, retain) NSSet<ObservationFavorite *> *favorites;
 @property (nullable, nonatomic, retain) ObservationImportant *observationImportant;

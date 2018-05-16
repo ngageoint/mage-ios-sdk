@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *url;
 @property (nullable, nonatomic, retain) Observation *observation;
 @property (nullable, nonatomic, retain) NSNumber *taskIdentifier;
+@property (nonatomic) BOOL uploading;
+@property (nullable, nonatomic, retain) NSNumber *uploadProgress;
+@property (nullable, nonatomic, retain) NSString *uploadStatus;
 
 @end
 

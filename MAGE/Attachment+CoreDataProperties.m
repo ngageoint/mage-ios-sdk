@@ -26,5 +26,8 @@
 @dynamic url;
 @dynamic observation;
 @dynamic taskIdentifier;
+@dynamic uploading;
+@dynamic uploadProgress;
+@dynamic uploadStatus;
 
 @end

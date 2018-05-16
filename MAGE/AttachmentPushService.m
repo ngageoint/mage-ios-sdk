@@ -104,10 +104,6 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
             NSLog(@"ATTACHMENT - attachment inserted, push em");
             [self pushAttachments:@[anObject]];
             break;
-        case NSFetchedResultsChangeUpdate:
-            NSLog(@"ATTACHMENT - attachment updated, push em");
-            [self pushAttachments:@[anObject]];
-            break;
         default:
             break;
     }
@@ -142,19 +138,24 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
         
         NSURL *attachmentUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name]];
         NSLog(@"ATTACHMENT - Creating tmp multi part file for attachment upload %@", attachmentUrl);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[attachmentUrl absoluteString]]) {
-            NSLog(@"file already exists");
-        }
-        
-        [self.requestSerializer requestWithMultipartFormRequest:request writingStreamContentsToFile:attachmentUrl completionHandler:^(NSError * _Nullable error) {
-            NSURLSessionUploadTask *uploadTask = [self.session uploadTaskWithRequest:request fromFile:attachmentUrl];
-            
-            NSNumber *taskIdentifier = [NSNumber numberWithLong:uploadTask.taskIdentifier];
-            [self.pushTasks addObject:taskIdentifier];
-            attachment.taskIdentifier = taskIdentifier;
-            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
-                NSLog(@"ATTACHMENT - Context did save %d with error %@", contextDidSave, error);
-                [uploadTask resume];
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext * _Nonnull localContext) {
+            // update the attachment
+            Attachment *localAttachment = [attachment MR_inContext:localContext];
+            localAttachment.uploading = YES;
+            localAttachment.uploadProgress = [NSNumber numberWithInt:0];
+            attachment.observation.attachmentsLastUpdated = [NSDate date];
+        } completion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            // send the file
+            [self.requestSerializer requestWithMultipartFormRequest:request writingStreamContentsToFile:attachmentUrl completionHandler:^(NSError * _Nullable error) {
+                NSURLSessionUploadTask *uploadTask = [self.session uploadTaskWithRequest:request fromFile:attachmentUrl];
+                
+                NSNumber *taskIdentifier = [NSNumber numberWithLong:uploadTask.taskIdentifier];
+                [self.pushTasks addObject:taskIdentifier];
+                attachment.taskIdentifier = taskIdentifier;
+                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+                    NSLog(@"ATTACHMENT - Context did save %d with error %@", contextDidSave, error);
+                    [uploadTask resume];
+                }];
             }];
         }];
     }
@@ -165,6 +166,15 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
         double progress = (double) totalBytesSent / (double) totalBytesExpectedToSend;
         NSUInteger percent = (NSUInteger) (100.0 * progress);
         NSLog(@"ATTACHMENT - Upload %@ progress: %lu%%", task, (unsigned long)percent);
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext * _Nonnull localContext) {
+            // update the attachment
+            Attachment *attachment = [Attachment MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"taskIdentifier == %@", [NSNumber numberWithLong:task.taskIdentifier]]
+                                                                 inContext:localContext];
+            attachment.uploadProgress = [NSNumber numberWithUnsignedInteger:percent];
+            attachment.observation.attachmentsLastUpdated = [NSDate date];
+        } completion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            NSLog(@"ATTACHMENT - Upload progress Context did save %d with error %@", contextDidSave, error);
+        }];
     }];
 }
 
@@ -181,41 +191,49 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
 }
 
 - (void) attachmentUploadCompleteWithTask:(NSURLSessionTask *) task withError:(NSError *) error {
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    Attachment *attachment = [Attachment MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"taskIdentifier == %@", [NSNumber numberWithLong:task.taskIdentifier]]
+                                                         inContext:context];
+
+    if (!attachment) {
+        NSLog(@"ATTACHMENT - error completing attachment upload, could not retrieve attachment for task id %lu", (unsigned long)task.taskIdentifier);
+        return;
+    }
+    attachment.uploading = NO;
+    attachment.observation.attachmentsLastUpdated = [NSDate date];
 
     if (error) {
-        NSLog(@"ATTACHMENT - error uploading attachment %@", error);
+        attachment.uploadStatus = [NSString stringWithFormat:@"Error uploading attachment %@", error];
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            NSLog(@"ATTACHMENT - error uploading attachment %@", error);
+        }];
         return;
     }
     
     NSData *data = [self.pushData objectForKey:[NSNumber numberWithLong:task.taskIdentifier]];
     if (!data) {
-        NSLog(@"ATTACHMENT - error uploading attachment, did not receive response from the server");
-        return;
-    }
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-    Attachment *attachment = [Attachment MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"taskIdentifier == %@", [NSNumber numberWithLong:task.taskIdentifier]]
-                                                         inContext:context];
-    
-    if (!attachment) {
-        NSLog(@"ATTACHMENT - error completing attachment upload, could not retrieve attachment for task id %lu", (unsigned long)task.taskIdentifier);
+        attachment.uploadStatus = @"Error uploading attachment , did not receive response from the server";
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            NSLog(@"ATTACHMENT - error uploading attachment, did not receive response from the server");
+        }];
         return;
     }
     
     NSString *tmpFileLocation = [NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name];
     
     NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    
-        attachment.dirty = [NSNumber numberWithBool:NO];
-        attachment.remoteId = [response valueForKey:@"id"];
-        attachment.name = [response valueForKey:@"name"];
-        attachment.url = [response valueForKey:@"url"];
-        attachment.taskIdentifier = nil;
-        NSString *dateString = [response valueForKey:@"lastModified"];
-        if (dateString != nil) {
-            NSDate *date = [NSDate dateFromIso8601String:dateString];
-            [attachment setLastModified:date];
-        }
+    attachment.uploadProgress = [NSNumber numberWithInt:100];
+    attachment.uploadStatus = @"Success";
+    attachment.dirty = [NSNumber numberWithBool:NO];
+    attachment.remoteId = [response valueForKey:@"id"];
+    attachment.name = [response valueForKey:@"name"];
+    attachment.url = [response valueForKey:@"url"];
+    attachment.taskIdentifier = nil;
+    NSString *dateString = [response valueForKey:@"lastModified"];
+    if (dateString != nil) {
+        NSDate *date = [NSDate dateFromIso8601String:dateString];
+        [attachment setLastModified:date];
+    }
     
     if (attachment.url) {
         __weak __typeof__(self) weakSelf = self;

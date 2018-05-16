@@ -27,6 +27,7 @@
 @dynamic url;
 @dynamic userId;
 @dynamic syncing;
+@dynamic attachmentsLastUpdated;
 @dynamic attachments;
 @dynamic favorites;
 @dynamic observationImportant;
