@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+extern NSString * _Nonnull const kAttachmentErrorStatusCode;
+extern NSString * _Nullable const kAttachmentErrorDescription;
+extern NSString * _Nullable const kAttachmentErrorMessage;
+
 @class Observation;
 
 NS_ASSUME_NONNULL_BEGIN

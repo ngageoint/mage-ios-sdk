@@ -29,5 +29,6 @@
 @dynamic uploading;
 @dynamic uploadProgress;
 @dynamic uploadStatus;
+@dynamic error;
 
 @end

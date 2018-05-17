@@ -17,4 +17,6 @@ extern NSString * const kAttachmentBackgroundSessionIdentifier;
 - (void) start;
 - (void) stop;
 
+- (void) pushAttachments:(NSArray *) attachments;
+
 @end

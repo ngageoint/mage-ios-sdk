@@ -11,6 +11,10 @@
 #import "NSDate+Iso8601.h"
 #import "StoredPassword.h"
 
+NSString * const kAttachmentErrorStatusCode = @"errorStatusCode";
+NSString * const kAttachmentErrorDescription = @"errorDescription";
+NSString * const kAttachmentErrorMessage = @"errorMessage";
+
 @implementation Attachment
 
 + (Attachment *) attachmentForJson: (NSDictionary *) json inContext: (NSManagedObjectContext *) context {

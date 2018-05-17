@@ -201,8 +201,23 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
     }
     attachment.uploading = NO;
     attachment.observation.attachmentsLastUpdated = [NSDate date];
+    
+    NSMutableDictionary *localError = [NSMutableDictionary dictionary];
 
     if (error) {
+        
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if ([error localizedDescription]) {
+            [localError setObject:[error localizedDescription] forKey:kAttachmentErrorDescription];
+        }
+        
+        if (response) {
+            [localError setObject:[NSNumber numberWithInteger:response.statusCode] forKey:kAttachmentErrorStatusCode];
+            [localError setObject:[[NSString alloc] initWithData:(NSData *) error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding] forKey:kAttachmentErrorMessage];
+        }
+        
+        attachment.error = localError;
+        
         attachment.uploadStatus = [NSString stringWithFormat:@"Error uploading attachment %@", error];
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
             NSLog(@"ATTACHMENT - error uploading attachment %@", error);
@@ -210,9 +225,33 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
         return;
     }
     
+    if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+        
+        [localError setObject:[NSNumber numberWithInteger:httpResponse.statusCode] forKey:kAttachmentErrorStatusCode];
+
+        if (httpResponse.statusCode >= 400 && httpResponse.statusCode < 600) {
+            
+            [localError setObject:[NSString stringWithFormat:@"Error uploading attachment %ld", (long)httpResponse.statusCode] forKey:kAttachmentErrorMessage];
+            
+            attachment.error = localError;
+            
+            attachment.uploadStatus = [NSString stringWithFormat:@"Error uploading attachment %ld", (long)httpResponse.statusCode];
+            [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+                NSLog(@"Error uploading attachment. Status: %ld", (long)httpResponse.statusCode);
+            }];
+            return;
+        }
+    }
+    
     NSData *data = [self.pushData objectForKey:[NSNumber numberWithLong:task.taskIdentifier]];
     if (!data) {
-        attachment.uploadStatus = @"Error uploading attachment , did not receive response from the server";
+        [localError setObject:[error localizedDescription] forKey:kAttachmentErrorDescription];
+        [localError setObject:@"Error uploading attachment, did not receive response from the server" forKey:kAttachmentErrorMessage];
+        
+        attachment.error = localError;
+        
+        attachment.uploadStatus = @"Error uploading attachment, did not receive response from the server";
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
             NSLog(@"ATTACHMENT - error uploading attachment, did not receive response from the server");
         }];
@@ -220,10 +259,13 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
     }
     
     NSString *tmpFileLocation = [NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterMediumStyle;
+    formatter.timeStyle = NSDateFormatterShortStyle;
     
     NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     attachment.uploadProgress = [NSNumber numberWithInt:100];
-    attachment.uploadStatus = @"Success";
+    attachment.uploadStatus = [NSString stringWithFormat:@"Successfully pushed on %@", [formatter stringFromDate:[NSDate date]]];
     attachment.dirty = [NSNumber numberWithBool:NO];
     attachment.remoteId = [response valueForKey:@"id"];
     attachment.name = [response valueForKey:@"name"];

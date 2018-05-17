@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL uploading;
 @property (nullable, nonatomic, retain) NSNumber *uploadProgress;
 @property (nullable, nonatomic, retain) NSString *uploadStatus;
+@property (nullable, nonatomic, copy) NSDictionary* error;
 
 @end
 
