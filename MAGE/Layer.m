@@ -14,6 +14,8 @@
 @implementation Layer
 
 NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
+NSString * const GeoPackageLayerFetched = @"mil.nga.giat.mage.geopackage.layer.fetched";
+NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloaded";
 
 - (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId {
     [self setRemoteId:[json objectForKey:@"id"]];
@@ -21,6 +23,7 @@ NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
     [self setType:[json objectForKey:@"type"]];
     [self setUrl:[json objectForKey:@"url"]];
     [self setFormId:[json objectForKey:@"formId"]];
+    [self setFile:[json objectForKey:@"file"]];
     [self setEventId:eventId];
     
     return self;
@@ -49,6 +52,59 @@ NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
     [manager addTask:task];
 }
 
++ (void) downloadGeoPackage: (Layer *) layer success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
+    NSString *url = [NSString stringWithFormat:@"%@/api/layers/%@", [MageServer baseURL], [layer remoteId]];
+    
+    MageSessionManager *manager = [MageSessionManager manager];
+    NSString *stringPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"/geopackages/%@/%@", layer.remoteId, [layer.file valueForKey:@"name"]]];
+
+    
+    NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: nil error: nil];
+    [request setValue:[layer.file valueForKey:@"contentType"] forHTTPHeaderField:@"Accepts"];
+    
+    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Layer *localLayer = [layer MR_inContext:localContext];
+            
+            localLayer.downloadedBytes = [NSNumber numberWithUnsignedLongLong: downloadProgress.completedUnitCount];
+        }];
+    } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        return [NSURL fileURLWithPath:stringPath];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Layer *localLayer = [layer MR_inContext:localContext];
+            
+            localLayer.loaded = [NSNumber numberWithBool:!error];
+            localLayer.downloading = NO;
+            if (success) {
+                success();
+            }
+            if (error) {
+                NSLog(@"Error: %@", error);
+                if (failure) {
+                    failure(error);
+                }
+                return;
+            }
+            NSString *fileString = [filePath path];
+            [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageDownloaded object:nil userInfo:@{@"filePath": fileString}];
+        }];
+    }];
+    
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:stringPath]) {
+        NSLog(@"Create directory %@ for geopackage", [stringPath stringByDeletingLastPathComponent]);
+        [[NSFileManager defaultManager] createDirectoryAtPath:[stringPath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error];
+    }
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        Layer *localLayer = [layer MR_inContext:localContext];
+        
+        localLayer.downloading = YES;
+    }];
+    
+    [manager addTask:task];
+}
+
 + (NSURLSessionDataTask *) operationToPullLayersForEvent: (NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
     
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/layers", [MageServer baseURL], eventId];
@@ -67,6 +123,17 @@ NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
                 [layerRemoteIds addObject:remoteLayerId];
                 if ([[Layer layerTypeFromJson:layer] isEqualToString:@"Feature"]) {
                     [StaticLayer createOrUpdateStaticLayer:layer withEventId:eventId inContext:localContext];
+                } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"geopackage"]) {
+                    Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:localContext];
+                    if (l == nil) {
+                        l = [Layer MR_createEntityInContext:localContext];
+                        [l populateObjectFromJson:layer withEventId:eventId];
+                        NSLog(@"Inserting layer with id: %@ in event: %@", l.remoteId, eventId);
+                    } else {
+                        NSLog(@"Updating layer with id: %@ in event: %@", l.remoteId, eventId);
+                        [l populateObjectFromJson:layer withEventId:eventId];
+                    }
+                    [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageLayerFetched object:l];
                 } else {
                     Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:localContext];
                     if (l == nil) {
