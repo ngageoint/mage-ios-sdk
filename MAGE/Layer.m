@@ -60,7 +60,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
 
     
     NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: nil error: nil];
-    [request setValue:[layer.file valueForKey:@"contentType"] forHTTPHeaderField:@"Accepts"];
+    [request setValue:[layer.file valueForKey:@"contentType"] forHTTPHeaderField:@"Accept"];
     
     NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -71,24 +71,18 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         return [NSURL fileURLWithPath:stringPath];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            Layer *localLayer = [layer MR_inContext:localContext];
-            
-            localLayer.loaded = [NSNumber numberWithBool:!error];
-            localLayer.downloading = NO;
-            if (success) {
-                success();
+        if (success) {
+            success();
+        }
+        if (error) {
+            NSLog(@"Error: %@", error);
+            if (failure) {
+                failure(error);
             }
-            if (error) {
-                NSLog(@"Error: %@", error);
-                if (failure) {
-                    failure(error);
-                }
-                return;
-            }
-            NSString *fileString = [filePath path];
-            [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageDownloaded object:nil userInfo:@{@"filePath": fileString}];
-        }];
+            return;
+        }
+        NSString *fileString = [filePath path];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageDownloaded object:nil userInfo:@{@"filePath": fileString, @"layerId": layer.remoteId}];
     }];
     
     NSError *error = nil;
