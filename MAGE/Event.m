@@ -95,7 +95,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
         NSString *layerType = [Layer layerTypeFromJson:layerJson];
         if ([layerType isEqualToString:@"Feature"]) {
             [StaticLayer createOrUpdateStaticLayer:layerJson withEventId:self.remoteId inContext:context];
-        } else if ([layerType isEqualToString: @"geopackage"]) {
+        } else if ([layerType isEqualToString: @"GeoPackage"]) {
             Layer *layer = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@ AND eventId == %@", [layerJson objectForKey:@"id"], self.remoteId] inContext:context];
             if (!layer) {
                 layer = [Layer MR_createEntityInContext:context];

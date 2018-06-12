@@ -117,7 +117,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
                 [layerRemoteIds addObject:remoteLayerId];
                 if ([[Layer layerTypeFromJson:layer] isEqualToString:@"Feature"]) {
                     [StaticLayer createOrUpdateStaticLayer:layer withEventId:eventId inContext:localContext];
-                } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"geopackage"]) {
+                } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"GeoPackage"]) {
                     Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:localContext];
                     if (l == nil) {
                         l = [Layer MR_createEntityInContext:localContext];
