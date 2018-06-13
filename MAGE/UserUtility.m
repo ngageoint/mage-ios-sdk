@@ -88,7 +88,7 @@
     self.expired = YES;
 }
 
-- (void) logout: (void (^)(void)) completion {
+- (void) logoutWithCompletion: (void (^)(void)) completion {
     NSString *url = [NSString stringWithFormat:@"%@/api/logout", [MageServer baseURL]];
 
     MageSessionManager *manager = [MageSessionManager manager];
