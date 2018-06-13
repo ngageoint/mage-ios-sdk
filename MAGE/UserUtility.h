@@ -13,6 +13,6 @@
 - (void) expireToken;
 - (void) resetExpiration;
 - (void) acceptConsent;
-- (void) logout: (void (^)(void)) completion;
+- (void) logoutWithCompletion: (void (^)(void)) completion;
 
 @end
