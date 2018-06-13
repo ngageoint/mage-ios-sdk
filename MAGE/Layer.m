@@ -57,6 +57,8 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     
     MageSessionManager *manager = [MageSessionManager manager];
     NSString *stringPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"/geopackages/%@/%@", layer.remoteId, [layer.file valueForKey:@"name"]]];
+    
+    stringPath = [NSString stringWithFormat:@"%@_%@.gpkg", [[stringPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[stringPath lastPathComponent] stringByDeletingPathExtension]], @"from_server"];
 
     
     NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:@"GET" URLString:url parameters: nil error: nil];
@@ -82,6 +84,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
             return;
         }
         NSString *fileString = [filePath path];
+        NSLog(@"Downloaded GeoPackage to %@", fileString);
         [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageDownloaded object:nil userInfo:@{@"filePath": fileString, @"layerId": layer.remoteId}];
     }];
     
@@ -89,6 +92,15 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     if (![[NSFileManager defaultManager] fileExistsAtPath:stringPath]) {
         NSLog(@"Create directory %@ for geopackage", [stringPath stringByDeletingLastPathComponent]);
         [[NSFileManager defaultManager] createDirectoryAtPath:[stringPath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error];
+    } else {
+        NSLog(@"GeoPackage still exists at %@, delete it", stringPath);
+        [[NSFileManager defaultManager] removeItemAtPath:stringPath error:&error];
+        if (error) {
+            NSLog(@"Error deleting existing GeoPackage %@", error);
+        }
+        if ([[NSFileManager defaultManager] fileExistsAtPath:stringPath]) {
+            NSLog(@"GeoPackage file still exists at %@ after attempted deletion", stringPath);
+        }
     }
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Layer *localLayer = [layer MR_inContext:localContext];
