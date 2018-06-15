@@ -3,12 +3,18 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
+## 2.0.5 (TBD)
+
+##### Features
+
+* Adds support for downloading GeoPackage layers from the server
+
 ## [2.0.4](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.4) (04-18-2018)
 
 ##### Bug Fixes
 
 * When events are fetched and the connection fails, try to fetch the forms for all known events
-  which could potentially work in an area of limited connectivity 
+  which could potentially work in an area of limited connectivity
 
 ## [2.0.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.3) (04-16-2018)
 
@@ -16,7 +22,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 * Sends the app version on the authorize call
 
-## [2.0.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.2) (04-13-2018) 
+## [2.0.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.2) (04-13-2018)
 
 ##### Features
 
