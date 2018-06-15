@@ -10,6 +10,7 @@
 #import "MageSessionManager.h"
 #import "MageServer.h"
 #import "StaticLayer.h"
+#import "Server.h"
 
 @implementation Layer
 
@@ -53,7 +54,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
 }
 
 + (void) downloadGeoPackage: (Layer *) layer success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
-    NSString *url = [NSString stringWithFormat:@"%@/api/layers/%@", [MageServer baseURL], [layer remoteId]];
+    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/layers/%@", [MageServer baseURL], [Server currentEventId], [layer remoteId]];
     
     MageSessionManager *manager = [MageSessionManager manager];
     NSString *stringPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"/geopackages/%@/%@", layer.remoteId, [layer.file valueForKey:@"name"]]];
@@ -118,6 +119,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     MageSessionManager *manager = [MageSessionManager manager];
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            // Seems like we shouldn't have to do this....
             [StaticLayer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"eventId == %@", eventId] inContext:localContext];
             
             NSArray *layers = responseObject;
@@ -138,6 +140,12 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
                     } else {
                         NSLog(@"Updating layer with id: %@ in event: %@", l.remoteId, eventId);
                         [l populateObjectFromJson:layer withEventId:eventId];
+                    }
+                    
+                    // If this layer already exists but for a different event, set it's downloaded status
+                    Layer *existing = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@ AND eventId != %@", remoteLayerId, eventId] inContext:localContext];
+                    if (existing) {
+                        l.loaded = existing.loaded;
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageLayerFetched object:l];
                 } else {
