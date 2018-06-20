@@ -9,6 +9,10 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 * Adds support for downloading GeoPackage layers from the server
 
+##### Bug Fixes
+
+* Fixes for oauth2 providers
+
 ## [2.0.4](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.4) (04-18-2018)
 
 ##### Bug Fixes
