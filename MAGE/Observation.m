@@ -39,19 +39,24 @@ NSMutableArray *_transientAttachments;
 NSDictionary *_fieldNameToField;
 Event *_event;
 
+- (void) didSave {
+    [super didSave];
+    NSLog(@"Did Save Observation %@ Managed Object Context %@", self.remoteId, [self.managedObjectContext MR_workingName]);
+}
+
 //NSNumber *_currentEventId;
 + (Observation *) observationWithGeometry:(WKBGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
     Observation *observation = [Observation MR_createEntityInContext:mangedObjectContext];
-
+    
     [observation setTimestamp:[NSDate date]];
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
-
+    
     [properties setObject:[observation.timestamp iso8601String] forKey:@"timestamp"];
     [properties setObject:provider forKey:@"provider"];
     [properties setObject:[NSNumber numberWithDouble:accuracy] forKey:@"accuracy"];
     [properties setObject:[NSNumber numberWithInt:(int)delta] forKey:@"delta"];
     [properties setObject:[[NSMutableArray alloc] init] forKey:@"forms"];
-
+    
     [observation setProperties:properties];
     [observation setUser:[User fetchCurrentUserInManagedObjectContext:mangedObjectContext]];
     [observation setGeometry:geometry];
@@ -100,7 +105,7 @@ Event *_event;
 - (NSString *) primaryFieldText {
     NSString *primaryField = [self getPrimaryField];
     NSArray *observationForms = [self.properties objectForKey:@"forms"];
-
+    
     if (primaryField != nil && [observationForms count] > 0) {
         return [[observationForms objectAtIndex:0] objectForKey:primaryField];
     }
@@ -119,7 +124,7 @@ Event *_event;
     
     NSString *secondaryField = [self getSecondaryField];
     NSArray *observationForms = [self.properties objectForKey:@"forms"];
-
+    
     if (secondaryField != nil && [observationForms count] > 0) {
         return [[observationForms objectAtIndex:0] objectForKey:secondaryField];
     }
@@ -141,8 +146,8 @@ Event *_event;
     if (_fieldNameToField != nil) {//} && [_currentEventId isEqualToNumber:event.remoteId]) {
         return [_fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
     }
-
-//    _currentEventId = event.remoteId;
+    
+    //    _currentEventId = event.remoteId;
     NSArray *forms = event.forms;
     
     NSMutableDictionary *formFieldMap = [[NSMutableDictionary alloc] init];
@@ -157,21 +162,21 @@ Event *_event;
     }
     
     _fieldNameToField = formFieldMap;
-
+    
     return [_fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
 }
 
 - (NSDictionary *) createJsonToSubmitForEvent:(Event *) event {
-
+    
     NSDateFormatter *dateFormat = [NSDateFormatter new];
     [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     dateFormat.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     // Always use this locale when parsing fixed format date strings
     NSLocale* posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     dateFormat.locale = posix;
-
+    
     NSMutableDictionary *observationJson = [[NSMutableDictionary alloc] init];
-
+    
     if (self.remoteId != nil) {
         [observationJson setObject:self.remoteId forKey:@"id"];
     }
@@ -185,20 +190,20 @@ Event *_event;
         [observationJson setObject:self.url forKey:@"url"];
     }
     [observationJson setObject:@"Feature" forKey:@"type"];
-
+    
     NSString *stringState = [[NSString alloc] StringFromStateInt:[self.state intValue]];
-
+    
     [observationJson setObject:@{
                                  @"name": stringState
                                  } forKey:@"state"];
-
+    
     WKBGeometry *geometry = [self getGeometry];
     [observationJson setObject:[GeometrySerializer serializeGeometry:geometry] forKey:@"geometry"];
-
+    
     [observationJson setObject: [dateFormat stringFromDate:self.timestamp] forKey:@"timestamp"];
-
+    
     NSMutableDictionary *jsonProperties = [[NSMutableDictionary alloc] initWithDictionary:self.properties];
-
+    
     NSArray *forms = [jsonProperties objectForKey:@"forms"];
     NSMutableArray *formArray = [[NSMutableArray alloc] init];
     if (forms) {
@@ -215,14 +220,14 @@ Event *_event;
                     @catch (NSException *e){
                         NSLog(@"Problem parsing geometry %@", e);
                     }
-                
+                    
                 }
             }
             [formArray addObject:formProperties];
         }
     }
     [jsonProperties setObject:formArray forKey:@"forms"];
-
+    
     [observationJson setObject:jsonProperties forKey:@"properties"];
     return observationJson;
 }
@@ -236,23 +241,23 @@ Event *_event;
     [self setUserId:[json objectForKey:@"userId"]];
     [self setDeviceId:[json objectForKey:@"deviceId"]];
     [self setDirty:[NSNumber numberWithBool:NO]];
-
+    
     NSDictionary *properties = [json objectForKey: @"properties"];
     [self setProperties:[self generatePropertiesFromRaw:properties]];
-
+    
     NSDate *date = [NSDate dateFromIso8601String:[json objectForKey:@"lastModified"]];
     [self setLastModified:date];
-
+    
     NSDate *timestamp = [NSDate dateFromIso8601String:[self.properties objectForKey:@"timestamp"]];
     [self setTimestamp:timestamp];
-
+    
     [self setUrl:[json objectForKey:@"url"]];
-
+    
     State state = [Observation  observationStateFromJson:json];
     [self setState:[NSNumber numberWithInt:(int) state]];
-
+    
     @try {
-    WKBGeometry * geometry = [GeometryDeserializer parseGeometry:[json valueForKeyPath:@"geometry"]];
+        WKBGeometry * geometry = [GeometryDeserializer parseGeometry:[json valueForKeyPath:@"geometry"]];
         [self setGeometry:geometry];
     }
     @catch (NSException *e){
@@ -263,8 +268,8 @@ Event *_event;
 }
 
 - (NSDictionary *) generatePropertiesFromRaw: (NSDictionary *) propertyJson {
-//    Event *event = [Event getCurrentEventInContext:self.managedObjectContext];
-
+    //    Event *event = [Event getCurrentEventInContext:self.managedObjectContext];
+    
     NSMutableDictionary *parsedProperties = [[NSMutableDictionary alloc] init];
     for (NSString* key in propertyJson) {
         
@@ -287,7 +292,7 @@ Event *_event;
                     }
                 }
                 [forms addObject:parsedFormProperties];
-
+                
             }
             [parsedProperties setObject:forms forKey:key];
         } else {
@@ -295,7 +300,7 @@ Event *_event;
         }
         
     }
-
+    
     return parsedProperties;
 }
 
@@ -354,8 +359,8 @@ Event *_event;
     BOOL archived = [observation.state intValue] ==  Archive;
     NSURLSessionDataTask *task = observation.remoteId ?
     (!archived ? [self operationToUpdateObservation:observation success:success failure:failure] : [self operationToDeleteObservation: observation success: success failure: failure] ):
-        [self operationToCreateObservation:observation success:success failure:failure];
-
+    [self operationToCreateObservation:observation success:success failure:failure];
+    
     return task;
 }
 
@@ -389,22 +394,31 @@ Event *_event;
 + (NSURLSessionDataTask *) operationToCreateObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations/id", [MageServer baseURL], observation.eventId];
     NSLog(@"Trying to create observation %@", url);
-
+    
     MageSessionManager *manager = [MageSessionManager manager];
     NSURLSessionDataTask *task = [manager POST_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id response) {
-        NSLog(@"Successfully created location for observation resource");
-
+        NSLog(@"DUPLICATE TEST: Successfully retrieved an ID for the observation %@", [response objectForKey:@"id"]);
+        
         NSString *observationUrl = [response objectForKey:@"url"];
-
+        
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [localContext MR_setWorkingName:@"ID and URL Save"];
+            
             Observation *localObservation = [observation MR_inContext:localContext];
+            // comment these lines out to make a dupe
             localObservation.remoteId = [response objectForKey:@"id"];
             localObservation.url = observationUrl;
+            NSLog(@"DUPLICATE TEST: Setting the remote ID and URL on observation %@", localObservation.primaryFieldText);
         } completion:^(BOOL dbSuccess, NSError *error) {
+            NSLog(@"DUPLICATE TEST: Saved the observation remote ID and URL from the server success? %d", dbSuccess);
+            NSLog(@"DUPLICATE TEST: Error %@", error);
             if (!dbSuccess) {
-                NSLog(@"Failed to save observation to DB after getting an ID");
-//                failure(error);
-//                return;
+                NSLog(@"DUPLICATE TEST: DB Success was false saving observation to DB after getting an ID %@", error);
+                //                failure(error);
+                //                return;
+            }
+            if (error) {
+                NSLog(@"DUPLICATE TEST: User info of error setting remote id: %@", error.userInfo);
             }
             Event *event = [Event getCurrentEventInContext:observation.managedObjectContext];
             NSURLSessionDataTask *putTask = [manager PUT_TASK:observationUrl parameters:[observation createJsonToSubmitForEvent:event] success:^(NSURLSessionTask *task, id response) {
@@ -415,15 +429,15 @@ Event *_event;
                 NSLog(@"Error: %@", error);
                 failure(error);
             }];
-
+            
             [manager addTask:putTask];
         }];
-
+        
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         failure(error);
     }];
-
+    
     return task;
 }
 
@@ -438,20 +452,20 @@ Event *_event;
         NSLog(@"Error: %@", error);
         failure(error);
     }];
-
+    
     return task;
 }
 
 + (NSURLSessionDataTask *) operationToPushFavorite:(ObservationFavorite *) favorite success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations/%@/favorite", [MageServer baseURL], favorite.observation.eventId, favorite.observation.remoteId];
     NSLog(@"Trying to push favorite to server %@", url);
-
+    
     MageSessionManager *manager = [MageSessionManager manager];
-
+    
     NSURLSessionDataTask *task = nil;
-
+    
     if (!favorite.favorite) {
-
+        
         task = [manager DELETE_TASK:url parameters:nil success:^(NSURLSessionTask *task, id response) {
             if (success) {
                 success(response);
@@ -460,9 +474,9 @@ Event *_event;
             NSLog(@"Error: %@", error);
             failure(error);
         }];
-
+        
     }else{
-
+        
         task = [manager PUT_TASK:url parameters:nil success:^(NSURLSessionTask *task, id response) {
             if (success) {
                 success(response);
@@ -472,22 +486,22 @@ Event *_event;
             failure(error);
         }];
     }
-
+    
     return task;
 }
 
 + (NSURLSessionDataTask *) operationToPushImportant:(ObservationImportant *) important success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations/%@/important", [MageServer baseURL], important.observation.eventId, important.observation.remoteId];
     NSLog(@"Trying to push important to server %@", url);
-
+    
     MageSessionManager *manager = [MageSessionManager manager];
-
+    
     NSURLSessionDataTask *task = nil;
-
+    
     if ([important.important isEqualToNumber:[NSNumber numberWithBool:YES]]) {
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         [parameters setObject:important.reason forKey:@"description"];
-
+        
         task = [manager PUT_TASK:url parameters:parameters success:^(NSURLSessionTask *task, id response) {
             if (success) {
                 success(response);
@@ -496,7 +510,7 @@ Event *_event;
             NSLog(@"Error: %@", error);
             failure(error);
         }];
-
+        
     } else {
         task = [manager DELETE_TASK:url parameters:nil success:^(NSURLSessionTask *task, id response) {
             if (success) {
@@ -507,7 +521,7 @@ Event *_event;
             failure(error);
         }];
     }
-
+    
     return task;
 }
 
@@ -520,23 +534,23 @@ Event *_event;
 }
 
 + (NSURLSessionDataTask *) operationToPullObservationsAsInitial: (BOOL) initialPull withSuccess:(void (^) (void)) success failure: (void(^)(NSError *)) failure {
-
+    
     __block NSNumber *eventId = [Server currentEventId];
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations", [MageServer baseURL], eventId];
     NSLog(@"Fetching observations from event %@", eventId);
     
     __block BOOL sendBulkNotification = initialPull;
-
+    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     __block NSDate *lastObservationDate = [Observation fetchLastObservationDateInContext:[NSManagedObjectContext MR_defaultContext]];
     if (lastObservationDate != nil) {
         [parameters setObject:[lastObservationDate iso8601String] forKey:@"startDate"];
     }
-
+    
     MageSessionManager *manager = [MageSessionManager manager];
     
     __block BOOL newData = NO;
-
+    
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:parameters progress:nil success:^(NSURLSessionTask *task, id features) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSLog(@"Observation request complete");
@@ -545,7 +559,7 @@ Event *_event;
             for (id feature in features) {
                 NSString *remoteId = [Observation observationIdFromJson:feature];
                 State state = [Observation observationStateFromJson:feature];
-
+                
                 Observation *existingObservation = [Observation MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@)", remoteId] inContext:localContext];
                 // if the Observation is archived, delete it
                 if (state == Archive && existingObservation) {
@@ -558,25 +572,25 @@ Event *_event;
                     observation.eventId = eventId;
                     [observation populateObjectFromJson:feature];
                     observation.user = [User MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId = %@)", observation.userId] inContext:localContext];
-
+                    
                     NSDictionary *importantJson = [feature objectForKey:@"important"];
                     if (importantJson) {
                         ObservationImportant *important = [ObservationImportant importantForJson:importantJson inManagedObjectContext:localContext];
                         important.observation = observation;
                         observation.observationImportant = important;
                     }
-
+                    
                     for (NSString *userId in [feature objectForKey:@"favoriteUserIds"]) {
                         ObservationFavorite *favorite = [ObservationFavorite favoriteForUserId:userId inManagedObjectContext:localContext];
                         favorite.observation = observation;
                         [observation addFavoritesObject:favorite];
                     }
-
+                    
                     for (id attachmentJson in [feature objectForKey:@"attachments"]) {
                         Attachment *attachment = [Attachment attachmentForJson:attachmentJson inContext:localContext];
                         [observation addAttachmentsObject:attachment];
                     }
-
+                    
                     [observation setEventId:eventId];
                     NSLog(@"Saving new observation with id: %@", observation.remoteId);
                     count++;
@@ -585,17 +599,17 @@ Event *_event;
                     }
                     newData = YES;
                 } else if (state != Archive && ![existingObservation.dirty boolValue]) {
-
+                    
                     // if the observation is not dirty, and has been updated, update it
                     NSDate *lastModified = [NSDate dateFromIso8601String:[feature objectForKey:@"lastModified"]];
                     if ([lastModified compare:existingObservation.lastModified] == NSOrderedSame) {
                         // If the last modified date for this observation has not changed no need to update.
                         continue;
                     }
-
+                    
                     [existingObservation populateObjectFromJson:feature];
                     existingObservation.user = [User MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId = %@)", existingObservation.userId] inContext:localContext];
-
+                    
                     NSDictionary *importantJson = [feature objectForKey:@"important"];
                     if (importantJson) {
                         ObservationImportant *important = [ObservationImportant importantForJson:importantJson inManagedObjectContext:localContext];
@@ -607,7 +621,7 @@ Event *_event;
                             existingObservation.observationImportant = nil;
                         }
                     }
-
+                    
                     NSDictionary *favoritesMap = [existingObservation getFavoritesMap];
                     NSArray *favoriteUserIds = [feature objectForKey:@"favoriteUserIds"];
                     for (NSString *userId in favoriteUserIds) {
@@ -618,14 +632,14 @@ Event *_event;
                             [existingObservation addFavoritesObject:favorite];
                         }
                     }
-
+                    
                     for (ObservationFavorite *favorite in [favoritesMap allValues]) {
                         if (![favoriteUserIds containsObject:favorite.userId]) {
                             [favorite MR_deleteEntityInContext:localContext];
                             [existingObservation removeFavoritesObject:favorite];
                         }
                     }
-
+                    
                     for (id attachmentJson in [feature objectForKey:@"attachments"]) {
                         NSString *remoteId = [attachmentJson objectForKey:@"id"];
                         BOOL attachmentFound = NO;
@@ -641,7 +655,7 @@ Event *_event;
                                 break;
                             }
                         }
-
+                        
                         if (!attachmentFound) {
                             Attachment *newAttachment = [Attachment attachmentForJson:attachmentJson inContext:localContext];
                             [existingObservation addAttachmentsObject:newAttachment];
@@ -673,7 +687,7 @@ Event *_event;
             failure(error);
         }
     }];
-
+    
     return task;
 }
 
@@ -681,30 +695,30 @@ Event *_event;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Downloading Attachments"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
-
+    
     UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
     progressView.translatesAutoresizingMaskIntoConstraints = NO;
     [progressView setProgress:0.0];
     [alert.view addSubview:progressView];
-
+    
     NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:progressView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:alert.view attribute:NSLayoutAttributeTop multiplier:1 constant:80];
     NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:progressView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:alert.view attribute:NSLayoutAttributeLeading multiplier:1 constant:16];
     NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:alert.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:progressView attribute:NSLayoutAttributeTrailing multiplier:1 constant:16];
     [alert.view addConstraints:@[topConstraint, leftConstraint, rightConstraint]];
-
+    
     // download the attachments (if we don't have them)
     MageSessionManager *manager = [MageSessionManager manager];
-
+    
     dispatch_group_t group = dispatch_group_create();
-
+    
     NSMutableArray *requests = [[NSMutableArray alloc] init];
     NSMutableArray *urls = [[NSMutableArray alloc] init];
     for (Attachment *attachment in self.attachments) {
         NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name];
         if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-
+            
             NSURLRequest *request = [manager.requestSerializer requestWithMethod:@"GET" URLString:attachment.url parameters: nil error: nil];
-
+            
             NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * downloadProgress){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     progressView.progress = downloadProgress.fractionCompleted;
@@ -712,69 +726,69 @@ Event *_event;
             } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
                 return [NSURL fileURLWithPath:path];
             } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-
+                
                 if(!error){
                     [urls addObject:filePath];
                 }
                 dispatch_group_leave(group);
-
+                
             }];
-
+            
             [requests addObject:task];
         } else {
             NSURL *url = [NSURL fileURLWithPath:path isDirectory:NO];
             [urls addObject:url];
         }
     }
-
+    
     __block Boolean cancelled = NO;
     if ([requests count]) {
         [alert setMessage:[NSString stringWithFormat:@"1 of %lu\n\n", (unsigned long)[requests count]]];
-
+        
         [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             cancelled = YES;
             for (NSURLSessionDownloadTask *request in requests) {
                 [request cancel];
             }
         }]];
-
+        
         [viewController presentViewController:alert animated:YES completion:nil];
     }
-
+    
     __weak typeof(self) weakSelf = self;
     for(NSURLSessionDownloadTask *request in requests){
         dispatch_group_enter(group);
         [manager addTask:request];
     }
-
+    
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         [alert dismissViewControllerAnimated:YES completion:nil];
-
+        
         if (cancelled) {
             // clean up attachments
             for (NSURL *url in urls) {
                 [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
             }
-
+            
             return;
         }
-
+        
         NSMutableArray *items = [[NSMutableArray alloc] init];
         [items addObject:[weakSelf observationText]];
         [items addObjectsFromArray:urls];
-
+        
         UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
         [controller setValue:@"MAGE Observation" forKey:@"subject"];
-
+        
         if (controller.popoverPresentationController) {
             controller.popoverPresentationController.sourceView = viewController.view;
             controller.popoverPresentationController.sourceRect = viewController.view.frame;
             controller.popoverPresentationController.permittedArrowDirections = 0;
         }
-
+        
         [viewController presentViewController:controller animated:YES completion:nil];
     });
-
+    
 }
 
 - (NSString *) observationText {
@@ -782,59 +796,59 @@ Event *_event;
     
     NSDictionary *form = [event formForObservation:self];
     NSMutableArray *generalFields = [NSMutableArray arrayWithObjects:@"timestamp", @"geometry", @"type", nil];
-
+    
     NSMutableString *text = [[NSMutableString alloc] init];
-
+    
     NSMutableDictionary *nameToField = [[NSMutableDictionary alloc] init];
     for (NSDictionary *field in [form objectForKey:@"fields"]) {
         [nameToField setObject:field forKey:[field objectForKey:@"name"]];
     }
-
+    
     // user
     [text appendFormat:@"Created by:\n%@\n\n", self.user.name];
-
+    
     // timestamp
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterLongStyle;
     dateFormatter.timeStyle = NSDateFormatterLongStyle;
     [text appendFormat:@"Date:\n%@\n\n", [dateFormatter stringFromDate:self.timestamp]];
-
+    
     // geometry
     WKBGeometry *geometry = [self getGeometry];
     WKBPoint *point = [GeometryUtility centroidOfGeometry:geometry];
     [text appendFormat:@"Latitude, Longitude:\n%f, %f\n\n", [point.y doubleValue], [point.x doubleValue]];
-
+    
     // type
     [text appendString:[self propertyText:[self.properties objectForKey:@"type"] forField:[nameToField objectForKey:@"type"]]];
-
+    
     // variant
     NSString *variantField = [form objectForKey:@"variantField"];;
     if (variantField) {
         [generalFields addObject:variantField];
-
+        
         id variant = [self.properties objectForKey:variantField];
         if (variant) {
             [text appendString:[self propertyText:variant forField:[nameToField objectForKey:variantField]]];
         }
     }
-
+    
     for (NSDictionary *field in [form objectForKey:@"fields"]) {
         if ([generalFields containsObject:[field objectForKey:@"name"]]) {
             continue;
         }
-
+        
         if ([field objectForKey:@"archived"]) {
             continue;
         }
-
+        
         id value = [self.properties objectForKey:[field objectForKey:@"name"]];
         if (![value length] || ([value isKindOfClass:[NSArray class]] && ![value count])) {
             continue;
         }
-
+        
         [text appendString:[self propertyText:value forField:field]];
     }
-
+    
     return text;
 }
 
@@ -874,7 +888,7 @@ Event *_event;
 }
 
 - (Boolean) isDeletableByCurrentUser {
-        
+    
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:self.managedObjectContext];
     
     // if the user has update on the event
@@ -911,7 +925,7 @@ Event *_event;
     if (!errorMessage) {
         errorMessage = [self.error objectForKey:kObservationErrorDescription];
     }
-
+    
     return errorMessage;
 }
 
@@ -937,7 +951,7 @@ Event *_event;
     NSManagedObjectContext *context = self.managedObjectContext;
     User *user = [User fetchCurrentUserInManagedObjectContext:context];
     ObservationFavorite *favorite = [[self getFavoritesMap] objectForKey:user.remoteId];
-
+    
     NSLog(@"toggle favorite %@", favorite);
     if (favorite && favorite.favorite) {
         // toggle off
@@ -950,12 +964,12 @@ Event *_event;
             [self addFavoritesObject:favorite];
             favorite.observation = self;
         }
-
+        
         favorite.dirty = YES;
         favorite.favorite = YES;
         favorite.userId = user.remoteId;
     }
-
+    
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
@@ -968,7 +982,7 @@ Event *_event;
     for (ObservationFavorite *favorite in self.favorites) {
         [favorites setObject:favorite forKey:favorite.userId];
     }
-
+    
     return favorites;
 }
 
@@ -981,23 +995,23 @@ Event *_event;
     }
     NSManagedObjectContext *context = self.managedObjectContext;
     User *currentUser = [User fetchCurrentUserInManagedObjectContext:context];
-
+    
     ObservationImportant *important = self.observationImportant;
     if (!important) {
         important = [ObservationImportant MR_createEntityInContext:context];
         important.observation = self;
         self.observationImportant = important;
     }
-
+    
     important.dirty = [NSNumber numberWithBool:YES];
     important.important = [NSNumber numberWithBool:YES];
     important.userId = currentUser.remoteId;
     important.reason = description;
-
+    
     // This will get overriden by the server, but lets set an inital value
     // so the UI has something to display
     important.timestamp = [NSDate date];
-
+    
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
@@ -1013,13 +1027,13 @@ Event *_event;
         return;
     }
     NSManagedObjectContext *context = self.managedObjectContext;
-
+    
     ObservationImportant *important = self.observationImportant;
     if (important) {
         important.dirty = [NSNumber numberWithBool:YES];
         important.important = [NSNumber numberWithBool:NO];
     }
-
+    
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
@@ -1036,8 +1050,9 @@ Event *_event;
     if (observation) {
         date = observation.lastModified;
     }
-
+    
     return date;
 }
 
 @end
+

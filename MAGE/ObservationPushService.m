@@ -46,9 +46,16 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
         _pushingObservations = [[NSMutableDictionary alloc] init];
         _pushingFavorites = [[NSMutableDictionary alloc] init];
         _delegates = [NSMutableSet set];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     }
     
     return self;
+}
+
+- (void) objectChanged: (NSNotification *) sender {
+    NSManagedObjectContext *context = (NSManagedObjectContext *)[sender object];
+    //    NSLog(@"Changed Values: %@", [sender userInfo]);
+    //    NSLog(@"sender %@", sender);
 }
 
 - (void) addObservationPushDelegate:(id<ObservationPushDelegate>) delegate {
@@ -73,23 +80,23 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
     [self pushObservations:self.fetchedResultsController.fetchedObjects];
     
     self.favoritesFetchedResultsController = [ObservationFavorite MR_fetchAllSortedBy:@"observation.timestamp"
-                                                           ascending:NO
-                                                       withPredicate:[NSPredicate predicateWithFormat:@"dirty == YES"]
-                                                             groupBy:nil
-                                                            delegate:self
-                                                           inContext:context];
-    
-    [self pushFavorites:self.favoritesFetchedResultsController.fetchedObjects];
-    
-    self.importantFetchedResultsController = [ObservationImportant MR_fetchAllSortedBy:@"observation.timestamp"
                                                                             ascending:NO
                                                                         withPredicate:[NSPredicate predicateWithFormat:@"dirty == YES"]
                                                                               groupBy:nil
                                                                              delegate:self
                                                                             inContext:context];
     
+    [self pushFavorites:self.favoritesFetchedResultsController.fetchedObjects];
+    
+    self.importantFetchedResultsController = [ObservationImportant MR_fetchAllSortedBy:@"observation.timestamp"
+                                                                             ascending:NO
+                                                                         withPredicate:[NSPredicate predicateWithFormat:@"dirty == YES"]
+                                                                               groupBy:nil
+                                                                              delegate:self
+                                                                             inContext:context];
+    
     [self pushImportant:self.importantFetchedResultsController.fetchedObjects];
-
+    
     
     [self scheduleTimer];
 }
@@ -123,7 +130,12 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
             case NSFetchedResultsChangeDelete:
                 break;
             case NSFetchedResultsChangeUpdate: {
+                Observation *o = (Observation *) anObject;
                 NSLog(@"observations updated, push em");
+                NSLog(@"Observation %@", anObject);
+                NSLog(@"Observation changes for current event %@", [o changedValuesForCurrentEvent]);
+                NSLog(@"Observation changes %@", [o changedValues]);
+                
                 if ([anObject remoteId]) [self pushObservations:@[anObject]];
                 break;
             }
@@ -167,20 +179,23 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
                 break;
             }
             case NSFetchedResultsChangeMove:
-            break;
+                break;
         }
     }
 }
 
 - (void) pushObservations:(NSArray *) observations {
     NSLog(@"currently still pushing %lu observations", (unsigned long) self.pushingObservations.count);
-
+    
     // only push observations that haven't already been told to be pushed
     NSMutableDictionary *observationsToPush = [[NSMutableDictionary alloc] init];
     for (Observation *observation in observations) {
+        NSLog(@"DUPLICATE TEST: Obtaining permanent ID for %@", observation.primaryFieldText);
+        NSLog(@"DUPLICATE TEST: Observation ID is currently temporary? %d", observation.objectID.isTemporaryID);
         [[observation managedObjectContext] obtainPermanentIDsForObjects:@[observation] error:nil];
         
         if ([self.pushingObservations objectForKey:observation.objectID] == nil) {
+            NSLog(@"DUPLICATE TEST: Adding observation to push queue");
             [self.pushingObservations setObject:observation forKey:observation.objectID];
             [observationsToPush setObject:observation forKey:observation.objectID];
             observation.syncing = YES;
@@ -191,11 +206,13 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
     __weak typeof(self) weakSelf = self;
     MageSessionManager *manager = [MageSessionManager manager];
     for (Observation *observation in [observationsToPush allValues]) {
-        NSLog(@"submitting observation %@", observation.remoteId);
+        NSLog(@"DUPLICATE TEST: Submitting observation id %@ and type %@", observation.remoteId, observation.primaryFieldText);
         NSURLSessionDataTask *observationPushTask = [Observation operationToPushObservation:observation success:^(id response) {
-            NSLog(@"Successfully submitted observation");
+            NSLog(@"DUPLICATE TEST: Successfully submitted observation id %@ and type %@", observation.remoteId, observation.primaryFieldText);
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                [localContext MR_setWorkingName:@"Save Observation Info From Server"];
                 Observation *localObservation = [observation MR_inContext:localContext];
+                // commenting out next three lines results in a dupe if the id is also not saved
                 [localObservation populateObjectFromJson:response];
                 localObservation.dirty = [NSNumber numberWithBool:NO];
                 localObservation.error = nil;
@@ -203,7 +220,13 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
                 for (Attachment *attachment in localObservation.attachments) {
                     attachment.observationRemoteId = localObservation.remoteId;
                 }
+                NSLog(@"DUPLICATE TEST: Saving Observation Info from server for id %@ and type %@", localObservation.remoteId, localObservation.primaryFieldText);
             } completion:^(BOOL success, NSError *error) {
+                NSLog(@"DUPLICATE TEST: Saved the observation info from the server for id %@, success? %d", observation.remoteId, success);
+                NSLog(@"DUPLICATE TEST: Error %@", error);
+                if (error) {
+                    NSLog(@"DUPLICATE TEST: User info of error setting observation info from server: %@", error.userInfo);
+                }
                 [weakSelf.pushingObservations removeObjectForKey:observation.objectID];
                 
                 for (id<ObservationPushDelegate> delegate in self.delegates) {
@@ -211,7 +234,7 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
                 }
             }];
         } failure:^(NSError* error) {
-            NSLog(@"Error submitting observation");
+            NSLog(@"DUPLICATE TEST: Error submitting observation %@", error);
             // TODO check for 400
             if (error == nil) {
                 NSLog(@"Error submitting observation, no error returned");
@@ -224,7 +247,7 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
                 
                 return;
             }
-                        
+            
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                 Observation *localObservation = [observation MR_inContext:localContext];
                 
@@ -326,9 +349,10 @@ NSString * const kObservationPushFrequencyKey = @"observationPushFrequency";
             _observationPushTimer = nil;
         }
     });
-
+    
     self.fetchedResultsController = nil;
 }
 
 
 @end
+
