@@ -67,6 +67,8 @@
 		F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */; };
 		F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9CD191D1C7B003287E3 /* MageSessionManager.m */; };
 		F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F7971BD51A03F50D001505F0 /* ObservationPushService.m */; };
+		F79E5D0E21138E3F004C3902 /* Canary.m in Sources */ = {isa = PBXBuildFile; fileRef = F79E5D0A21138E3F004C3902 /* Canary.m */; };
+		F79E5D0F21138E3F004C3902 /* Canary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F79E5D0C21138E3F004C3902 /* Canary+CoreDataProperties.m */; };
 		F7A87F351AA51695001AEDF4 /* Mage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A87F341AA51695001AEDF4 /* Mage.m */; };
 		F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B25E23191AB5A900589E5B /* CoreLocation.framework */; };
 		F7B679751959CF2D0035596A /* MageEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B679741959CF2D0035596A /* MageEnums.m */; };
@@ -217,6 +219,7 @@
 		ED58FFB6E12F877BD465D73F /* Pods-mage-ios-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		F75DD3181A9F9F230007FA3F /* NSString+Contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Contains.h"; path = "MAGE/NSString+Contains.h"; sourceTree = SOURCE_ROOT; };
 		F75DD3191A9F9F230007FA3F /* NSString+Contains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Contains.m"; path = "MAGE/NSString+Contains.m"; sourceTree = SOURCE_ROOT; };
+		F75EE9542113859F00EDBE8E /* mage-ios-sdk 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 14.xcdatamodel"; sourceTree = "<group>"; };
 		F76655841A30EAEB00558EBB /* AttachmentPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentPushService.h; path = MAGE/AttachmentPushService.h; sourceTree = SOURCE_ROOT; };
 		F76655851A30EAEB00558EBB /* AttachmentPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentPushService.m; path = MAGE/AttachmentPushService.m; sourceTree = SOURCE_ROOT; };
 		F768E9C7191D095B003287E3 /* ObservationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservationTests.m; sourceTree = "<group>"; };
@@ -226,6 +229,10 @@
 		F768E9CD191D1C7B003287E3 /* MageSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageSessionManager.m; path = MAGE/Networking/MageSessionManager.m; sourceTree = SOURCE_ROOT; };
 		F7971BD41A03F50D001505F0 /* ObservationPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObservationPushService.h; path = MAGE/ObservationPushService.h; sourceTree = SOURCE_ROOT; };
 		F7971BD51A03F50D001505F0 /* ObservationPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationPushService.m; path = MAGE/ObservationPushService.m; sourceTree = SOURCE_ROOT; };
+		F79E5D0A21138E3F004C3902 /* Canary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Canary.m; path = MAGE/Canary.m; sourceTree = "<group>"; };
+		F79E5D0B21138E3F004C3902 /* Canary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Canary.h; path = MAGE/Canary.h; sourceTree = "<group>"; };
+		F79E5D0C21138E3F004C3902 /* Canary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Canary+CoreDataProperties.m"; path = "MAGE/Canary+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F79E5D0D21138E3F004C3902 /* Canary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Canary+CoreDataProperties.h"; path = "MAGE/Canary+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F7A87F331AA51695001AEDF4 /* Mage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mage.h; path = MAGE/Mage.h; sourceTree = SOURCE_ROOT; };
 		F7A87F341AA51695001AEDF4 /* Mage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mage.m; path = MAGE/Mage.m; sourceTree = SOURCE_ROOT; };
 		F7B25E23191AB5A900589E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -453,6 +460,10 @@
 		F739EFF31AB1E41E003A6E4B /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				F79E5D0B21138E3F004C3902 /* Canary.h */,
+				F79E5D0A21138E3F004C3902 /* Canary.m */,
+				F79E5D0D21138E3F004C3902 /* Canary+CoreDataProperties.h */,
+				F79E5D0C21138E3F004C3902 /* Canary+CoreDataProperties.m */,
 				2F5332381CC154C3006E92E1 /* Attachment.h */,
 				2F5332391CC154C3006E92E1 /* Attachment.m */,
 				2F5332C31CC557F3006E92E1 /* Attachment+CoreDataProperties.h */,
@@ -737,6 +748,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F2190171FC5D247001E4A84 /* NotificationRequester.m in Sources */,
+				F79E5D0E21138E3F004C3902 /* Canary.m in Sources */,
 				2F2A76EB19A7DE8D0008E7DD /* ObservationFetchService.m in Sources */,
 				2F2190251FC5D25D001E4A84 /* mage-ios-sdk.xcdatamodeld in Sources */,
 				2F5332DC1CC557F3006E92E1 /* Location+CoreDataProperties.m in Sources */,
@@ -771,6 +783,7 @@
 				049C65501E55E60E005F4FA4 /* TaskSessionManager.m in Sources */,
 				2F5332701CC154C3006E92E1 /* Role.m in Sources */,
 				2F5332D51CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m in Sources */,
+				F79E5D0F21138E3F004C3902 /* Canary+CoreDataProperties.m in Sources */,
 				2F5332D71CC557F3006E92E1 /* Attachment+CoreDataProperties.m in Sources */,
 				F7B679751959CF2D0035596A /* MageEnums.m in Sources */,
 				2F5332781CC154C3006E92E1 /* User.m in Sources */,
@@ -1041,6 +1054,7 @@
 		2F2190181FC5D25D001E4A84 /* mage-ios-sdk.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F75EE9542113859F00EDBE8E /* mage-ios-sdk 14.xcdatamodel */,
 				F7FEF8BE20BEE52B006C0D70 /* mage-ios-sdk 13.xcdatamodel */,
 				2F2190191FC5D25D001E4A84 /* mage-ios-sdk 10.xcdatamodel */,
 				2F21901A1FC5D25D001E4A84 /* mage-ios-sdk 11.xcdatamodel */,
@@ -1055,7 +1069,7 @@
 				2F2190231FC5D25D001E4A84 /* mage-ios-sdk 9.xcdatamodel */,
 				2F2190241FC5D25D001E4A84 /* mage-ios-sdk.xcdatamodel */,
 			);
-			currentVersion = F7FEF8BE20BEE52B006C0D70 /* mage-ios-sdk 13.xcdatamodel */;
+			currentVersion = F75EE9542113859F00EDBE8E /* mage-ios-sdk 14.xcdatamodel */;
 			name = "mage-ios-sdk.xcdatamodeld";
 			path = "MAGE/mage-ios-sdk.xcdatamodeld";
 			sourceTree = "<group>";
