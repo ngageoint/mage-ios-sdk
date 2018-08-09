@@ -3,7 +3,19 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.5](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.5) (06-20-2018) 
+## [2.0.6](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.6) (08-09-2018)
+
+##### Features
+
+* Adds canary object to ensure the database is open and writeable
+* Upgrade AFNetworking to 3.2.1
+
+##### Bug Fixes
+
+* Corrects local notification text
+* Notifications will now bulk notify if more than 1 observation was pulled from the server
+
+## [2.0.5](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.5) (06-20-2018)
 
 ##### Features
 
