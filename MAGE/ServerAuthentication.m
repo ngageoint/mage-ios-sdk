@@ -34,44 +34,66 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     MageSessionManager *manager = [MageSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@/%@", [[MageServer baseURL] absoluteString], @"api/login"];
+    NSString *url = [NSString stringWithFormat:@"%@/auth/local/signin", [[MageServer baseURL] absoluteString]];
     
     NSURL *URL = [NSURL URLWithString:url];
     NSURLSessionDataTask *task = [manager POST_TASK:URL.absoluteString parameters:loginParameters progress:nil success:^(NSURLSessionTask *task, id response) {
-        NSDictionary *api = [response objectForKey:@"api"];
-        BOOL serverCompatible = [MageServer checkServerCompatibility:api];
-        if (!serverCompatible) {
-            NSError *error = [MageServer generateServerCompatibilityError:api];
-            return complete(AUTHENTICATION_ERROR, error.localizedDescription);
+        NSDictionary *user = [response objectForKey:@"user"];
+        // check if the user is active and if not but they have a user tell them to talk to a MAGE admin
+        if (user && [[user objectForKey:@"active"] intValue] == 0) {
+            return complete(ACCOUNT_CREATION_SUCCESS, @"Your account has been created.  You will be able to login once and administrator approves your account");
         }
-        self.loginParameters = loginParameters;
-        self.response = response;
-        [self finishLoginForParameters: loginParameters withResponse:response complete:complete];
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        // if the error was a network error try to login with the local auth module
-        if ([error.domain isEqualToString:NSURLErrorDomain]
-            && (error.code == NSURLErrorCannotConnectToHost
-                || error.code == NSURLErrorNotConnectedToInternet
-                )) {
-                NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
-                // at this point, we might not have a connection to the server.
-                complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
-            } else {
-                NSLog(@"Error logging in: %@", error);
-                // try to register again
-                [defaults setBool:NO forKey:@"deviceRegistered"];
-                [self registerDevice:loginParameters complete:^(AuthenticationStatus authenticationStatus, NSString *errorString) {
-                    if (authenticationStatus == AUTHENTICATION_ERROR) {
-                        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-                        complete(authenticationStatus, errResponse);
-                    } else {
-                        complete(authenticationStatus, errorString);
-                    }
-                }];
+        
+        NSMutableDictionary *authorizeParameters = [[NSMutableDictionary alloc] init];
+        [authorizeParameters setObject:[loginParameters valueForKey:@"uid"] forKey:@"uid"];
+        [authorizeParameters setObject:[loginParameters valueForKey:@"appVersion"] forKey:@"appVersion"];
+        
+        // make an authorize call to the MAGE server and then we will get a token back
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        MageSessionManager *manager = [MageSessionManager manager];
+        NSString *url = [NSString stringWithFormat:@"%@/auth/%@/authorize", [[MageServer baseURL] absoluteString], @"local"];
+        
+        NSURL *URL = [NSURL URLWithString:url];
+        NSURLSessionDataTask *authorizeTask = [manager POST_TASK:URL.absoluteString parameters:authorizeParameters progress:nil success:^(NSURLSessionTask *task, id response) {
+            NSDictionary *api = [response objectForKey:@"api"];
+            BOOL serverCompatible = [MageServer checkServerCompatibility:api];
+            if (!serverCompatible) {
+                NSError *error = [MageServer generateServerCompatibilityError:api];
+                return complete(AUTHENTICATION_ERROR, error.localizedDescription);
             }
+            self.loginParameters = loginParameters;
+            self.response = response;
+            [self finishLoginForParameters: loginParameters withResponse:response complete:complete];
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            // if the error was a network error try to login with the local auth module
+            if ([error.domain isEqualToString:NSURLErrorDomain]
+                && (error.code == NSURLErrorCannotConnectToHost
+                    || error.code == NSURLErrorNotConnectedToInternet
+                    )) {
+                    NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
+                    // at this point, we might not have a connection to the server.
+                    complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
+                } else {
+                    NSLog(@"Error logging in: %@", error);
+                    // try to register again
+                    [defaults setBool:NO forKey:@"deviceRegistered"];
+                    [self registerDevice:authorizeParameters complete:^(AuthenticationStatus authenticationStatus, NSString *errorString) {
+                        if (authenticationStatus == AUTHENTICATION_ERROR) {
+                            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                            complete(authenticationStatus, errResponse);
+                        } else {
+                            complete(authenticationStatus, errorString);
+                        }
+                    }];
+                }
+        }];
+        
+        [manager addTask:authorizeTask];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
     }];
-    
-    [manager addTask:task];
+    [manager addTask: task];
 }
 
 - (BOOL) canHandleLoginToURL: (NSString *) url {
