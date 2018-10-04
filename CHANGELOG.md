@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.8) (TBD)
+## [2.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.8) (10-4-2018)
 
 ##### Bug Fixes
 
