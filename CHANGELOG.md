@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.7](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.7) (TBD)
+## [2.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.8) (TBD)
 
 ##### Bug Fixes
 
-* Handle the case where multiple GeoPackages were uploaded with the same name 
+* Handle the case where the observation has no forms even if the event does
+
+## [2.0.7](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.7) (09-21-2018)
+
+##### Bug Fixes
+
+* Handle the case where multiple GeoPackages were uploaded with the same name
 * Properly compare server and app versions to compare compatibility
 
 ## [2.0.6](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.6) (08-09-2018)
