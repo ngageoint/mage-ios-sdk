@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "mage-ios-sdk"
-  s.version          = "2.0.8"
+  s.version          = "2.0.9"
   s.summary          = "iOS SDK for MAGE"
   s.description      = <<-DESC
                        iOS SDK for MAGE, assist with:
@@ -32,5 +32,5 @@ Pod::Spec.new do |s|
   s.dependency 'DateTools', '~> 2.0.0'
   s.dependency 'MagicalRecord', '~> 2.3.2'
   s.dependency 'objective-zip', '~> 1.0.2'
-  s.dependency 'geopackage-ios', '~> 1.3.0'
+  s.dependency 'geopackage-ios', '~> 3.1.0'
 end

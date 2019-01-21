@@ -59,8 +59,8 @@
 		4CAF959218C62E0100A41CB8 /* AuthenticationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF959118C62E0100A41CB8 /* AuthenticationTests.m */; };
 		4CAF95A018C62F7C00A41CB8 /* LocalAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */; };
 		4CAF95A318C6616300A41CB8 /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF95A218C6616300A41CB8 /* Authentication.m */; };
-		4DD0FBCF215EA177D40046F8 /* libPods-mage-ios-sdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */; };
-		C233DBBDBFDBC8A8173E8835 /* libPods-mage-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */; };
+		562F7E975AEBCF980A122698 /* Pods_mage_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A2B85A19F2B3D4DE97AA83B /* Pods_mage_ios_sdk.framework */; };
+		689F6552DA70E9C0963FC1E0 /* Pods_mage_ios_sdkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6400D88547ABE980196068F1 /* Pods_mage_ios_sdkTests.framework */; };
 		F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */ = {isa = PBXBuildFile; fileRef = F75DD3191A9F9F230007FA3F /* NSString+Contains.m */; };
 		F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F76655851A30EAEB00558EBB /* AttachmentPushService.m */; };
 		F768E9C8191D095B003287E3 /* ObservationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F768E9C7191D095B003287E3 /* ObservationTests.m */; };
@@ -112,7 +112,6 @@
 		049C654C1E53B571005F4FA4 /* SessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionTask.m; path = MAGE/Networking/SessionTask.m; sourceTree = SOURCE_ROOT; };
 		049C654E1E55E60E005F4FA4 /* TaskSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaskSessionManager.h; path = MAGE/Networking/TaskSessionManager.h; sourceTree = SOURCE_ROOT; };
 		049C654F1E55E60E005F4FA4 /* TaskSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaskSessionManager.m; path = MAGE/Networking/TaskSessionManager.m; sourceTree = SOURCE_ROOT; };
-		14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F01652B199D1C6D00C4862B /* LocationFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationFetchService.h; path = MAGE/LocationFetchService.h; sourceTree = SOURCE_ROOT; };
 		2F01652C199D1C6D00C4862B /* LocationFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationFetchService.m; path = MAGE/LocationFetchService.m; sourceTree = SOURCE_ROOT; };
 		2F01653119A2A88D00C4862B /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationService.h; path = MAGE/LocationService.h; sourceTree = SOURCE_ROOT; };
@@ -214,8 +213,9 @@
 		4CAF95A218C6616300A41CB8 /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Authentication.m; path = MAGE/Authentication.m; sourceTree = SOURCE_ROOT; };
 		595D169C90A86905653E937D /* Pods-mage-ios-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5EB6050198AAD2B29ED45ACD /* Pods-mage-ios-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk.debug.xcconfig"; sourceTree = "<group>"; };
+		6400D88547ABE980196068F1 /* Pods_mage_ios_sdkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mage_ios_sdkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		660A743D10C89FF65CE337F3 /* Pods-mage-ios-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk.release.xcconfig"; sourceTree = "<group>"; };
-		CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mage-ios-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A2B85A19F2B3D4DE97AA83B /* Pods_mage_ios_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mage_ios_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED58FFB6E12F877BD465D73F /* Pods-mage-ios-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mage-ios-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		F75DD3181A9F9F230007FA3F /* NSString+Contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Contains.h"; path = "MAGE/NSString+Contains.h"; sourceTree = SOURCE_ROOT; };
 		F75DD3191A9F9F230007FA3F /* NSString+Contains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Contains.m"; path = "MAGE/NSString+Contains.m"; sourceTree = SOURCE_ROOT; };
@@ -255,7 +255,7 @@
 			files = (
 				F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */,
 				4CAF957618C62E0100A41CB8 /* Foundation.framework in Frameworks */,
-				C233DBBDBFDBC8A8173E8835 /* libPods-mage-ios-sdk.a in Frameworks */,
+				562F7E975AEBCF980A122698 /* Pods_mage_ios_sdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +267,7 @@
 				4CAF958418C62E0100A41CB8 /* XCTest.framework in Frameworks */,
 				4CAF958A18C62E0100A41CB8 /* libmage-ios-sdk.a in Frameworks */,
 				4CAF958718C62E0100A41CB8 /* UIKit.framework in Frameworks */,
-				4DD0FBCF215EA177D40046F8 /* libPods-mage-ios-sdkTests.a in Frameworks */,
+				689F6552DA70E9C0963FC1E0 /* Pods_mage_ios_sdkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,8 +388,8 @@
 				4CAF957518C62E0100A41CB8 /* Foundation.framework */,
 				4CAF958318C62E0100A41CB8 /* XCTest.framework */,
 				4CAF958618C62E0100A41CB8 /* UIKit.framework */,
-				CFB9F865C86598EFC6955A8A /* libPods-mage-ios-sdkTests.a */,
-				14C4A5C65A3D96F8215BD417 /* libPods-mage-ios-sdk.a */,
+				6A2B85A19F2B3D4DE97AA83B /* Pods_mage_ios_sdk.framework */,
+				6400D88547ABE980196068F1 /* Pods_mage_ios_sdkTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -554,7 +554,6 @@
 				4CAF956E18C62E0100A41CB8 /* Sources */,
 				4CAF956F18C62E0100A41CB8 /* Frameworks */,
 				4CAF957018C62E0100A41CB8 /* CopyFiles */,
-				DE6E58D12CC9F50DAF85A900 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -574,8 +573,8 @@
 				4CAF957E18C62E0100A41CB8 /* Sources */,
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
 				4CAF958018C62E0100A41CB8 /* Resources */,
-				3EEFBB0E364249041D412032 /* [CP] Copy Pods Resources */,
 				038239C1F41BF04C6741B174 /* 📦 Copy Pods Resources */,
+				C64530B573638104E8FA55BD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -641,30 +640,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3EEFBB0E364249041D412032 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh",
-				"${PODS_ROOT}/DateTools/DateTools/DateTools.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/geopackage-ios/GeoPackage.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/tiff-ios/TIFF.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/wkb-ios/WKB.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DateTools.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GeoPackage.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TIFF.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WKB.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4461E2209F748E49902E6C38 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -716,28 +691,44 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DE6E58D12CC9F50DAF85A900 /* [CP] Copy Pods Resources */ = {
+		C64530B573638104E8FA55BD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk-resources.sh",
-				"${PODS_ROOT}/DateTools/DateTools/DateTools.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/geopackage-ios/GeoPackage.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/tiff-ios/TIFF.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/wkb-ios/WKB.bundle",
+				"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/TRVSMonitor/TRVSMonitor.framework",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/DateTools/DateTools.framework",
+				"${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework",
+				"${BUILT_PRODUCTS_DIR}/geopackage-ios/geopackage_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/objective-zip/objective_zip.framework",
+				"${BUILT_PRODUCTS_DIR}/proj4-ios/proj4_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/sf-ios/sf_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/sf-proj-ios/sf_proj_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/sf-wkb-ios/sf_wkb_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/tiff-ios/tiff_ios.framework",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DateTools.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GeoPackage.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TIFF.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WKB.bundle",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRVSMonitor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateTools.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagicalRecord.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/geopackage_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/objective_zip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/proj4_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sf_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sf_proj_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sf_wkb_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/tiff_ios.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdk/Pods-mage-ios-sdk-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
