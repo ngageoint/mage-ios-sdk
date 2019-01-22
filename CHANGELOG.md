@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
+## [2.0.10]
+
+* TBD
+
+##### Features
+
+##### Bug Fixes
+
+## [2.0.9](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.9) (01-22-2019)
+
+##### Features
+* Upgrade GeoPackage dependency to 3.2.1
+
+##### Bug Fixes
+
 ## [2.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.8) (10-4-2018)
 
 ##### Bug Fixes
