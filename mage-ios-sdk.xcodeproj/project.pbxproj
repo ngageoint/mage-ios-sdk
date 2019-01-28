@@ -573,7 +573,6 @@
 				4CAF957E18C62E0100A41CB8 /* Sources */,
 				4CAF957F18C62E0100A41CB8 /* Frameworks */,
 				4CAF958018C62E0100A41CB8 /* Resources */,
-				038239C1F41BF04C6741B174 /* 📦 Copy Pods Resources */,
 				C64530B573638104E8FA55BD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -625,21 +624,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		038239C1F41BF04C6741B174 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mage-ios-sdkTests/Pods-mage-ios-sdkTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4461E2209F748E49902E6C38 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
