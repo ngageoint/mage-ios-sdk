@@ -3,11 +3,18 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.10]
+## [2.0.11]
 
 * TBD
 
 ##### Features
+
+##### Bug Fixes
+
+## [2.0.10]
+
+##### Features
+* Save observation to core data in chunks.
 
 ##### Bug Fixes
 
