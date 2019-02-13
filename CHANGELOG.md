@@ -15,6 +15,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Features
 * Save observation to core data in chunks.
+* Added coredata migrations for all versions to version 15
 
 ##### Bug Fixes
 

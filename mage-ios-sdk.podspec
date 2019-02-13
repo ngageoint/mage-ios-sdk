@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   #s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
   s.resource_bundle = { 'MageSDK' => ['MAGE/**/*.plist'] }
-  s.resources = ['MAGE/**/*.xcdatamodeld']
+  s.resources = ['MAGE/**/*.xcdatamodeld', 'MAGE/**/*.xcmappingmodel']
   s.static_framework=true
   s.frameworks = 'Foundation'
   s.dependency 'AFNetworking', '~> 3.2.1'
