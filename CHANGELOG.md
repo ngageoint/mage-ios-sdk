@@ -11,7 +11,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Bug Fixes
 
-## [2.0.10]
+## [2.0.10](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.10) (02-15-2019)
 
 ##### Features
 * Save observation to core data in chunks.
