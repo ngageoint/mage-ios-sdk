@@ -3,13 +3,20 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.11]
+## [2.0.12]
 
 * TBD
 
 ##### Features
 
 ##### Bug Fixes
+
+## [2.0.11](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.11) (02-15-2019)
+
+##### Features
+
+##### Bug Fixes
+* Added unique constraint to observation remoteId
 
 ## [2.0.10](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.10) (02-15-2019)
 
