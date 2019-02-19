@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [2.0.12]
+## [3.0.1]
 
 * TBD
 
@@ -11,12 +11,14 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Bug Fixes
 
-## [2.0.11](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.11) (02-15-2019)
+## [3.0.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.0) (02-19-2019)
 
 ##### Features
+* Cache observation image map annotations 
 
 ##### Bug Fixes
 * Added unique constraint to observation remoteId
+* Save observation chunks to root svaing context on correct thread
 
 ## [2.0.10](https://github.com/ngageoint/mage-ios-sdk/releases/tag/2.0.10) (02-15-2019)
 
