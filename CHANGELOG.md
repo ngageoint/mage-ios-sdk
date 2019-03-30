@@ -3,13 +3,19 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.1]
-
+## [3.0.2]
 * TBD
 
 ##### Features
 
 ##### Bug Fixes
+
+## [3.0.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.1) (03-29-2019)
+
+##### Features
+
+##### Bug Fixes
+* Fix bug where observation notifcation could cause crash.
 
 ## [3.0.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.0) (02-19-2019)
 
