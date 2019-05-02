@@ -3,10 +3,17 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.2]
+## [3.0.3]
 * TBD
 
 ##### Features
+
+##### Bug Fixes
+
+## [3.0.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.2) (05-02-2019)
+
+##### Features
+* Update default image upload size to original
 
 ##### Bug Fixes
 
