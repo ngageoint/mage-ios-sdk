@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "mage-ios-sdk"
-  s.version          = "3.0.2"
+  s.version          = "3.0.3"
   s.summary          = "iOS SDK for MAGE"
   s.description      = <<-DESC
                        iOS SDK for MAGE, assist with:
@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.author           = { "NGA" => "winewman@caci.com" }
   s.source           = { :git => "https://github.com/ngageoint/mage-ios-sdk.git", :tag => s.version.to_s }
 
-  s.platform         = :ios, '10.0'
-  s.ios.deployment_target = '10.0'
+  s.platform         = :ios, '11.0'
+  s.ios.deployment_target = '11.0'
   s.requires_arc = true
 
   s.source_files = 'MAGE/**/*.{h,m}'

@@ -58,13 +58,20 @@
         // if the error was a network error try to login with the local auth module
         NSLog(@"Error logging in: %@", error);
         
-
         if ([error.domain isEqualToString:NSURLErrorDomain] && (error.code == NSURLErrorCannotConnectToHost || error.code == NSURLErrorNotConnectedToInternet)) {
             NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
             // at this point, we might not have a connection to the server.
             complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
         } else {
-            NSString* message = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+            
+            NSString* message;
+            if (response.statusCode >= 500) {
+                message = @"Cannot connect to server, please contact your MAGE administrator.";
+            } else {
+                message = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            }
+            
             if (!message) {
                 message = @"Please check your username and password and try again.";
             }
@@ -128,44 +135,7 @@
     }];
 }
 
-- (void) registerDevice: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
-    NSLog(@"Registering device");
-    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    MageSessionManager *manager = [MageSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@/auth/%@/devices", [[MageServer baseURL] absoluteString], [parameters valueForKey:@"strategy"]];
-    
-    NSURL *URL = [NSURL URLWithString:url];
-    NSURLSessionDataTask *task = [manager POST_TASK:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id response) {
-        BOOL registered = [[response objectForKey:@"registered"] boolValue];
-        if (registered) {
-            NSLog(@"Device was registered already, logging in");
-            [defaults setBool:YES forKey:@"deviceRegistered"];
-            // device was already registered, log in
-            [self loginWithParameters:parameters complete:complete];
-        } else {
-            NSLog(@"Registration was successful");
-            complete(REGISTRATION_SUCCESS, nil);
-        }
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-        if ([error.domain isEqualToString:NSURLErrorDomain]
-            && (error.code == NSURLErrorCannotConnectToHost
-                || error.code == NSURLErrorNotConnectedToInternet
-                ))
-        {
-            NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
-            // at this point, we might not have a connection to the server.
-            complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
-        } else {
-            complete(AUTHENTICATION_ERROR, errResponse);
-        }
-    }];
-    
-    [manager addTask:task];
-}
-
 - (void) authorize:(NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
-    
     // authentication succeeded, authorize with the mage server
     NSDictionary *user = [self.response objectForKey:@"user"];
     
@@ -227,5 +197,43 @@
     
     [manager addTask:task];
 }
+
+- (void) registerDevice: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
+    NSLog(@"Registering device");
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    MageSessionManager *manager = [MageSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@/auth/%@/devices", [[MageServer baseURL] absoluteString], [parameters valueForKey:@"strategy"]];
+    
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLSessionDataTask *task = [manager POST_TASK:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id response) {
+        BOOL registered = [[response objectForKey:@"registered"] boolValue];
+        if (registered) {
+            NSLog(@"Device was registered already, logging in");
+            [defaults setBool:YES forKey:@"deviceRegistered"];
+            // device was already registered, log in
+            [self loginWithParameters:parameters complete:complete];
+        } else {
+            NSLog(@"Registration was successful");
+            complete(REGISTRATION_SUCCESS, nil);
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        if ([error.domain isEqualToString:NSURLErrorDomain]
+            && (error.code == NSURLErrorCannotConnectToHost
+                || error.code == NSURLErrorNotConnectedToInternet
+                ))
+        {
+            NSLog(@"Unable to authenticate, probably due to no connection.  Error: %@", error);
+            // at this point, we might not have a connection to the server.
+            complete(UNABLE_TO_AUTHENTICATE, error.localizedDescription);
+        } else {
+            complete(AUTHENTICATION_ERROR, errResponse);
+        }
+    }];
+    
+    [manager addTask:task];
+}
+
+
 
 @end

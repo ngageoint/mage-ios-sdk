@@ -3,10 +3,17 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.3]
+## [3.0.4]
 * TBD
 
 ##### Features
+
+##### Bug Fixes
+
+## [3.0.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.3) (06-28-2019)
+
+##### Features
+* LDAP authentication module.
 
 ##### Bug Fixes
 
