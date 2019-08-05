@@ -7,6 +7,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 * TBD
 
 ##### Features
+* Added methods to the Observation class to pull feed field display values
 
 ##### Bug Fixes
 
