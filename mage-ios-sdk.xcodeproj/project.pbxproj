@@ -41,7 +41,7 @@
 		2F5332DD1CC557F3006E92E1 /* Server+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332D01CC557F3006E92E1 /* Server+CoreDataProperties.m */; };
 		2F5332DE1CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332D21CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m */; };
 		2F5332DF1CC557F3006E92E1 /* Layer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5332D41CC557F3006E92E1 /* Layer+CoreDataProperties.m */; };
-		2F58BC261BFBBFE500B3B09D /* OAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */; };
+		2F58BC261BFBBFE500B3B09D /* IdpAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC251BFBBFE500B3B09D /* IdpAuthentication.m */; };
 		2F58BC291BFBF64000B3B09D /* MagicalRecord+MAGE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */; };
 		2F7067E82214836200121B52 /* mage-ios-sdk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F7067D82214836200121B52 /* mage-ios-sdk.xcdatamodeld */; };
 		2F92D10E1D91CD6900CC0149 /* ObservationFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F92D10A1D91CD6900CC0149 /* ObservationFavorite.m */; };
@@ -183,8 +183,8 @@
 		2F5332D21CC557F3006E92E1 /* StaticLayer+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "StaticLayer+CoreDataProperties.m"; path = "MAGE/StaticLayer+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		2F5332D31CC557F3006E92E1 /* Layer+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Layer+CoreDataProperties.h"; path = "MAGE/Layer+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2F5332D41CC557F3006E92E1 /* Layer+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Layer+CoreDataProperties.m"; path = "MAGE/Layer+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
-		2F58BC241BFBBFE500B3B09D /* OAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OAuthAuthentication.h; path = MAGE/OAuthAuthentication.h; sourceTree = SOURCE_ROOT; };
-		2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OAuthAuthentication.m; path = MAGE/OAuthAuthentication.m; sourceTree = SOURCE_ROOT; };
+		2F58BC241BFBBFE500B3B09D /* IdpAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdpAuthentication.h; path = MAGE/IdpAuthentication.h; sourceTree = SOURCE_ROOT; };
+		2F58BC251BFBBFE500B3B09D /* IdpAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IdpAuthentication.m; path = MAGE/IdpAuthentication.m; sourceTree = SOURCE_ROOT; };
 		2F58BC271BFBF64000B3B09D /* MagicalRecord+MAGE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MagicalRecord+MAGE.h"; path = "MAGE/MagicalRecord+MAGE.h"; sourceTree = SOURCE_ROOT; };
 		2F58BC281BFBF64000B3B09D /* MagicalRecord+MAGE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MagicalRecord+MAGE.m"; path = "MAGE/MagicalRecord+MAGE.m"; sourceTree = SOURCE_ROOT; };
 		2F7067D92214836200121B52 /* mage-ios-sdk 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 6.xcdatamodel"; sourceTree = "<group>"; };
@@ -418,8 +418,8 @@
 				2FCDC34F22BD85D9004189AD /* LdapAuthentication.m */,
 				4CAF959E18C62F7C00A41CB8 /* LocalAuthentication.h */,
 				4CAF959F18C62F7C00A41CB8 /* LocalAuthentication.m */,
-				2F58BC241BFBBFE500B3B09D /* OAuthAuthentication.h */,
-				2F58BC251BFBBFE500B3B09D /* OAuthAuthentication.m */,
+				2F58BC241BFBBFE500B3B09D /* IdpAuthentication.h */,
+				2F58BC251BFBBFE500B3B09D /* IdpAuthentication.m */,
 				F768E9C9191D0E6E003287E3 /* ServerAuthentication.h */,
 				F768E9CA191D0E6E003287E3 /* ServerAuthentication.m */,
 			);
@@ -757,7 +757,6 @@
 				"${BUILT_PRODUCTS_DIR}/DateTools/DateTools.framework",
 				"${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework",
 				"${BUILT_PRODUCTS_DIR}/geopackage-ios/geopackage_ios.framework",
-				"${BUILT_PRODUCTS_DIR}/objective-zip/objective_zip.framework",
 				"${BUILT_PRODUCTS_DIR}/proj4-ios/proj4_ios.framework",
 				"${BUILT_PRODUCTS_DIR}/sf-ios/sf_ios.framework",
 				"${BUILT_PRODUCTS_DIR}/sf-proj-ios/sf_proj_ios.framework",
@@ -772,7 +771,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateTools.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagicalRecord.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/geopackage_ios.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/objective_zip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/proj4_ios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sf_ios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sf_proj_ios.framework",
@@ -804,7 +802,7 @@
 				2F5332DD1CC557F3006E92E1 /* Server+CoreDataProperties.m in Sources */,
 				F7F133621975857000E79762 /* UserUtility.m in Sources */,
 				F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */,
-				2F58BC261BFBBFE500B3B09D /* OAuthAuthentication.m in Sources */,
+				2F58BC261BFBBFE500B3B09D /* IdpAuthentication.m in Sources */,
 				049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */,
 				2FE3C9C5221759590066B19E /* Model11To15.xcmappingmodel in Sources */,
 				2FE3C9C4221759590066B19E /* Model6To15.xcmappingmodel in Sources */,

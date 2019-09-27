@@ -3,10 +3,19 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.4]
+## [3.0.5]
 * TBD
 
 ##### Features
+
+##### Bug Fixes
+
+## [3.0.4](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.4) (09-27-2019)
+
+##### Features
+* Added SAML authentication support.
+* Migrate deprecated Objective-Zip library to SSZipArchive library.
+* Bump iOS version to 12
 
 ##### Bug Fixes
 
