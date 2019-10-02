@@ -10,12 +10,12 @@
 #import "MageSessionManager.h"
 #import "MageServer.h"
 #import "StaticLayer.h"
+#import "ImageryLayer.h"
 #import "Server.h"
 
 @implementation Layer
 
 NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
-NSString * const GeoPackageLayerFetched = @"mil.nga.giat.mage.geopackage.layer.fetched";
 NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloaded";
 
 - (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId {
@@ -111,6 +111,42 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     [manager addTask:task];
 }
 
++ (NSMutableArray *) populateLayersFromJson: (NSArray *) layers inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
+    NSMutableArray *layerRemoteIds = [[NSMutableArray alloc] init];
+    for (id layer in layers) {
+        NSString *remoteLayerId = [Layer layerIdFromJson:layer];
+        [layerRemoteIds addObject:remoteLayerId];
+        if ([[Layer layerTypeFromJson:layer] isEqualToString:@"Feature"]) {
+            [StaticLayer createOrUpdateStaticLayer:layer withEventId:eventId inContext:context];
+        } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"GeoPackage"]) {
+            Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:context];
+            if (l == nil) {
+                l = [Layer MR_createEntityInContext:context];
+            }
+            [l populateObjectFromJson:layer withEventId:eventId];
+            
+            // If this layer already exists but for a different event, set it's downloaded status
+            Layer *existing = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@ AND eventId != %@", remoteLayerId, eventId] inContext:context];
+            if (existing) {
+                l.loaded = existing.loaded;
+            }
+        } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"Imagery"]){
+            ImageryLayer *l = [ImageryLayer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:context];
+            if (l == nil) {
+                l = [ImageryLayer MR_createEntityInContext:context];
+            }
+            [l populateObjectFromJson:layer withEventId:eventId];
+        } else {
+            Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:context];
+            if (l == nil) {
+                l = [Layer MR_createEntityInContext:context];
+            }
+            [l populateObjectFromJson:layer withEventId:eventId];
+        }
+    }
+    return layerRemoteIds;
+}
+
 + (NSURLSessionDataTask *) operationToPullLayersForEvent: (NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
     
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/layers", [MageServer baseURL], eventId];
@@ -120,45 +156,8 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             // Seems like we shouldn't have to do this....
             [StaticLayer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"eventId == %@", eventId] inContext:localContext];
-            
-            NSArray *layers = responseObject;
-            
-            NSMutableArray *layerRemoteIds = [[NSMutableArray alloc] init];
-            
-            for (id layer in layers) {
-                NSString *remoteLayerId = [Layer layerIdFromJson:layer];
-                [layerRemoteIds addObject:remoteLayerId];
-                if ([[Layer layerTypeFromJson:layer] isEqualToString:@"Feature"]) {
-                    [StaticLayer createOrUpdateStaticLayer:layer withEventId:eventId inContext:localContext];
-                } else if ([[Layer layerTypeFromJson:layer] isEqualToString:@"GeoPackage"]) {
-                    Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:localContext];
-                    if (l == nil) {
-                        l = [Layer MR_createEntityInContext:localContext];
-                        [l populateObjectFromJson:layer withEventId:eventId];
-                        NSLog(@"Inserting layer with id: %@ in event: %@", l.remoteId, eventId);
-                    } else {
-                        NSLog(@"Updating layer with id: %@ in event: %@", l.remoteId, eventId);
-                        [l populateObjectFromJson:layer withEventId:eventId];
-                    }
-                    
-                    // If this layer already exists but for a different event, set it's downloaded status
-                    Layer *existing = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"remoteId == %@ AND eventId != %@", remoteLayerId, eventId] inContext:localContext];
-                    if (existing) {
-                        l.loaded = existing.loaded;
-                    }
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageLayerFetched object:l];
-                } else {
-                    Layer *l = [Layer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteLayerId, eventId] inContext:localContext];
-                    if (l == nil) {
-                        l = [Layer MR_createEntityInContext:localContext];
-                        [l populateObjectFromJson:layer withEventId:eventId];
-                        NSLog(@"Inserting layer with id: %@ in event: %@", l.remoteId, eventId);
-                    } else {
-                        NSLog(@"Updating layer with id: %@ in event: %@", l.remoteId, eventId);
-                        [l populateObjectFromJson:layer withEventId:eventId];
-                    }
-                }
-            }
+                                    
+            NSMutableArray *layerRemoteIds = [Layer populateLayersFromJson:responseObject inEventId: eventId inContext:localContext];
             [Layer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND eventId == %@", layerRemoteIds, eventId] inContext:localContext];
             [StaticLayer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND eventId == %@", layerRemoteIds, eventId] inContext:localContext];
         } completion:^(BOOL contextDidSave, NSError *error) {
