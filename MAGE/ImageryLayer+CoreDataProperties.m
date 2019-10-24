@@ -17,5 +17,6 @@
 
 @dynamic format;
 @dynamic options;
+@dynamic isSecure;
 
 @end

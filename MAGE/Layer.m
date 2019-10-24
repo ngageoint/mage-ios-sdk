@@ -15,7 +15,6 @@
 
 @implementation Layer
 
-NSString * const LayerFetched = @"mil.nga.giat.mage.layer.fetched";
 NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloaded";
 
 - (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId {
@@ -41,14 +40,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
 + (void) refreshLayersForEvent:(NSNumber *)eventId {
     MageSessionManager *manager = [MageSessionManager manager];
     NSURLSessionDataTask *task = [Layer operationToPullLayersForEvent:eventId success:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:LayerFetched object:nil];
-        NSArray *staticLayers = [StaticLayer MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"eventId == %@", eventId]];
-        for (StaticLayer *l in staticLayers) {
-            NSURLSessionDataTask *fetchFeaturesTask = [StaticLayer operationToFetchStaticLayerData:l];
-            [manager addTask:fetchFeaturesTask];
-        }
     } failure:^(NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:LayerFetched object:nil];
     }];
     [manager addTask:task];
 }
@@ -70,6 +62,8 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
             
             localLayer.downloadedBytes = [NSNumber numberWithUnsignedLongLong: downloadProgress.completedUnitCount];
         }];
+        NSLog(@"downloaded Bytes: %lld", downloadProgress.completedUnitCount);
+
     } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         return [NSURL fileURLWithPath:stringPath];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
@@ -154,9 +148,6 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     MageSessionManager *manager = [MageSessionManager manager];
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            // Seems like we shouldn't have to do this....
-            [StaticLayer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"eventId == %@", eventId] inContext:localContext];
-                                    
             NSMutableArray *layerRemoteIds = [Layer populateLayersFromJson:responseObject inEventId: eventId inContext:localContext];
             [Layer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND eventId == %@", layerRemoteIds, eventId] inContext:localContext];
             [StaticLayer MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND eventId == %@", layerRemoteIds, eventId] inContext:localContext];

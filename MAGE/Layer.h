@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Layer : NSManagedObject
 
-extern NSString * const LayerFetched;
 extern NSString * const GeoPackageDownloaded;
 
 + (NSString *) layerTypeFromJson:(NSDictionary *) json;

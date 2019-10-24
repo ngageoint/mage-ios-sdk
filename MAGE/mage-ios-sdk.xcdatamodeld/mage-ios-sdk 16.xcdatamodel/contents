@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18F132" minimumToolsVersion="Xcode 8.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="18F132" minimumToolsVersion="Xcode 8.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Attachment" representedClassName="Attachment" syncable="YES">
         <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dirty" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="NO" syncable="YES"/>
@@ -35,6 +35,7 @@
     </entity>
     <entity name="ImageryLayer" representedClassName="ImageryLayer" parentEntity="Layer" syncable="YES">
         <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSecure" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="options" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="Layer" representedClassName="Layer" syncable="YES">
@@ -135,7 +136,7 @@
         <element name="Canary" positionX="-2322" positionY="-1008" width="128" height="60"/>
         <element name="Event" positionX="-2466" positionY="-973" width="128" height="150"/>
         <element name="GPSLocation" positionX="-1989" positionY="-1161" width="128" height="105"/>
-        <element name="ImageryLayer" positionX="-2322" positionY="-1008" width="128" height="73"/>
+        <element name="ImageryLayer" positionX="-2322" positionY="-1008" width="128" height="88"/>
         <element name="Layer" positionX="-2243" positionY="-1035" width="128" height="193"/>
         <element name="Location" positionX="-2108" positionY="-612" width="128" height="150"/>
         <element name="Observation" positionX="-1926" positionY="-1024" width="128" height="300"/>

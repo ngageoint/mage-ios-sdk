@@ -19,6 +19,7 @@
     [self setEventId:eventId];
     [self setFormat:[json objectForKey:@"format"]];
     [self setOptions:[json objectForKey:@"wms"]];
+    [self setIsSecure:[[json objectForKey:@"url"] hasPrefix:@"https"]];
     return self;
 }
 

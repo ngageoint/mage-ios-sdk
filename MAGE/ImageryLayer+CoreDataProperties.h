@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, copy) NSString *format;
 @property (nullable, nonatomic, retain) NSDictionary* options;
+@property (nonatomic) BOOL isSecure;
 
 @end
 
