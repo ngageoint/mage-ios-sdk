@@ -45,6 +45,20 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
     [manager addTask:task];
 }
 
++ (void) cancelGeoPackageDownload: (Layer *) layer {
+    MageSessionManager *manager = [MageSessionManager manager];
+    for (NSURLSessionDownloadTask *task in manager.downloadTasks) {
+        if ([task.taskDescription isEqualToString: [NSString stringWithFormat: @"geopackage_download_%@", layer.remoteId]]) {
+            [task cancel];
+        }
+    }
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        Layer *localLayer = [layer MR_inContext:localContext];
+        localLayer.downloadedBytes = 0;
+        localLayer.downloading = NO;
+    }];
+}
+
 + (void) downloadGeoPackage: (Layer *) layer success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/layers/%@", [MageServer baseURL], [Server currentEventId], [layer remoteId]];
     
@@ -82,6 +96,8 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
         [[NSNotificationCenter defaultCenter] postNotificationName:GeoPackageDownloaded object:nil userInfo:@{@"filePath": fileString, @"layerId": layer.remoteId}];
     }];
     
+    task.taskDescription = [NSString stringWithFormat: @"geopackage_download_%@", layer.remoteId];
+    
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:stringPath]) {
         NSLog(@"Create directory %@ for geopackage", [stringPath stringByDeletingLastPathComponent]);
@@ -101,7 +117,7 @@ NSString * const GeoPackageDownloaded = @"mil.nga.giat.mage.geopackage.downloade
         
         localLayer.downloading = YES;
     }];
-    
+        
     [manager addTask:task];
 }
 

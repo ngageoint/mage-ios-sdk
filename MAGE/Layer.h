@@ -21,6 +21,7 @@ extern NSString * const GeoPackageDownloaded;
 + (NSMutableArray *) populateLayersFromJson: (NSArray *) layers inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context;
 + (void) refreshLayersForEvent: (NSNumber *) eventId;
 + (void) downloadGeoPackage: (Layer *) layer success: (void (^)(void)) success failure: (void (^)(NSError *)) failure;
++ (void) cancelGeoPackageDownload: (Layer *) layer;
 
 @end
 
