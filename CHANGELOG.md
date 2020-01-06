@@ -3,10 +3,17 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.5]
+## [3.0.6]
 * TBD
 
 ##### Features
+
+##### Bug Fixes
+
+## [3.0.5](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.5) (01-06-2020)
+
+##### Features
+* Support XYZ/WMS/TMS layers
 
 ##### Bug Fixes
 
