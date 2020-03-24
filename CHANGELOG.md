@@ -3,12 +3,20 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.6]
+## [3.0.7]
 * TBD
 
 ##### Features
 
 ##### Bug Fixes
+
+## [3.0.6](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.6) (03-24-2020)
+
+##### Features
+
+##### Bug Fixes
+* Set loaded property on static layers after download.
+* Account for no selected online layers.
 
 ## [3.0.5](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.5) (01-06-2020)
 
