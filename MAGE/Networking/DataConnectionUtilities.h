@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, NetworkAllowType) {
 + (BOOL) shouldPushLocations;
 + (BOOL) shouldPushAttachments;
 + (BOOL) shouldFetchAttachments;
++ (BOOL) shouldFetchAvatars;
 
 @end
 

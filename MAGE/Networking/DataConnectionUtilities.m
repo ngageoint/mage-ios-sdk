@@ -131,4 +131,8 @@
     return [DataConnectionUtilities shouldPerformNetworkOperation:@"attachmentFetchNetworkOption"];
 }
 
++ (BOOL) shouldFetchAvatars {
+    return [DataConnectionUtilities shouldPerformNetworkOperation:@"attachmentFetchNetworkOption"];
+}
+
 @end
