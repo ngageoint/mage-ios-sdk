@@ -3,10 +3,10 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.7]
-* TBD
+## [3.0.7](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.7) (04-27-2020)
 
 ##### Features
+* Updated to GeoPackage-iOS 4.0.1
 
 ##### Bug Fixes
 
