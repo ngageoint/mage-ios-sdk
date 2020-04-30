@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
+## [3.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.7) (04-30-2020)
+
+##### Features
+
+##### Bug Fixes
+* Update ignored url list when checking for token expiration
+
 ## [3.0.7](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.7) (04-27-2020)
 
 ##### Features
