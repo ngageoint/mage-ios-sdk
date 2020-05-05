@@ -8,6 +8,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ##### Features
 * DataConnectionUtilities class can be used to determine if different MAGE data should be pushed or pulled
 * Added Network Sync Options for preferences views
+* Added methods to the Observation class to pull feed field display values
 
 ##### Bug Fixes
 
