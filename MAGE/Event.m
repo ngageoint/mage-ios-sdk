@@ -9,6 +9,7 @@
 #import "Event.h"
 #import "Team.h"
 #import "User.h"
+#import "Feed.h"
 #import "Server.h"
 #import "StaticLayer.h"
 
@@ -92,6 +93,8 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
         }
     }
     [Layer populateLayersFromJson:[json objectForKey:@"layers"] inEventId: self.remoteId inContext:context];
+    [Feed refreshFeedsForEvent:self.remoteId];
+//    [Feed populateFeedsFromJson:[json objectForKey:@"feeds"] inEventId: self.remoteId inContext: context];
 }
 
 - (BOOL) isUserInEvent: (User *) user {

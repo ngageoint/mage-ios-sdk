@@ -95,6 +95,10 @@
 		F7F133621975857000E79762 /* UserUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F133611975857000E79762 /* UserUtility.m */; };
 		F7F711F32343E3A900E01FD7 /* Model15To16.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F7F711F22343E3A900E01FD7 /* Model15To16.xcmappingmodel */; };
 		F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */; };
+		F7F8A1B02486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */; };
+		F7F8A1B12486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */; };
+		F7F8A1B22486F4BC00E3A2A2 /* Feed+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */; };
+		F7F8A1B32486F4BC00E3A2A2 /* Feed+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,11 +289,20 @@
 		F7DEF9251912BD2D0026B9D0 /* preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = preferences.plist; path = MAGE/preferences.plist; sourceTree = SOURCE_ROOT; };
 		F7EDF8F623EE162E00B77379 /* DataConnectionUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConnectionUtilities.h; sourceTree = "<group>"; };
 		F7EDF8F723EE162E00B77379 /* DataConnectionUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataConnectionUtilities.m; sourceTree = "<group>"; };
+		F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 17.xcdatamodel"; sourceTree = "<group>"; };
 		F7F133601975857000E79762 /* UserUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserUtility.h; path = MAGE/UserUtility.h; sourceTree = SOURCE_ROOT; };
 		F7F133611975857000E79762 /* UserUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserUtility.m; path = MAGE/UserUtility.m; sourceTree = SOURCE_ROOT; };
 		F7F711F22343E3A900E01FD7 /* Model15To16.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; name = Model15To16.xcmappingmodel; path = MAGE/Model15To16.xcmappingmodel; sourceTree = "<group>"; };
 		F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredPassword.h; path = MAGE/StoredPassword.h; sourceTree = SOURCE_ROOT; };
 		F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredPassword.m; path = MAGE/StoredPassword.m; sourceTree = SOURCE_ROOT; };
+		F7F8A1A82486F4BB00E3A2A2 /* FeedItem+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FeedItem+CoreDataProperties.h"; path = "MAGE/FeedItem+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F7F8A1A92486F4BB00E3A2A2 /* FeedItem+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FeedItem+CoreDataClass.h"; path = "MAGE/FeedItem+CoreDataClass.h"; sourceTree = "<group>"; };
+		F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "FeedItem+CoreDataClass.m"; path = "MAGE/FeedItem+CoreDataClass.m"; sourceTree = "<group>"; };
+		F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "FeedItem+CoreDataProperties.m"; path = "MAGE/FeedItem+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F7F8A1AC2486F4BC00E3A2A2 /* Feed+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Feed+CoreDataProperties.h"; path = "MAGE/Feed+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F7F8A1AD2486F4BC00E3A2A2 /* Feed+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Feed+CoreDataClass.h"; path = "MAGE/Feed+CoreDataClass.h"; sourceTree = "<group>"; };
+		F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Feed+CoreDataClass.m"; path = "MAGE/Feed+CoreDataClass.m"; sourceTree = "<group>"; };
+		F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Feed+CoreDataProperties.m"; path = "MAGE/Feed+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -553,6 +566,14 @@
 		F739EFF31AB1E41E003A6E4B /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				F7F8A1A82486F4BB00E3A2A2 /* FeedItem+CoreDataProperties.h */,
+				F7F8A1A92486F4BB00E3A2A2 /* FeedItem+CoreDataClass.h */,
+				F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */,
+				F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */,
+				F7F8A1AC2486F4BC00E3A2A2 /* Feed+CoreDataProperties.h */,
+				F7F8A1AD2486F4BC00E3A2A2 /* Feed+CoreDataClass.h */,
+				F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */,
+				F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */,
 				F7083E572343D0BC006EE9D4 /* ImageryLayer+CoreDataProperties.h */,
 				F7083E582343D0BC006EE9D4 /* ImageryLayer.h */,
 				F7083E592343D0BC006EE9D4 /* ImageryLayer.m */,
@@ -845,8 +866,10 @@
 				2FE3C9C4221759590066B19E /* Model6To15.xcmappingmodel in Sources */,
 				F7EDF8F823EE162E00B77379 /* DataConnectionUtilities.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
+				F7F8A1B32486F4BC00E3A2A2 /* Feed+CoreDataProperties.m in Sources */,
 				2FE3C9C9221759590066B19E /* Model5To15.xcmappingmodel in Sources */,
 				2F53326E1CC154C3006E92E1 /* Observation.m in Sources */,
+				F7F8A1B02486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m in Sources */,
 				2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */,
 				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
 				049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */,
@@ -863,6 +886,7 @@
 				2F5332DB1CC557F3006E92E1 /* User+CoreDataProperties.m in Sources */,
 				048E23D81EAFD8B40001DB3E /* GeometrySerializer.m in Sources */,
 				F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */,
+				F7F8A1B22486F4BC00E3A2A2 /* Feed+CoreDataClass.m in Sources */,
 				F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */,
 				2F5332D81CC557F3006E92E1 /* Role+CoreDataProperties.m in Sources */,
 				F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */,
@@ -870,6 +894,7 @@
 				2F5332DF1CC557F3006E92E1 /* Layer+CoreDataProperties.m in Sources */,
 				2F5332661CC154C3006E92E1 /* Event.m in Sources */,
 				049C65501E55E60E005F4FA4 /* TaskSessionManager.m in Sources */,
+				F7F8A1B12486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m in Sources */,
 				2F5332701CC154C3006E92E1 /* Role.m in Sources */,
 				2F5332D51CC557F3006E92E1 /* GPSLocation+CoreDataProperties.m in Sources */,
 				F79E5D0F21138E3F004C3902 /* Canary+CoreDataProperties.m in Sources */,
@@ -1152,6 +1177,7 @@
 		2F7067D82214836200121B52 /* mage-ios-sdk.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */,
 				F774970422FA0DA200E69734 /* mage-ios-sdk 16.xcdatamodel */,
 				2F7067DF2214836200121B52 /* mage-ios-sdk 15.xcdatamodel */,
 				2F7067E52214836200121B52 /* mage-ios-sdk 14.xcdatamodel */,
@@ -1169,7 +1195,7 @@
 				2F7067E12214836200121B52 /* mage-ios-sdk 2.xcdatamodel */,
 				2F7067DB2214836200121B52 /* mage-ios-sdk.xcdatamodel */,
 			);
-			currentVersion = F774970422FA0DA200E69734 /* mage-ios-sdk 16.xcdatamodel */;
+			currentVersion = F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */;
 			name = "mage-ios-sdk.xcdatamodeld";
 			path = "MAGE/mage-ios-sdk.xcdatamodeld";
 			sourceTree = "<group>";
