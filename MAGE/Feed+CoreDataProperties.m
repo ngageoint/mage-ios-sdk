@@ -18,6 +18,8 @@
 @dynamic id;
 @dynamic title;
 @dynamic summary;
+@dynamic itemPrimaryProperty;
+@dynamic itemSecondaryProperty;
 @dynamic constantParams;
 @dynamic variableParams;
 @dynamic style;

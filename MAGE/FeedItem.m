@@ -13,6 +13,11 @@
 
 @implementation FeedItem
 
++ (NSArray<FeedItem*> *) getFeedItemsForFeed: (NSNumber *) feedId {
+    Feed *feed = [Feed MR_findFirstByAttribute:@"id" withValue:feedId];
+    return [FeedItem MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(feed == %@)", feed]];
+}
+
 - (id) populateObjectFromJson: (NSDictionary *) json withFeed: (Feed *) feed {
     [self setId:[NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]]];
     @try {
@@ -33,7 +38,7 @@
 }
 
 - (BOOL) hasContent {
-    return self.primaryValue || self.secondaryValue || self.iconURL;
+    return self.primaryValue || self.secondaryValue || ([self isTemporal] && self.timestamp != nil);
 }
 
 - (SFGeometry *) simpleFeature {
@@ -44,32 +49,34 @@
     self.geometry = [GeometryUtility toGeometryDataFromGeometry:simpleFeature];
 }
 
-- (NSString *) primaryValue {
-    NSDictionary *propertyDictionary = self.properties;
-    return [propertyDictionary valueForKey:@"Property 1"];
+- (nullable NSString *) primaryValue {
+    return [((NSDictionary *)self.properties)  valueForKey:self.feed.itemPrimaryProperty];
 }
 
-- (NSString *) secondaryValue {
-    return [((NSDictionary *)self.properties) valueForKey:@"Property 2"];
+- (nullable NSString *) secondaryValue {
+    return [((NSDictionary *)self.properties) valueForKey:self.feed.itemSecondaryProperty];
 }
 
-- (NSURL *) iconURL {
-    NSString *urlString = [((NSDictionary *)self.feed.style) valueForKey:@"iconUrl"];
-    if (urlString != nil) {
-        return [NSURL URLWithString:urlString];
+- (nullable NSURL *) iconURL {
+    return self.feed.iconURL;
+}
+
+- (nullable NSDate *) timestamp {
+    NSNumber *epochTime = [((NSDictionary *)self.properties) valueForKey:self.feed.itemTemporalProperty];
+    if (epochTime == nil) {
+        return nil;
     }
-    return nil;
-}
-
-- (NSDate *) timestamp {
-    return [((NSDictionary *)self.properties) valueForKey:@"timestamp"];
+    return [NSDate dateWithTimeIntervalSince1970: epochTime.doubleValue];
 }
 
 - (NSString *) title {
+    if (self.primaryValue == nil) {
+        return @" ";
+    }
     return self.primaryValue;
 }
 
-- (NSString *) subtitle {
+- (nullable NSString *) subtitle {
     return self.secondaryValue;
 }
 
@@ -80,6 +87,10 @@
 
 - (BOOL) isMappable {
     return self.geometry != nil;
+}
+
+- (BOOL) isTemporal {
+    return self.feed.itemTemporalProperty != nil;
 }
 
 @end

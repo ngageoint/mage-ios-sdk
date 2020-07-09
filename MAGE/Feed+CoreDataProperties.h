@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber* id;
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nullable, nonatomic, copy) NSString *summary;
+@property (nonatomic) BOOL itemsHaveIdentity;
+@property (nonatomic) BOOL itemsHaveSpatialDimension;
+@property (nullable, nonatomic, copy) NSString *itemPrimaryProperty;
+@property (nullable, nonatomic, copy) NSString *itemSecondaryProperty;
+@property (nullable, nonatomic, copy) NSString *itemTemporalProperty;
 @property (nullable, nonatomic, retain) id constantParams;
 @property (nullable, nonatomic, retain) id variableParams;
 @property (nullable, nonatomic, retain) id style;

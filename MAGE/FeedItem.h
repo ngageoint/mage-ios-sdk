@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy, nullable) NSString *subtitle;
 @property (readonly) BOOL isMappable;
 
++ (NSArray<FeedItem*> *) getFeedItemsForFeed: (NSNumber *) feedId;
 + (NSNumber *) feedItemIdFromJson:(NSDictionary *) json;
 - (id) populateObjectFromJson: (NSDictionary *) json withFeed: (Feed *) feed;
 - (BOOL) hasContent;

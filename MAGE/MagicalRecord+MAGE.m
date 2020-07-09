@@ -42,6 +42,11 @@
 }
 
 +(void) deleteAndSetupMageCoreDataStack {
+    
+    for (NSPersistentStore *store in [NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator.persistentStores) {
+        [[NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator removePersistentStore:store error:nil];
+    }
+    
     NSError *storeError = nil;
     NSError *walError = nil;
     NSError *shmError = nil;

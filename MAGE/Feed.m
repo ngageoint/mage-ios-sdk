@@ -23,30 +23,60 @@
     [self setUpdateFrequency:[json objectForKey:@"updateFrequency"]];
     [self setPullFrequency:[json objectForKey:@"updateFrequency"]];
     [self setStyle:[json objectForKey:@"style"]];
+    [self setItemPrimaryProperty:[json objectForKey:@"itemPrimaryProperty"]];
+    [self setItemSecondaryProperty:[json objectForKey:@"itemSecondaryProperty"]];
+    [self setItemTemporalProperty:[json objectForKey:@"itemTemporalProperty"]];
+    [self setItemsHaveIdentity:[json objectForKey:@"itemsHaveIdentity"]];
+    [self setItemsHaveSpatialDimension:[[json objectForKey:@"itemsHaveSpatialDimension"] boolValue] ];
     [self setEventId:eventId];
     
     return self;
+}
+
+- (nullable NSURL *) iconURL {
+    NSString *urlString = [((NSDictionary *)self.style) valueForKey:@"iconUrl"];
+    if (urlString != nil) {
+        return [NSURL URLWithString:urlString];
+    }
+    return nil;
 }
 
 + (NSNumber *) feedIdFromJson:(NSDictionary *) json {
     return [NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]];
 }
 
++ (NSArray *) getMappableFeeds: (NSNumber *) eventId {
+    return [Feed MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(itemsHaveSpatialDimension == YES AND eventId == %@)", eventId]];
+}
+
 + (NSMutableArray *) populateFeedsFromJson: (NSArray *) feeds inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
     NSMutableArray *feedRemoteIds = [[NSMutableArray alloc] init];
+    NSMutableDictionary *selectedFeedsPerEvent = [[NSUserDefaults.standardUserDefaults objectForKey:@"selectedFeeds"] mutableCopy];
+    if (selectedFeedsPerEvent == nil) {
+        selectedFeedsPerEvent = [[NSMutableDictionary alloc] init];
+    }
+    NSMutableArray *selectedFeedsForEvent = [[selectedFeedsPerEvent objectForKey:[eventId stringValue]] mutableCopy];
+    if (selectedFeedsForEvent == nil) {
+        selectedFeedsForEvent = [[NSMutableArray alloc] init];
+    }
     for (id feed in feeds) {
         NSNumber *remoteFeedId = [Feed feedIdFromJson:feed];
         [feedRemoteIds addObject:remoteFeedId];
         Feed *f = [Feed MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(id == %@ AND eventId == %@)", remoteFeedId, eventId] inContext:context];
         if (f == nil) {
             f = [Feed MR_createEntityInContext:context];
+            [selectedFeedsForEvent addObject:remoteFeedId];
         }
         
         [f populateObjectFromJson:feed withEventId:eventId];
     }
     
     [Feed MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (id IN %@)) AND eventId == %@", feedRemoteIds, eventId] inContext:context];
-
+    
+    [selectedFeedsForEvent filterUsingPredicate:[NSPredicate predicateWithFormat:@"self in %@", feedRemoteIds]];
+    [selectedFeedsPerEvent setObject:selectedFeedsForEvent forKey:[eventId stringValue]];
+    [NSUserDefaults.standardUserDefaults setObject:selectedFeedsPerEvent forKey:@"selectedFeeds"];
+    [NSUserDefaults.standardUserDefaults synchronize];
     return feedRemoteIds;
 }
 
