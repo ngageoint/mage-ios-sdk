@@ -16,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Feed *> *)fetchRequest;
 
-@property (nullable, nonatomic, retain) NSNumber* id;
+@property (nullable, nonatomic, copy) NSString* remoteId;
 @property (nullable, nonatomic, copy) NSString *title;
+@property (nullable, nonatomic, copy) NSNumber *tag;
 @property (nullable, nonatomic, copy) NSString *summary;
 @property (nonatomic) BOOL itemsHaveIdentity;
 @property (nonatomic) BOOL itemsHaveSpatialDimension;

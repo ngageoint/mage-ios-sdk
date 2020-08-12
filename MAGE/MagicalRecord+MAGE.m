@@ -42,10 +42,19 @@
 }
 
 +(void) deleteAndSetupMageCoreDataStack {
-    
-    for (NSPersistentStore *store in [NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator.persistentStores) {
-        [[NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator removePersistentStore:store error:nil];
+    NSLog(@"Remove persistent stores");
+    @try {
+        if ([NSManagedObjectContext MR_defaultContext] != nil) {
+            for (NSPersistentStore *store in [NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator.persistentStores) {
+                @try {
+                    [[NSManagedObjectContext MR_defaultContext].persistentStoreCoordinator removePersistentStore:store error:nil];
+                }
+                @catch (id exception) {}
+            }
+        }
     }
+    @catch (id exception) {}
+    
     
     NSError *storeError = nil;
     NSError *walError = nil;
@@ -55,12 +64,15 @@
     NSURL *walURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
     NSURL *shmURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
     
+    NSLog(@"Clean up magical record");
     [MagicalRecord cleanUp];
-    
+    NSLog(@"after cleanup");
     if([[NSFileManager defaultManager] removeItemAtURL:storeURL error:&storeError] &&
        [[NSFileManager defaultManager] removeItemAtURL:walURL error:&walError] &&
        [[NSFileManager defaultManager] removeItemAtURL:shmURL error:&shmError]) {
+        NSLog(@"setup stack");
         [self setupMageCoreDataStack];
+        NSLog(@"stack is set up");
     } else {
         NSLog(@"An error has occurred while deleting %@", @"Mage.sqlite");
         NSLog(@"store error description: %@", storeError.description);

@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isMappable;
 
 + (NSArray<FeedItem*> *) getFeedItemsForFeed: (NSNumber *) feedId;
-+ (NSNumber *) feedItemIdFromJson:(NSDictionary *) json;
++ (NSString *) feedItemIdFromJson:(NSDictionary *) json;
 - (id) populateObjectFromJson: (NSDictionary *) json withFeed: (Feed *) feed;
 - (BOOL) hasContent;
 

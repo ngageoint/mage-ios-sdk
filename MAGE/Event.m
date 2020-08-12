@@ -137,7 +137,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     NSLog(@"Pulling events from the server %@", url);
     
     NSURL *URL = [NSURL URLWithString:url];
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSURLSessionDataTask *task = [manager GET_TASK:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id events) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             User *localUser = [User fetchCurrentUserInManagedObjectContext:localContext];
@@ -180,7 +180,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     NSString *url = [NSString stringWithFormat:@"%@/api/users/%@/events/%@/recent", [MageServer baseURL], u.remoteId, [Server currentEventId]];
     
     NSURL *URL = [NSURL URLWithString:url];
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSURLSessionDataTask *task = [manager POST_TASK:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id events) {
         
     } failure:^(NSURLSessionTask *operation, NSError *error) {

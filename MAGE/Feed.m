@@ -14,14 +14,15 @@
 
 @implementation Feed
 
-- (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId {
-    [self setId:[NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]]];
+- (id) populateObjectFromJson: (NSDictionary *) json withEventId: (NSNumber *) eventId withTag: (NSNumber *) tag {
+    [self setRemoteId:[json objectForKey:@"id"]];
+    [self setTag:tag];
     [self setTitle:[json objectForKey:@"title"]];
     [self setSummary:[json objectForKey:@"summary"]];
     [self setConstantParams:[json objectForKey:@"constantParams"]];
     [self setVariableParams:[json objectForKey:@"variableParams"]];
-    [self setUpdateFrequency:[json objectForKey:@"updateFrequency"]];
-    [self setPullFrequency:[json objectForKey:@"updateFrequency"]];
+    [self setUpdateFrequency:[[json objectForKey:@"updateFrequency"] objectForKey:@"seconds"]];
+    [self setPullFrequency:[[json objectForKey:@"updateFrequency"] objectForKey:@"seconds"]];
     [self setStyle:[json objectForKey:@"style"]];
     [self setItemPrimaryProperty:[json objectForKey:@"itemPrimaryProperty"]];
     [self setItemSecondaryProperty:[json objectForKey:@"itemSecondaryProperty"]];
@@ -41,52 +42,48 @@
     return nil;
 }
 
-+ (NSNumber *) feedIdFromJson:(NSDictionary *) json {
-    return [NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]];
++ (NSString *) feedIdFromJson:(NSDictionary *) json {
+    return [json objectForKey:@"id"];
 }
 
-+ (NSArray *) getMappableFeeds: (NSNumber *) eventId {
-    return [Feed MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(itemsHaveSpatialDimension == YES AND eventId == %@)", eventId]];
++ (NSArray <Feed *>*) getMappableFeeds: (NSNumber *) eventId {
+    return [Feed MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(itemsHaveSpatialDimension == 1 AND eventId == %@)", eventId]];
 }
 
-+ (NSMutableArray *) populateFeedsFromJson: (NSArray *) feeds inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
++ (NSMutableArray <NSNumber *>*) populateFeedsFromJson: (NSArray *) feeds inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
     NSMutableArray *feedRemoteIds = [[NSMutableArray alloc] init];
-    NSMutableDictionary *selectedFeedsPerEvent = [[NSUserDefaults.standardUserDefaults objectForKey:@"selectedFeeds"] mutableCopy];
-    if (selectedFeedsPerEvent == nil) {
-        selectedFeedsPerEvent = [[NSMutableDictionary alloc] init];
-    }
-    NSMutableArray *selectedFeedsForEvent = [[selectedFeedsPerEvent objectForKey:[eventId stringValue]] mutableCopy];
+    NSMutableArray *selectedFeedsForEvent = [[NSUserDefaults.standardUserDefaults objectForKey:[NSString stringWithFormat:@"selectedFeeds-%@", eventId]] mutableCopy];
     if (selectedFeedsForEvent == nil) {
         selectedFeedsForEvent = [[NSMutableArray alloc] init];
     }
+    NSUInteger count = [Feed MR_countOfEntities];
     for (id feed in feeds) {
-        NSNumber *remoteFeedId = [Feed feedIdFromJson:feed];
+        NSString *remoteFeedId = [Feed feedIdFromJson:feed];
         [feedRemoteIds addObject:remoteFeedId];
-        Feed *f = [Feed MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(id == %@ AND eventId == %@)", remoteFeedId, eventId] inContext:context];
+        Feed *f = [Feed MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteFeedId, eventId] inContext:context];
         if (f == nil) {
             f = [Feed MR_createEntityInContext:context];
             [selectedFeedsForEvent addObject:remoteFeedId];
         }
         
-        [f populateObjectFromJson:feed withEventId:eventId];
+        [f populateObjectFromJson:feed withEventId:eventId withTag:[NSNumber numberWithUnsignedInteger: count]];
+        count++;
     }
     
-    [Feed MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (id IN %@)) AND eventId == %@", feedRemoteIds, eventId] inContext:context];
-    
+    [Feed MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND eventId == %@", feedRemoteIds, eventId] inContext:context];
     [selectedFeedsForEvent filterUsingPredicate:[NSPredicate predicateWithFormat:@"self in %@", feedRemoteIds]];
-    [selectedFeedsPerEvent setObject:selectedFeedsForEvent forKey:[eventId stringValue]];
-    [NSUserDefaults.standardUserDefaults setObject:selectedFeedsPerEvent forKey:@"selectedFeeds"];
+    [NSUserDefaults.standardUserDefaults setObject:selectedFeedsForEvent forKey:[NSString stringWithFormat:@"selectedFeeds-%@", eventId]];
     [NSUserDefaults.standardUserDefaults synchronize];
     return feedRemoteIds;
 }
 
-+ (NSMutableArray *) populateFeedItemsFromJson: (NSArray *) feedItems inFeedId: (NSNumber *) feedId inContext: (NSManagedObjectContext *) context {
++ (NSMutableArray <NSNumber *>*) populateFeedItemsFromJson: (NSArray *) feedItems inFeedId: (NSString *) feedId inContext: (NSManagedObjectContext *) context {
     NSMutableArray *feedItemRemoteIds = [[NSMutableArray alloc] init];
-    Feed *feed = [Feed MR_findFirstByAttribute:@"id" withValue:feedId inContext:context];
+    Feed *feed = [Feed MR_findFirstByAttribute:@"remoteId" withValue:feedId inContext:context];
     for (id feedItem in feedItems) {
-        NSNumber *remoteFeedItemId = [FeedItem feedItemIdFromJson:feedItem];
+        NSString *remoteFeedItemId = [FeedItem feedItemIdFromJson:feedItem];
         [feedItemRemoteIds addObject:remoteFeedItemId];
-        FeedItem *fi = [FeedItem MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(id == %@ AND feed == %@)", remoteFeedItemId, feed] inContext:context];
+        FeedItem *fi = [FeedItem MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND feed == %@)", remoteFeedItemId, feed] inContext:context];
         if (fi == nil) {
             fi = [FeedItem MR_createEntityInContext:context];
         }
@@ -94,21 +91,21 @@
         [fi populateObjectFromJson:feedItem withFeed:feed];
     }
     
-    [FeedItem MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (id IN %@)) AND feed == %@", feedItemRemoteIds, feed] inContext:context];
+    [FeedItem MR_deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"(NOT (remoteId IN %@)) AND feed == %@", feedItemRemoteIds, feed] inContext:context];
     
     return feedItemRemoteIds;
 }
 
 + (void) refreshFeedsForEvent:(NSNumber *)eventId {
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSURLSessionDataTask *task = [Feed operationToPullFeedsForEvent:eventId success:^{
     } failure:^(NSError *error) {
     }];
     [manager addTask:task];
 }
 
-+ (void) pullFeedItemsForFeed:(NSNumber *) feedId inEvent:(NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
-    MageSessionManager *manager = [MageSessionManager manager];
++ (void) pullFeedItemsForFeed:(NSString *) feedId inEvent:(NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSURLSessionDataTask *task = [Feed operationToPullFeedItemsForFeed:feedId inEvent:eventId success:success failure:failure];
     [manager addTask:task];
 }
@@ -117,7 +114,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/feeds", [MageServer baseURL], eventId];
     
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             NSMutableArray *feedRemoteIds = [Feed populateFeedsFromJson:responseObject inEventId:eventId inContext:localContext];
@@ -129,7 +126,7 @@
             } else if (success) {
                 NSArray *feeds = [Feed MR_findAll];
                 for (Feed *feed in feeds) {
-                    [Feed pullFeedItemsForFeed:feed.id inEvent:eventId success:^{
+                    [Feed pullFeedItemsForFeed:feed.remoteId inEvent:eventId success:^{
                     } failure:^(NSError *error) {
                     }];
                 }
@@ -146,13 +143,14 @@
     return task;
 }
 
-+ (NSURLSessionDataTask *) operationToPullFeedItemsForFeed: (NSNumber *) feedId inEvent: (NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
-    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/feeds/%@/items", [MageServer baseURL], eventId, feedId];
++ (NSURLSessionDataTask *) operationToPullFeedItemsForFeed: (NSString *) feedId inEvent: (NSNumber *) eventId success: (void (^)(void)) success failure: (void (^)(NSError *)) failure {
+    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/feeds/%@/content", [MageServer baseURL], eventId, feedId];
     
-    MageSessionManager *manager = [MageSessionManager manager];
-    NSURLSessionDataTask *task = [manager GET_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    MageSessionManager *manager = [MageSessionManager sharedManager];
+    NSURLSessionDataTask *task = [manager POST_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            NSMutableArray *feedRemoteIds = [Feed populateFeedItemsFromJson:responseObject inFeedId:feedId inContext:localContext];
+            NSArray *features = [responseObject mutableArrayValueForKeyPath:@"items.features"];
+            NSMutableArray *feedRemoteIds = [Feed populateFeedItemsFromJson:features inFeedId:feedId inContext:localContext];
         } completion:^(BOOL contextDidSave, NSError *error) {
             if (error) {
                 if (failure) {

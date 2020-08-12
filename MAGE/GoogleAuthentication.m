@@ -57,7 +57,7 @@
 - (void) signinWithParameters: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *url = [NSString stringWithFormat:@"%@/%@", [[MageServer baseURL] absoluteString], @"auth/google/signin"];
     
     NSURL *URL = [NSURL URLWithString:url];
@@ -129,7 +129,7 @@
         
         // Always use this locale when parsing fixed format date strings
         NSDate* tokenExpirationDate = [NSDate dateFromIso8601String:[parameters objectForKey:@"expirationDate"]];
-        [MageSessionManager manager].token = token;
+        [MageSessionManager sharedManager].token = token;
         
         [[UserUtility singleton] resetExpiration];
         
@@ -155,7 +155,7 @@
 - (void) registerDevice: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
     NSLog(@"Registering device");
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *url = [NSString stringWithFormat:@"%@/%@", [[MageServer baseURL] absoluteString], @"api/devices"];
     
     NSURL *URL = [NSURL URLWithString:url];

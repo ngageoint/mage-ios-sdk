@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<FeedItem *> *)fetchRequest;
 
-@property (nullable, nonatomic, retain) NSNumber* id;
+@property (nullable, nonatomic, retain) NSString* remoteId;
 @property (nullable, nonatomic, retain) NSData *geometry;
 @property (nullable, nonatomic, retain) id properties;
 @property (nullable, nonatomic, retain) Feed *feed;

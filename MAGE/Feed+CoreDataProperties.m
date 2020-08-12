@@ -15,8 +15,9 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"Feed"];
 }
 
-@dynamic id;
+@dynamic remoteId;
 @dynamic title;
+@dynamic tag;
 @dynamic summary;
 @dynamic itemPrimaryProperty;
 @dynamic itemSecondaryProperty;

@@ -46,7 +46,7 @@
 - (void) loginWithParameters: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
     NSDictionary *strategy = [parameters objectForKey:@"strategy"];
     
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *url = [NSString stringWithFormat:@"%@/auth/%@/signin", [[MageServer baseURL] absoluteString], [strategy objectForKey:@"identifier"]];
 
     NSURL *URL = [NSURL URLWithString:url];
@@ -109,7 +109,7 @@
         // Always use this locale when parsing fixed format date strings
         NSDate* tokenExpirationDate = [NSDate dateFromIso8601String:[self.response objectForKey:@"expirationDate"]];
         
-        [MageSessionManager manager].token = token;
+        [MageSessionManager sharedManager].token = token;
         
         [[UserUtility singleton] resetExpiration];
         
@@ -155,7 +155,7 @@
     // TODO make sure MAGE session cookie is passed here
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *url = [NSString stringWithFormat:@"%@/auth/%@/authorize", [[MageServer baseURL] absoluteString], [strategy objectForKey:@"identifier"]];
     
     NSURL *URL = [NSURL URLWithString:url];
@@ -201,7 +201,7 @@
 - (void) registerDevice: (NSDictionary *) parameters complete:(void (^) (AuthenticationStatus authenticationStatus, NSString *errorString)) complete {
     NSLog(@"Registering device");
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *url = [NSString stringWithFormat:@"%@/auth/%@/devices", [[MageServer baseURL] absoluteString], [parameters valueForKey:@"strategy"]];
     
     NSURL *URL = [NSURL URLWithString:url];

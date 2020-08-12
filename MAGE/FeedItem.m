@@ -14,12 +14,12 @@
 @implementation FeedItem
 
 + (NSArray<FeedItem*> *) getFeedItemsForFeed: (NSNumber *) feedId {
-    Feed *feed = [Feed MR_findFirstByAttribute:@"id" withValue:feedId];
+    Feed *feed = [Feed MR_findFirstByAttribute:@"remoteId" withValue:feedId];
     return [FeedItem MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(feed == %@)", feed]];
 }
 
 - (id) populateObjectFromJson: (NSDictionary *) json withFeed: (Feed *) feed {
-    [self setId:[NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]]];
+    [self setRemoteId:[json objectForKey:@"id"]];
     @try {
         SFGeometry * geometry = [GeometryDeserializer parseGeometry:[json valueForKeyPath:@"geometry"]];
         [self setSimpleFeature:geometry];
@@ -33,8 +33,8 @@
     return self;
 }
 
-+ (NSNumber *) feedItemIdFromJson:(NSDictionary *) json {
-    return [NSNumber numberWithInteger:[[json objectForKey:@"id"] integerValue]];
++ (NSString *) feedItemIdFromJson:(NSDictionary *) json {
+    return [json objectForKey:@"id"];
 }
 
 - (BOOL) hasContent {

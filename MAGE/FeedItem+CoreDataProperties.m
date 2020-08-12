@@ -15,7 +15,7 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"FeedItem"];
 }
 
-@dynamic id;
+@dynamic remoteId;
 @dynamic geometry;
 @dynamic properties;
 @dynamic feed;

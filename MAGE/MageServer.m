@@ -140,7 +140,7 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
         return;
     }
     
-    MageSessionManager *manager = [MageSessionManager manager];
+    MageSessionManager *manager = [MageSessionManager sharedManager];
     NSString *apiURL = [NSString stringWithFormat:@"%@/%@", [url absoluteString], @"api"];
     NSURLSessionDataTask *task = [manager GET_TASK:apiURL parameters:nil progress:nil success:^(NSURLSessionTask *task, id response) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
