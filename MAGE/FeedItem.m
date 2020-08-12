@@ -50,7 +50,9 @@
 }
 
 - (nullable NSString *) primaryValue {
-    return [((NSDictionary *)self.properties)  valueForKey:self.feed.itemPrimaryProperty];
+    id value = [((NSDictionary *)self.properties) valueForKey:self.feed.itemPrimaryProperty];
+    return [value description];
+//    return [((NSDictionary *)self.properties) valueForKey:self.feed.itemPrimaryProperty];
 }
 
 - (nullable NSString *) secondaryValue {

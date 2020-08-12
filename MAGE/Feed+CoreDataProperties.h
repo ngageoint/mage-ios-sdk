@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *itemTemporalProperty;
 @property (nullable, nonatomic, retain) id constantParams;
 @property (nullable, nonatomic, retain) id variableParams;
-@property (nullable, nonatomic, retain) id style;
+@property (nullable, nonatomic, retain) id mapStyle;
 @property (nullable, nonatomic, retain) NSNumber* pullFrequency;
 @property (nullable, nonatomic, retain) NSNumber* updateFrequency;
 @property (nullable, nonatomic, retain) NSSet<FeedItem *> *items;

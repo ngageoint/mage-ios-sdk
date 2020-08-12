@@ -19,11 +19,12 @@
 @dynamic title;
 @dynamic tag;
 @dynamic summary;
+@dynamic itemsHaveIdentity;
 @dynamic itemPrimaryProperty;
 @dynamic itemSecondaryProperty;
 @dynamic constantParams;
 @dynamic variableParams;
-@dynamic style;
+@dynamic mapStyle;
 @dynamic updateFrequency;
 @dynamic pullFrequency;
 @dynamic items;

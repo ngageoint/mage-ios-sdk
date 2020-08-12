@@ -36,9 +36,9 @@
         <attribute name="itemsHaveIdentity" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="itemsHaveSpatialDimension" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="itemTemporalProperty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapStyle" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="pullFrequency" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="remoteId" attributeType="String" syncable="YES"/>
-        <attribute name="style" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>

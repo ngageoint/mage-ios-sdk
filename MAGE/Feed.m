@@ -23,7 +23,7 @@
     [self setVariableParams:[json objectForKey:@"variableParams"]];
     [self setUpdateFrequency:[[json objectForKey:@"updateFrequency"] objectForKey:@"seconds"]];
     [self setPullFrequency:[[json objectForKey:@"updateFrequency"] objectForKey:@"seconds"]];
-    [self setStyle:[json objectForKey:@"style"]];
+    [self setMapStyle:[json objectForKey:@"mapStyle"]];
     [self setItemPrimaryProperty:[json objectForKey:@"itemPrimaryProperty"]];
     [self setItemSecondaryProperty:[json objectForKey:@"itemSecondaryProperty"]];
     [self setItemTemporalProperty:[json objectForKey:@"itemTemporalProperty"]];
@@ -35,7 +35,7 @@
 }
 
 - (nullable NSURL *) iconURL {
-    NSString *urlString = [((NSDictionary *)self.style) valueForKey:@"iconUrl"];
+    NSString *urlString = [((NSDictionary *)self.mapStyle) valueForKey:@"iconUrl"];
     if (urlString != nil) {
         return [NSURL URLWithString:urlString];
     }
