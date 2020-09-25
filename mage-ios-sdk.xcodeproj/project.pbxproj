@@ -16,7 +16,6 @@
 		2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01652C199D1C6D00C4862B /* LocationFetchService.m */; };
 		2F01653319A2A88D00C4862B /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653219A2A88D00C4862B /* LocationService.m */; };
 		2F01653A19A4F11E00C4862B /* NSDate+Iso8601.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */; };
-		2F2190111FC5D218001E4A84 /* GoogleAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F21900F1FC5D218001E4A84 /* GoogleAuthentication.m */; };
 		2F2190141FC5D22E001E4A84 /* ObservationImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2190121FC5D22E001E4A84 /* ObservationImage.m */; };
 		2F2190171FC5D247001E4A84 /* NotificationRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2190151FC5D247001E4A84 /* NotificationRequester.m */; };
 		2F2A76EB19A7DE8D0008E7DD /* ObservationFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A76EA19A7DE8D0008E7DD /* ObservationFetchService.m */; };
@@ -887,7 +886,6 @@
 				2F53326A1CC154C3006E92E1 /* Layer.m in Sources */,
 				2FE3C9C6221759590066B19E /* Model8To15.xcmappingmodel in Sources */,
 				F768E9CB191D0E6E003287E3 /* ServerAuthentication.m in Sources */,
-				2F2190111FC5D218001E4A84 /* GoogleAuthentication.m in Sources */,
 				2FA5712D1D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m in Sources */,
 				2FE3C9C3221759590066B19E /* Model10To15.xcmappingmodel in Sources */,
 				2F5332741CC154C3006E92E1 /* StaticLayer.m in Sources */,

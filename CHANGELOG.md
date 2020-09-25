@@ -10,6 +10,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 * DataConnectionUtilities class can be used to determine if different MAGE data should be pushed or pulled
 * Added Network Sync Options for preferences views
 * Added methods to the Observation class to pull feed field display values
+* Upgrade to AFNetworking 4.x, removes support for deprecated UIWebView 
 
 ##### Bug Fixes
 
