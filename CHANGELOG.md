@@ -3,14 +3,23 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.0.8] (TBD)
+## [3.1.0] (TBD)
 
 ##### Features
+* Json Web Token authorization support.
 * DataConnectionUtilities class can be used to determine if different MAGE data should be pushed or pulled
 * Added Network Sync Options for preferences views
 * Added methods to the Observation class to pull feed field display values
+* Upgrade to AFNetworking 4.x, removes support for deprecated UIWebView 
 
 ##### Bug Fixes
+
+## [3.0.8](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.7) (04-30-2020)
+
+##### Features
+
+##### Bug Fixes
+* Update ignored url list when checking for token expiration
 
 ## [3.0.7](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.0.7) (04-27-2020)
 
