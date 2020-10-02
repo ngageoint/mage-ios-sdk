@@ -50,7 +50,27 @@
     return [Feed MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(itemsHaveSpatialDimension == 1 AND eventId == %@)", eventId]];
 }
 
-+ (NSMutableArray <NSNumber *>*) populateFeedsFromJson: (NSArray *) feeds inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
++ (NSString *) addFeedFromJson: (NSDictionary *) feed inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
+    NSMutableArray *selectedFeedsForEvent = [[NSUserDefaults.standardUserDefaults objectForKey:[NSString stringWithFormat:@"selectedFeeds-%@", eventId]] mutableCopy];
+    if (selectedFeedsForEvent == nil) {
+        selectedFeedsForEvent = [[NSMutableArray alloc] init];
+    }
+    NSUInteger count = [Feed MR_countOfEntities];
+    NSString *remoteFeedId = [Feed feedIdFromJson:feed];
+    Feed *f = [Feed MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(remoteId == %@ AND eventId == %@)", remoteFeedId, eventId] inContext:context];
+    if (f == nil) {
+        f = [Feed MR_createEntityInContext:context];
+        [selectedFeedsForEvent addObject:remoteFeedId];
+    }
+    
+    [f populateObjectFromJson:feed withEventId:eventId withTag:[NSNumber numberWithUnsignedInteger: count]];
+    
+    [NSUserDefaults.standardUserDefaults setObject:selectedFeedsForEvent forKey:[NSString stringWithFormat:@"selectedFeeds-%@", eventId]];
+    [NSUserDefaults.standardUserDefaults synchronize];
+    return remoteFeedId;
+}
+
++ (NSMutableArray <NSString *>*) populateFeedsFromJson: (NSArray *) feeds inEventId: (NSNumber *) eventId inContext: (NSManagedObjectContext *) context {
     NSMutableArray *feedRemoteIds = [[NSMutableArray alloc] init];
     NSMutableArray *selectedFeedsForEvent = [[NSUserDefaults.standardUserDefaults objectForKey:[NSString stringWithFormat:@"selectedFeeds-%@", eventId]] mutableCopy];
     if (selectedFeedsForEvent == nil) {

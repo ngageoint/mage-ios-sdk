@@ -134,7 +134,6 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
     }
     
     MageServer *server = [[MageServer alloc] initWithURL: url];
-    
     if ([url.absoluteString isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:kBaseServerUrlKey]] && server.authenticationModules) {
         success(server);
         return;
