@@ -31,6 +31,6 @@ Pod::Spec.new do |s|
   s.dependency 'AFNetworking', '~> 4.0.1'
   s.dependency 'DateTools', '~> 2.0.0'
   s.dependency 'MagicalRecord', '~> 2.3.2'
-  s.dependency 'geopackage-ios', '~> 4.0.1'
+  s.dependency 'geopackage-ios', '~> 5.0.0'
   s.dependency 'SSZipArchive', '~> 2.2.2'
 end
