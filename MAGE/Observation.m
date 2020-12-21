@@ -42,8 +42,15 @@ Event *_event;
 //NSNumber *_currentEventId;
 + (Observation *) observationWithGeometry:(SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
     Observation *observation = [Observation MR_createEntityInContext:mangedObjectContext];
+    
+    NSDate *observationDate = [NSDate date];
+    NSDateComponents *startSeconds = [[NSCalendar currentCalendar] components: NSCalendarUnitSecond | NSCalendarUnitNanosecond fromDate: observationDate];
+    [startSeconds setSecond: -[startSeconds second]];
+    [startSeconds setNanosecond: -[startSeconds nanosecond]];
+    
+    observationDate = [[NSCalendar currentCalendar] dateByAddingComponents: startSeconds toDate: observationDate options: 0];
 
-    [observation setTimestamp:[NSDate date]];
+    [observation setTimestamp:observationDate];
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
 
     [properties setObject:[observation.timestamp iso8601String] forKey:@"timestamp"];
@@ -244,6 +251,7 @@ Event *_event;
             for (id key in form) {
                 id value = [form objectForKey:key];
                 id field = [[self fieldNameToFieldForEvent:event andFormId:[form objectForKey:@"formId"]] objectForKey:key];
+                // TODO: serialize attachment field types properly
                 if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
                     @try {
                         SFGeometry *fieldGeometry = value;
@@ -313,6 +321,7 @@ Event *_event;
                 for (id formKey in formProperties) {
                     id value = [formProperties objectForKey:formKey];
                     id field = [fields objectForKey:formKey];
+                    // TODO: deserialize attachments properly
                     if ([[field objectForKey:@"type"] isEqualToString:@"geometry"]) {
                         @try {
                             SFGeometry * geometry = [GeometryDeserializer parseGeometry:value];
@@ -658,7 +667,7 @@ Event *_event;
     return chunks;
 }
 
-+ (Observation *) createObservation:(id) feature inContext:(NSManagedObjectContext *) localContext {
++ (Observation *) createObservation:(NSDictionary *) feature inContext:(NSManagedObjectContext *) localContext {
     Observation *newObservation = nil;
     
     NSNumber *eventId = [Server currentEventId];
