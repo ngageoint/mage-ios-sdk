@@ -110,10 +110,17 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
     
     NSNumber *serverMajorVersion = [api valueForKeyPath:@"version.major"];
     NSNumber *serverMinorVersion = [api valueForKeyPath:@"version.minor"];
+
     
-    [defaults synchronize];
-    
-    return ([serverCompatibilityMajorVersion intValue] == [serverMajorVersion intValue] && [serverCompatibilityMinorVersion intValue] <= [serverMinorVersion intValue]);
+    if ([serverCompatibilityMajorVersion intValue] == [serverMajorVersion intValue] && [serverCompatibilityMinorVersion intValue] <= [serverMinorVersion intValue]) {
+        // server is compatible.  save the version
+        [defaults setObject:[api valueForKeyPath:@"version.major"] forKey:@"serverMajorVersion"];
+        [defaults setObject:[api valueForKeyPath:@"version.minor"] forKey:@"serverMinorVersion"];
+        [defaults synchronize];
+        return true;
+    } else {
+        return false;
+    }
 }
 
 + (NSError *) generateServerCompatibilityError: (NSDictionary *) api {
