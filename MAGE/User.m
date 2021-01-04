@@ -272,4 +272,8 @@ static User *currentUser = nil;
     return task;
 }
 
+- (BOOL) hasEditPermission {
+    return [self.role.permissions containsObject:@"UPDATE_OBSERVATION_ALL"] || [self.role.permissions containsObject:@"UPDATE_OBSERVATION_EVENT"];
+}
+
 @end
