@@ -40,7 +40,7 @@ NSDictionary *_fieldNameToField;
 Event *_event;
 
 //NSNumber *_currentEventId;
-+ (Observation *) observationWithGeometry:(SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
++ (Observation *) observationWithGeometry:(nullable SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
     Observation *observation = [Observation MR_createEntityInContext:mangedObjectContext];
     
     NSDate *observationDate = [NSDate date];

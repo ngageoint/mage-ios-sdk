@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURLSessionDataTask *) operationToPushFavorite:(ObservationFavorite *) favorite success:(void (^)(id)) success failure: (void (^)(NSError *)) failure;
 + (NSURLSessionDataTask *) operationToPushImportant:(ObservationImportant *) important success:(void (^)(id)) success failure: (void (^)(NSError *)) failure;
 
-+ (Observation *) observationWithGeometry:(SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext;
++ (Observation *) observationWithGeometry:(nullable SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext;
 + (Observation *) createObservation:(NSDictionary *) feature inContext:(NSManagedObjectContext *) localContext;
 + (BOOL) checkIfRectangle: (NSArray<SFPoint *> *) points;
 
