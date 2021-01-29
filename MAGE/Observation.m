@@ -235,10 +235,14 @@ Event *_event;
     [observationJson setObject:@{
                                  @"name": stringState
                                  } forKey:@"state"];
-
-    SFGeometry *geometry = [self getGeometry];
-    [observationJson setObject:[GeometrySerializer serializeGeometry:geometry] forKey:@"geometry"];
-
+    @try {
+        SFGeometry *geometry = [self getGeometry];
+        [observationJson setObject:[GeometrySerializer serializeGeometry:geometry] forKey:@"geometry"];
+    }
+    @catch (NSException *e){
+        NSLog(@"Problem parsing geometry %@", e);
+    }
+    
     [observationJson setObject: [dateFormat stringFromDate:self.timestamp] forKey:@"timestamp"];
 
     NSMutableDictionary *jsonProperties = [[NSMutableDictionary alloc] initWithDictionary:self.properties];
@@ -476,6 +480,7 @@ Event *_event;
 + (NSURLSessionDataTask *) operationToUpdateObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSLog(@"Trying to update observation %@", observation.url);
     Event *event = [Event getCurrentEventInContext:observation.managedObjectContext];
+
     NSURLSessionDataTask *task = [[MageSessionManager sharedManager] PUT_TASK:observation.url parameters:[observation createJsonToSubmitForEvent:event] success:^(NSURLSessionTask *task, id response) {
         if (success) {
             success(response);
