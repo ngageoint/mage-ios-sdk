@@ -3,7 +3,13 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.1.0] (TBD)
+## [3.1.1] (TBD)
+
+##### Features
+
+##### Bug Fixes
+
+## [3.1.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.0) (02-02-2021)
 
 ##### Features
 * Json Web Token authorization support.
