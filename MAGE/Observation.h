@@ -50,7 +50,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (Boolean) hasValidationError;
 - (NSString *) errorMessage;
 
-- (NSDictionary *) getPrimaryForm;
+- (NSIndexSet *) getFormsToBeDeleted;
+- (void) clearFormsToBeDeleted;
+- (void) addFormToBeDeleted: (NSInteger) formIndex;
+- (void) removeFormToBeDeleted: (NSInteger) formIndex;
+
+- (nullable NSDictionary *) getPrimaryObservationForm;
+- (NSDictionary *) getPrimaryEventForm;
 - (NSString *) getPrimaryField;
 - (NSString *) getSecondaryField;
 - (NSString *) primaryFieldText;

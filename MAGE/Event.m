@@ -84,7 +84,7 @@ NSString * const MAGEEventsFetched = @"mil.nga.giat.mage.events.fetched";
 }
 
 - (NSDictionary *) formForObservation: (Observation *) observation {
-    return [observation getPrimaryForm];
+    return [observation getPrimaryEventForm];
 }
 
 - (NSDictionary *) formWithId: (long) formId {

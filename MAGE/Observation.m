@@ -35,6 +35,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 @implementation Observation
 
 NSMutableArray *_transientAttachments;
+NSMutableIndexSet *_formsToBeDeleted;
 
 NSDictionary *_fieldNameToField;
 Event *_event;
@@ -83,12 +84,26 @@ Event *_event;
     return _event;
 }
 
-- (NSDictionary *) getPrimaryForm {
+- (nullable NSDictionary *) getPrimaryObservationForm {
+    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+    
+    if (observationForms != nil) {
+        for (int i = 0; i < [observationForms count]; i++) {
+            // here we can ignore forms which will be deleted
+            if (![[self getFormsToBeDeleted] containsIndex:i]) {
+                return observationForms[i];
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSDictionary *) getPrimaryEventForm {
     Event *event = [self event];
     NSArray *forms = event.forms;
-    NSArray *observationForms = [self.properties objectForKey:@"forms"];
-    if (forms != nil && [forms count] > 0 && observationForms != nil && [observationForms count] > 0) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.id = %@", [[observationForms objectAtIndex:0] objectForKey:@"formId"]];
+    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
+    if (forms != nil && [forms count] > 0 && primaryObservationForm != nil) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.id = %@", [primaryObservationForm objectForKey:@"formId"]];
         NSArray *filteredArray = [forms filteredArrayUsingPredicate:predicate];
         
         return [filteredArray firstObject];
@@ -97,7 +112,7 @@ Event *_event;
 }
 
 - (NSString *) getPrimaryField {
-    NSDictionary *form = [self getPrimaryForm];
+    NSDictionary *form = [self getPrimaryEventForm];
     if (form != nil) {
         return [form objectForKey:@"primaryField"];
     }
@@ -106,16 +121,16 @@ Event *_event;
 
 - (NSString *) primaryFieldText {
     NSString *primaryField = [self getPrimaryField];
-    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
 
-    if (primaryField != nil && [observationForms count] > 0) {
-        return [[observationForms objectAtIndex:0] objectForKey:primaryField];
+    if (primaryField != nil && primaryObservationForm) {
+        return [primaryObservationForm objectForKey:primaryField];
     }
     return nil;
 }
 
 - (NSString *) getSecondaryField {
-    NSDictionary *form = [self getPrimaryForm];
+    NSDictionary *form = [self getPrimaryEventForm];
     if (form != nil) {
         return [form objectForKey:@"variantField"];
     }
@@ -125,16 +140,16 @@ Event *_event;
 - (NSString *) secondaryFieldText {
     
     NSString *secondaryField = [self getSecondaryField];
-    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
 
-    if (secondaryField != nil && [observationForms count] > 0) {
-        return [[observationForms objectAtIndex:0] objectForKey:secondaryField];
+    if (secondaryField != nil && primaryObservationForm) {
+        return [primaryObservationForm objectForKey:secondaryField];
     }
     return nil;
 }
 
 - (NSString *) getPrimaryFeedField {
-    NSDictionary *form = [self getPrimaryForm];
+    NSDictionary *form = [self getPrimaryEventForm];
     if (form != nil) {
         return [form objectForKey:@"primaryFeedField"];
     }
@@ -143,16 +158,16 @@ Event *_event;
 
 - (NSString *) primaryFeedFieldText {
     NSString *primaryFeedField = [self getPrimaryFeedField];
-    NSArray *observationForms = [self.properties objectForKey:@"forms"];
-    
-    if (primaryFeedField != nil && [observationForms count] > 0) {
-        return [[observationForms objectAtIndex:0] objectForKey:primaryFeedField];
+    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
+
+    if (primaryFeedField != nil && primaryObservationForm) {
+        return [primaryObservationForm objectForKey:primaryFeedField];
     }
     return nil;
 }
 
 - (NSString *) getSecondaryFeedField {
-    NSDictionary *form = [self getPrimaryForm];
+    NSDictionary *form = [self getPrimaryEventForm];
     if (form != nil) {
         return [form objectForKey:@"secondaryFeedField"];
     }
@@ -162,10 +177,10 @@ Event *_event;
 - (NSString *) secondaryFeedFieldText {
     
     NSString *secondaryFeedField = [self getSecondaryFeedField];
-    NSArray *observationForms = [self.properties objectForKey:@"forms"];
-    
-    if (secondaryFeedField != nil && [observationForms count] > 0) {
-        return [[observationForms objectAtIndex:0] objectForKey:secondaryFeedField];
+    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
+
+    if (secondaryFeedField != nil && primaryObservationForm) {
+        return [primaryObservationForm objectForKey:secondaryFeedField];
     }
     return nil;
 }
@@ -369,6 +384,31 @@ Event *_event;
         data = [GeometryUtility toGeometryDataFromGeometry:geometry];
     }
     [self setGeometryData:data];
+}
+
+- (NSIndexSet *) getFormsToBeDeleted {
+    if (_formsToBeDeleted == nil) {
+        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    }
+    return _formsToBeDeleted;
+}
+
+- (void) clearFormsToBeDeleted {
+    _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+}
+
+- (void) addFormToBeDeleted:(NSInteger)formIndex {
+    if (_formsToBeDeleted == nil) {
+        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    }
+    [_formsToBeDeleted addIndex:formIndex];
+}
+
+- (void) removeFormToBeDeleted:(NSInteger)formIndex {
+    if (_formsToBeDeleted == nil) {
+        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    }
+    [_formsToBeDeleted removeIndex:formIndex];
 }
 
 +(BOOL) checkIfRectangle: (NSArray<SFPoint *> *) points{
