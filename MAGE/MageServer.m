@@ -12,6 +12,7 @@
 #import "IdpAuthentication.h"
 #import "StoredPassword.h"
 
+NSString * const kServerCompatibilitiesKey = @"serverCompatibilities";
 NSString * const kServerMajorVersionKey = @"serverMajorVersion";
 NSString * const kServerMinorVersionKey = @"serverMinorVersion";
 NSString * const kServerAuthenticationStrategiesKey = @"serverAuthenticationStrategies";
@@ -104,23 +105,26 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
 
 + (BOOL) checkServerCompatibility: (NSDictionary *) api {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *serverCompatibilities  = [defaults arrayForKey:kServerCompatibilitiesKey];
     
-    NSNumber *serverCompatibilityMajorVersion = [defaults valueForKey:kServerMajorVersionKey];
-    NSNumber *serverCompatibilityMinorVersion = [defaults valueForKey:kServerMinorVersionKey];
-    
-    NSNumber *serverMajorVersion = [api valueForKeyPath:@"version.major"];
-    NSNumber *serverMinorVersion = [api valueForKeyPath:@"version.minor"];
-
-    
-    if ([serverCompatibilityMajorVersion intValue] == [serverMajorVersion intValue] && [serverCompatibilityMinorVersion intValue] <= [serverMinorVersion intValue]) {
-        // server is compatible.  save the version
-        [defaults setObject:[api valueForKeyPath:@"version.major"] forKey:@"serverMajorVersion"];
-        [defaults setObject:[api valueForKeyPath:@"version.minor"] forKey:@"serverMinorVersion"];
-        [defaults synchronize];
-        return true;
-    } else {
-        return false;
+    for (NSDictionary *compatibility in serverCompatibilities) {
+        NSNumber *serverCompatibilityMajorVersion = [compatibility valueForKey:kServerMajorVersionKey];
+        NSNumber *serverCompatibilityMinorVersion = [compatibility valueForKey:kServerMinorVersionKey];
+        
+        NSNumber *serverMajorVersion = [api valueForKeyPath:@"version.major"];
+        NSNumber *serverMinorVersion = [api valueForKeyPath:@"version.minor"];
+        
+        if ([serverCompatibilityMajorVersion intValue] == [serverMajorVersion intValue] && [serverCompatibilityMinorVersion intValue] <= [serverMinorVersion intValue]) {
+            // server is compatible.  save the version
+            [defaults setObject:[api valueForKeyPath:@"version.major"] forKey:@"serverMajorVersion"];
+            [defaults setObject:[api valueForKeyPath:@"version.minor"] forKey:@"serverMinorVersion"];
+            [defaults synchronize];
+            return true;
+        } else {
+            return false;
+        }
     }
+    return false;
 }
 
 + (NSError *) generateServerCompatibilityError: (NSDictionary *) api {
