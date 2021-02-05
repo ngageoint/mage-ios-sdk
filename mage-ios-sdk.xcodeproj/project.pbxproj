@@ -286,6 +286,7 @@
 		F7C5FB79195DDFF30065379C /* Form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Form.h; path = MAGE/Form.h; sourceTree = SOURCE_ROOT; };
 		F7C5FB7A195DDFF30065379C /* Form.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Form.m; path = MAGE/Form.m; sourceTree = SOURCE_ROOT; };
 		F7DEF9251912BD2D0026B9D0 /* preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = preferences.plist; path = MAGE/preferences.plist; sourceTree = SOURCE_ROOT; };
+		F7E9F26B25CCA6FF00A7AE66 /* mage-ios-sdk 18.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 18.xcdatamodel"; sourceTree = "<group>"; };
 		F7EDF8F623EE162E00B77379 /* DataConnectionUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConnectionUtilities.h; sourceTree = "<group>"; };
 		F7EDF8F723EE162E00B77379 /* DataConnectionUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataConnectionUtilities.m; sourceTree = "<group>"; };
 		F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 17.xcdatamodel"; sourceTree = "<group>"; };
@@ -1175,6 +1176,7 @@
 		2F7067D82214836200121B52 /* mage-ios-sdk.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F7E9F26B25CCA6FF00A7AE66 /* mage-ios-sdk 18.xcdatamodel */,
 				F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */,
 				F774970422FA0DA200E69734 /* mage-ios-sdk 16.xcdatamodel */,
 				2F7067DF2214836200121B52 /* mage-ios-sdk 15.xcdatamodel */,
@@ -1193,7 +1195,7 @@
 				2F7067E12214836200121B52 /* mage-ios-sdk 2.xcdatamodel */,
 				2F7067DB2214836200121B52 /* mage-ios-sdk.xcdatamodel */,
 			);
-			currentVersion = F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */;
+			currentVersion = F7E9F26B25CCA6FF00A7AE66 /* mage-ios-sdk 18.xcdatamodel */;
 			name = "mage-ios-sdk.xcdatamodeld";
 			path = "MAGE/mage-ios-sdk.xcdatamodeld";
 			sourceTree = "<group>";
