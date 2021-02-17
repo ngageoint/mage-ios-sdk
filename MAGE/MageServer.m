@@ -120,8 +120,6 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
             [defaults setObject:[api valueForKeyPath:@"version.minor"] forKey:@"serverMinorVersion"];
             [defaults synchronize];
             return true;
-        } else {
-            return false;
         }
     }
     return false;
