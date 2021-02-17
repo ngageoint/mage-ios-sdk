@@ -124,42 +124,77 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
             continue;
         }
         
-        NSData *attachmentData = [NSData dataWithContentsOfFile:attachment.localPath];
-        if (attachmentData == nil) {
-            NSLog(@"Attachment data nil for observation: %@ at path: %@", attachment.observation.remoteId, attachment.localPath);
-            [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
-                Attachment *localAttachment = [attachment MR_inContext:localContext];
-                [localAttachment MR_deleteEntity];
-            }];
-            
-            continue;
+        // determine if this is a delete or a push
+        if (attachment.markedForDeletion) {
+            [self deleteAttachment:attachment];
+        } else {
+            [self pushAttachment:attachment];
         }
-        
-        NSString *url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
-        NSLog(@"pushing attachment %@", url);
-
-        NSMutableURLRequest *request = [self.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFileURL:[NSURL fileURLWithPath:attachment.localPath] name:@"attachment" fileName:attachment.name mimeType:attachment.contentType error:nil];
-        } error:nil];
-        
-        NSURL *attachmentUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name]];
-        NSLog(@"ATTACHMENT - Creating tmp multi part file for attachment upload %@", attachmentUrl);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[attachmentUrl absoluteString]]) {
-            NSLog(@"file already exists");
-        }
-        
-        [self.requestSerializer requestWithMultipartFormRequest:request writingStreamContentsToFile:attachmentUrl completionHandler:^(NSError * _Nullable error) {
-            NSURLSessionUploadTask *uploadTask = [self.session uploadTaskWithRequest:request fromFile:attachmentUrl];
-            
-            NSNumber *taskIdentifier = [NSNumber numberWithLong:uploadTask.taskIdentifier];
-            [self.pushTasks addObject:taskIdentifier];
-            attachment.taskIdentifier = taskIdentifier;
-            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
-                NSLog(@"ATTACHMENT - Context did save %d with error %@", contextDidSave, error);
-                [uploadTask resume];
-            }];
-        }];
     }
+}
+
+- (void) deleteAttachment: (Attachment *) attachment {
+    NSString *url;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"serverMajorVersion"] == 5) {
+        url = [NSString stringWithFormat:@"%@/attachments/%@", attachment.observation.url, attachment.remoteId];
+    } else {
+        // TODO: set correct url for new servers
+        url = [NSString stringWithFormat:@"%@/attachments/%@", attachment.observation.url, attachment.remoteId];
+    }
+    NSLog(@"deleting attachment %@", url);
+    [self DELETE:url parameters:nil headers:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"Attachment deleted response %@", responseObject);
+        [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
+            Attachment *localAttachment = [attachment MR_inContext:localContext];
+            [localAttachment MR_deleteEntity];
+        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Failure to delete attachment %@", error);
+    }];
+}
+
+- (void) pushAttachment: (Attachment *) attachment {
+    NSData *attachmentData = [NSData dataWithContentsOfFile:attachment.localPath];
+    if (attachmentData == nil) {
+        NSLog(@"Attachment data nil for observation: %@ at path: %@", attachment.observation.remoteId, attachment.localPath);
+        [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
+            Attachment *localAttachment = [attachment MR_inContext:localContext];
+            [localAttachment MR_deleteEntity];
+        }];
+        
+        return;
+    }
+    
+    NSString *url;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"serverMajorVersion"] == 5) {
+        url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
+    } else {
+        // TODO: set correct url for new servers
+        url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
+    }
+    NSLog(@"pushing attachment %@", url);
+    
+    NSMutableURLRequest *request = [self.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileURL:[NSURL fileURLWithPath:attachment.localPath] name:@"attachment" fileName:attachment.name mimeType:attachment.contentType error:nil];
+    } error:nil];
+    
+    NSURL *attachmentUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:attachment.name]];
+    NSLog(@"ATTACHMENT - Creating tmp multi part file for attachment upload %@", attachmentUrl);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[attachmentUrl absoluteString]]) {
+        NSLog(@"file already exists");
+    }
+    
+    [self.requestSerializer requestWithMultipartFormRequest:request writingStreamContentsToFile:attachmentUrl completionHandler:^(NSError * _Nullable error) {
+        NSURLSessionUploadTask *uploadTask = [self.session uploadTaskWithRequest:request fromFile:attachmentUrl];
+        
+        NSNumber *taskIdentifier = [NSNumber numberWithLong:uploadTask.taskIdentifier];
+        [self.pushTasks addObject:taskIdentifier];
+        attachment.taskIdentifier = taskIdentifier;
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            NSLog(@"ATTACHMENT - Context did save %d with error %@", contextDidSave, error);
+            [uploadTask resume];
+        }];
+    }];
 }
 
 - (void) configureProgress {
@@ -183,6 +218,11 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
 }
 
 - (void) attachmentUploadCompleteWithTask:(NSURLSessionTask *) task withError:(NSError *) error {
+    
+    if ([task.originalRequest.HTTPMethod isEqualToString:@"DELETE"]) {
+        NSLog(@"ATTACHMENT - delete complete with error %@", error);
+        return;
+    }
 
     if (error) {
         NSLog(@"ATTACHMENT - error uploading attachment %@", error);
