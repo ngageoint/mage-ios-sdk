@@ -11,6 +11,7 @@
 #import "NSDate+Iso8601.h"
 #import "StoredPassword.h"
 #import "DataConnectionUtilities.h"
+#import "MageServer.h"
 
 NSString * const kAttachmentPushFrequencyKey = @"attachmentPushFrequency";
 NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.background.attachment";
@@ -135,7 +136,7 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
 
 - (void) deleteAttachment: (Attachment *) attachment {
     NSString *url;
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"serverMajorVersion"] == 5) {
+    if ([MageServer isServerVersion5]) {
         url = [NSString stringWithFormat:@"%@/attachments/%@", attachment.observation.url, attachment.remoteId];
     } else {
         // TODO: set correct url for new servers
@@ -166,7 +167,7 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
     }
     
     NSString *url;
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"serverMajorVersion"] == 5) {
+    if ([MageServer isServerVersion5]) {
         url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
     } else {
         // TODO: set correct url for new servers

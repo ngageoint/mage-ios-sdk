@@ -129,6 +129,10 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
     return [[NSError alloc] initWithDomain:@"MAGE" code:1 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"This version of the app is not compatible with version %@.%@.%@ of the server.  Please contact your MAGE administrator for more information.", [api valueForKeyPath:@"version.major"], [api valueForKeyPath:@"version.minor"], [api valueForKeyPath:@"version.micro"]]  forKey:NSLocalizedDescriptionKey]];
 }
 
++ (BOOL) isServerVersion5 {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"serverMajorVersion"] == 5;
+}
+
 + (void) serverWithURL:(NSURL *) url success:(void (^) (MageServer *)) success  failure:(void (^) (NSError *error)) failure {
     
     if (!url || !url.scheme || !url.host) {
