@@ -8,6 +8,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ##### Features
 
 ##### Bug Fixes
+* Fix crash when translating feed primary/secondary types that are not strings.
 
 ## [3.1.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.1)
 
