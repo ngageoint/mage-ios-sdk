@@ -12,6 +12,8 @@
 #import "StoredPassword.h"
 #import "DataConnectionUtilities.h"
 #import "MageServer.h"
+#import "RouteMethod.h"
+#import "MAGERoutes.h"
 
 NSString * const kAttachmentPushFrequencyKey = @"attachmentPushFrequency";
 NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.background.attachment";
@@ -135,15 +137,10 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
 }
 
 - (void) deleteAttachment: (Attachment *) attachment {
-    NSString *url;
-    if ([MageServer isServerVersion5]) {
-        url = [NSString stringWithFormat:@"%@/attachments/%@", attachment.observation.url, attachment.remoteId];
-    } else {
-        // TODO: set correct url for new servers
-        url = [NSString stringWithFormat:@"%@/attachments/%@", attachment.observation.url, attachment.remoteId];
-    }
-    NSLog(@"deleting attachment %@", url);
-    [self DELETE:url parameters:nil headers:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    RouteMethod *delete = [[MAGERoutes attachment] deleteRoute:attachment];
+
+    NSLog(@"deleting attachment %@", delete.route);
+    [self DELETE:delete.route parameters:nil headers:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"Attachment deleted response %@", responseObject);
         [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
             Attachment *localAttachment = [attachment MR_inContext:localContext];
@@ -166,16 +163,10 @@ NSString * const kAttachmentBackgroundSessionIdentifier = @"mil.nga.mage.backgro
         return;
     }
     
-    NSString *url;
-    if ([MageServer isServerVersion5]) {
-        url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
-    } else {
-        // TODO: set correct url for new servers
-        url = [NSString stringWithFormat:@"%@/%@", attachment.observation.url, @"attachments"];
-    }
-    NSLog(@"pushing attachment %@", url);
+    RouteMethod *push = [[MAGERoutes attachment] push:attachment];
+    NSLog(@"pushing attachment %@", push.route);
     
-    NSMutableURLRequest *request = [self.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [self.requestSerializer multipartFormRequestWithMethod:push.method URLString:push.route parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileURL:[NSURL fileURLWithPath:attachment.localPath] name:@"attachment" fileName:attachment.name mimeType:attachment.contentType error:nil];
     } error:nil];
     

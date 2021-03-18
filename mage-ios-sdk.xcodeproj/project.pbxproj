@@ -90,13 +90,16 @@
 		F7B25E24191AB5A900589E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B25E23191AB5A900589E5B /* CoreLocation.framework */; };
 		F7B679751959CF2D0035596A /* MageEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B679741959CF2D0035596A /* MageEnums.m */; };
 		F7C5FB7B195DDFF30065379C /* Form.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C5FB7A195DDFF30065379C /* Form.m */; };
+		F7CDD736260271EB00F3294C /* MAGERoutes.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD735260271EB00F3294C /* MAGERoutes.m */; };
+		F7CDD73B2602726300F3294C /* RouteMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD73A2602726300F3294C /* RouteMethod.m */; };
 		F7EDF8F823EE162E00B77379 /* DataConnectionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EDF8F723EE162E00B77379 /* DataConnectionUtilities.m */; };
+		F7F1169426027C5400C7DE9A /* AttachmentRoutes.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F1169326027C5400C7DE9A /* AttachmentRoutes.m */; };
+		F7F11705260280CE00C7DE9A /* AttachmentRoutes_Server5.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F11703260280CE00C7DE9A /* AttachmentRoutes_Server5.m */; };
+		F7F1177A260289E300C7DE9A /* ObservationRoutes.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F11779260289E300C7DE9A /* ObservationRoutes.m */; };
 		F7F133621975857000E79762 /* UserUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F133611975857000E79762 /* UserUtility.m */; };
 		F7F711F32343E3A900E01FD7 /* Model15To16.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F7F711F22343E3A900E01FD7 /* Model15To16.xcmappingmodel */; };
 		F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */; };
-		F7F8A1B02486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */; };
 		F7F8A1B12486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */; };
-		F7F8A1B22486F4BC00E3A2A2 /* Feed+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */; };
 		F7F8A1B32486F4BC00E3A2A2 /* Feed+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
@@ -285,23 +288,29 @@
 		F7B679741959CF2D0035596A /* MageEnums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MageEnums.m; path = MAGE/MageEnums.m; sourceTree = SOURCE_ROOT; };
 		F7C5FB79195DDFF30065379C /* Form.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Form.h; path = MAGE/Form.h; sourceTree = SOURCE_ROOT; };
 		F7C5FB7A195DDFF30065379C /* Form.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Form.m; path = MAGE/Form.m; sourceTree = SOURCE_ROOT; };
+		F7CDD734260271EB00F3294C /* MAGERoutes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MAGERoutes.h; path = MAGE/MAGERoutes.h; sourceTree = "<group>"; };
+		F7CDD735260271EB00F3294C /* MAGERoutes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MAGERoutes.m; path = MAGE/MAGERoutes.m; sourceTree = "<group>"; };
+		F7CDD7392602726300F3294C /* RouteMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RouteMethod.h; path = MAGE/RouteMethod.h; sourceTree = "<group>"; };
+		F7CDD73A2602726300F3294C /* RouteMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RouteMethod.m; path = MAGE/RouteMethod.m; sourceTree = "<group>"; };
 		F7DEF9251912BD2D0026B9D0 /* preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = preferences.plist; path = MAGE/preferences.plist; sourceTree = SOURCE_ROOT; };
 		F7E9F26B25CCA6FF00A7AE66 /* mage-ios-sdk 18.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 18.xcdatamodel"; sourceTree = "<group>"; };
 		F7EDF8F623EE162E00B77379 /* DataConnectionUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConnectionUtilities.h; sourceTree = "<group>"; };
 		F7EDF8F723EE162E00B77379 /* DataConnectionUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataConnectionUtilities.m; sourceTree = "<group>"; };
 		F7EF354A2486E63A003CF1DB /* mage-ios-sdk 17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "mage-ios-sdk 17.xcdatamodel"; sourceTree = "<group>"; };
+		F7F1169226027C5400C7DE9A /* AttachmentRoutes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentRoutes.h; path = MAGE/AttachmentRoutes.h; sourceTree = "<group>"; };
+		F7F1169326027C5400C7DE9A /* AttachmentRoutes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentRoutes.m; path = MAGE/AttachmentRoutes.m; sourceTree = "<group>"; };
+		F7F11703260280CE00C7DE9A /* AttachmentRoutes_Server5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentRoutes_Server5.m; path = MAGE/Server5/AttachmentRoutes_Server5.m; sourceTree = "<group>"; };
+		F7F11704260280CE00C7DE9A /* AttachmentRoutes_Server5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentRoutes_Server5.h; path = MAGE/Server5/AttachmentRoutes_Server5.h; sourceTree = "<group>"; };
+		F7F11778260289E300C7DE9A /* ObservationRoutes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObservationRoutes.h; path = MAGE/ObservationRoutes.h; sourceTree = "<group>"; };
+		F7F11779260289E300C7DE9A /* ObservationRoutes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ObservationRoutes.m; path = MAGE/ObservationRoutes.m; sourceTree = "<group>"; };
 		F7F133601975857000E79762 /* UserUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserUtility.h; path = MAGE/UserUtility.h; sourceTree = SOURCE_ROOT; };
 		F7F133611975857000E79762 /* UserUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserUtility.m; path = MAGE/UserUtility.m; sourceTree = SOURCE_ROOT; };
 		F7F711F22343E3A900E01FD7 /* Model15To16.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; name = Model15To16.xcmappingmodel; path = MAGE/Model15To16.xcmappingmodel; sourceTree = "<group>"; };
 		F7F7B7D71A6EDE1100270D61 /* StoredPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredPassword.h; path = MAGE/StoredPassword.h; sourceTree = SOURCE_ROOT; };
 		F7F7B7D81A6EDE1100270D61 /* StoredPassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredPassword.m; path = MAGE/StoredPassword.m; sourceTree = SOURCE_ROOT; };
 		F7F8A1A82486F4BB00E3A2A2 /* FeedItem+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FeedItem+CoreDataProperties.h"; path = "MAGE/FeedItem+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7F8A1A92486F4BB00E3A2A2 /* FeedItem+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FeedItem+CoreDataClass.h"; path = "MAGE/FeedItem+CoreDataClass.h"; sourceTree = "<group>"; };
-		F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "FeedItem+CoreDataClass.m"; path = "MAGE/FeedItem+CoreDataClass.m"; sourceTree = "<group>"; };
 		F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "FeedItem+CoreDataProperties.m"; path = "MAGE/FeedItem+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F7F8A1AC2486F4BC00E3A2A2 /* Feed+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Feed+CoreDataProperties.h"; path = "MAGE/Feed+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7F8A1AD2486F4BC00E3A2A2 /* Feed+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Feed+CoreDataClass.h"; path = "MAGE/Feed+CoreDataClass.h"; sourceTree = "<group>"; };
-		F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Feed+CoreDataClass.m"; path = "MAGE/Feed+CoreDataClass.m"; sourceTree = "<group>"; };
 		F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Feed+CoreDataProperties.m"; path = "MAGE/Feed+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -372,6 +381,8 @@
 		2F2A76E819A7DE770008E7DD /* Observation */ = {
 			isa = PBXGroup;
 			children = (
+				F7F1169226027C5400C7DE9A /* AttachmentRoutes.h */,
+				F7F1169326027C5400C7DE9A /* AttachmentRoutes.m */,
 				2F2190131FC5D22E001E4A84 /* ObservationImage.h */,
 				2F2190121FC5D22E001E4A84 /* ObservationImage.m */,
 				2F2A76E919A7DE8D0008E7DD /* ObservationFetchService.h */,
@@ -384,6 +395,10 @@
 				040B51BE1EAE82500025E7D9 /* GeometryDeserializer.m */,
 				048E23D61EAFD8B40001DB3E /* GeometrySerializer.h */,
 				048E23D71EAFD8B40001DB3E /* GeometrySerializer.m */,
+				F7CDD734260271EB00F3294C /* MAGERoutes.h */,
+				F7CDD735260271EB00F3294C /* MAGERoutes.m */,
+				F7F11778260289E300C7DE9A /* ObservationRoutes.h */,
+				F7F11779260289E300C7DE9A /* ObservationRoutes.m */,
 			);
 			name = Observation;
 			sourceTree = "<group>";
@@ -493,6 +508,7 @@
 		4CAF957718C62E0100A41CB8 /* MAGE */ = {
 			isa = PBXGroup;
 			children = (
+				F7F11702260280BD00C7DE9A /* Server5 */,
 				2F7067D82214836200121B52 /* mage-ios-sdk.xcdatamodeld */,
 				2FF74A4E1BEBFD3A00416090 /* Authentication */,
 				2FC308021A3F916600FBD2BA /* Categories */,
@@ -510,6 +526,8 @@
 				F7A87F341AA51695001AEDF4 /* Mage.m */,
 				2F2190161FC5D247001E4A84 /* NotificationRequester.h */,
 				2F2190151FC5D247001E4A84 /* NotificationRequester.m */,
+				F7CDD7392602726300F3294C /* RouteMethod.h */,
+				F7CDD73A2602726300F3294C /* RouteMethod.m */,
 			);
 			name = MAGE;
 			sourceTree = "<group>";
@@ -567,12 +585,8 @@
 			isa = PBXGroup;
 			children = (
 				F7F8A1A82486F4BB00E3A2A2 /* FeedItem+CoreDataProperties.h */,
-				F7F8A1A92486F4BB00E3A2A2 /* FeedItem+CoreDataClass.h */,
-				F7F8A1AA2486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m */,
 				F7F8A1AB2486F4BC00E3A2A2 /* FeedItem+CoreDataProperties.m */,
 				F7F8A1AC2486F4BC00E3A2A2 /* Feed+CoreDataProperties.h */,
-				F7F8A1AD2486F4BC00E3A2A2 /* Feed+CoreDataClass.h */,
-				F7F8A1AE2486F4BC00E3A2A2 /* Feed+CoreDataClass.m */,
 				F7F8A1AF2486F4BC00E3A2A2 /* Feed+CoreDataProperties.m */,
 				F7083E572343D0BC006EE9D4 /* ImageryLayer+CoreDataProperties.h */,
 				F7083E582343D0BC006EE9D4 /* ImageryLayer.h */,
@@ -649,6 +663,15 @@
 				F7B679741959CF2D0035596A /* MageEnums.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		F7F11702260280BD00C7DE9A /* Server5 */ = {
+			isa = PBXGroup;
+			children = (
+				F7F11704260280CE00C7DE9A /* AttachmentRoutes_Server5.h */,
+				F7F11703260280CE00C7DE9A /* AttachmentRoutes_Server5.m */,
+			);
+			name = Server5;
 			sourceTree = "<group>";
 		};
 		F7F1335F1975855200E79762 /* Utilities */ = {
@@ -855,21 +878,23 @@
 				040B51BF1EAE82500025E7D9 /* GeometryDeserializer.m in Sources */,
 				F7083E5B2343D0BC006EE9D4 /* ImageryLayer.m in Sources */,
 				2F92D10F1D91CD6900CC0149 /* ObservationFavorite+CoreDataProperties.m in Sources */,
+				F7CDD736260271EB00F3294C /* MAGERoutes.m in Sources */,
 				2FFE499819EC347300BC8922 /* MageServer.m in Sources */,
 				2F5332681CC154C3006E92E1 /* GPSLocation.m in Sources */,
 				2F5332DD1CC557F3006E92E1 /* Server+CoreDataProperties.m in Sources */,
 				F7F133621975857000E79762 /* UserUtility.m in Sources */,
 				F76655861A30EAEB00558EBB /* AttachmentPushService.m in Sources */,
 				2F58BC261BFBBFE500B3B09D /* IdpAuthentication.m in Sources */,
+				F7F1177A260289E300C7DE9A /* ObservationRoutes.m in Sources */,
 				049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */,
 				2FE3C9C5221759590066B19E /* Model11To15.xcmappingmodel in Sources */,
 				2FE3C9C4221759590066B19E /* Model6To15.xcmappingmodel in Sources */,
+				F7F1169426027C5400C7DE9A /* AttachmentRoutes.m in Sources */,
 				F7EDF8F823EE162E00B77379 /* DataConnectionUtilities.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
 				F7F8A1B32486F4BC00E3A2A2 /* Feed+CoreDataProperties.m in Sources */,
 				2FE3C9C9221759590066B19E /* Model5To15.xcmappingmodel in Sources */,
 				2F53326E1CC154C3006E92E1 /* Observation.m in Sources */,
-				F7F8A1B02486F4BC00E3A2A2 /* FeedItem+CoreDataClass.m in Sources */,
 				2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */,
 				F7A87F351AA51695001AEDF4 /* Mage.m in Sources */,
 				049C654D1E53B571005F4FA4 /* SessionTask.m in Sources */,
@@ -877,6 +902,7 @@
 				2F01652D199D1C6D00C4862B /* LocationFetchService.m in Sources */,
 				F7083E5C2343D0BC006EE9D4 /* ImageryLayer+CoreDataProperties.m in Sources */,
 				2FE3C9C8221759590066B19E /* Model9To15.xcmappingmodel in Sources */,
+				F7CDD73B2602726300F3294C /* RouteMethod.m in Sources */,
 				2F5332641CC154C3006E92E1 /* Attachment.m in Sources */,
 				F7F7B7D91A6EDE1100270D61 /* StoredPassword.m in Sources */,
 				2FE3C9CD221759590066B19E /* Model12To15.xcmappingmodel in Sources */,
@@ -886,7 +912,6 @@
 				2F5332DB1CC557F3006E92E1 /* User+CoreDataProperties.m in Sources */,
 				048E23D81EAFD8B40001DB3E /* GeometrySerializer.m in Sources */,
 				F768E9CE191D1C7B003287E3 /* MageSessionManager.m in Sources */,
-				F7F8A1B22486F4BC00E3A2A2 /* Feed+CoreDataClass.m in Sources */,
 				F75DD31A1A9F9F230007FA3F /* NSString+Contains.m in Sources */,
 				2F5332D81CC557F3006E92E1 /* Role+CoreDataProperties.m in Sources */,
 				F7971BD61A03F50D001505F0 /* ObservationPushService.m in Sources */,
@@ -906,6 +931,7 @@
 				2F5332781CC154C3006E92E1 /* User.m in Sources */,
 				2FE3C9CA221759590066B19E /* Model7To15.xcmappingmodel in Sources */,
 				2F5332D91CC557F3006E92E1 /* Event+CoreDataProperties.m in Sources */,
+				F7F11705260280CE00C7DE9A /* AttachmentRoutes_Server5.m in Sources */,
 				2F2190141FC5D22E001E4A84 /* ObservationImage.m in Sources */,
 				2FE3C9CC221759590066B19E /* Model3To15.xcmappingmodel in Sources */,
 				2F92D10E1D91CD6900CC0149 /* ObservationFavorite.m in Sources */,

@@ -27,18 +27,28 @@
 #import "SFLineString.h"
 #import "SFGeometryUtils.h"
 #import "NotificationRequester.h"
+#import "MAGERoutes.h"
 
 NSString * const kObservationErrorStatusCode = @"errorStatusCode";
 NSString * const kObservationErrorDescription = @"errorDescription";
 NSString * const kObservationErrorMessage = @"errorMessage";
 
+@interface Observation ()
+
+@property (nonatomic, retain) NSMutableArray *_transientAttachments;
+@property (nonatomic, retain) NSMutableIndexSet *_formsToBeDeleted;
+
+@property (nonatomic, retain) NSDictionary *_fieldNameToField;
+@property (nonatomic, retain) Event *_event;
+
+@end
+
 @implementation Observation
 
-NSMutableArray *_transientAttachments;
-NSMutableIndexSet *_formsToBeDeleted;
-
-NSDictionary *_fieldNameToField;
-Event *_event;
+@synthesize _transientAttachments;
+@synthesize _formsToBeDeleted;
+@synthesize _fieldNameToField;
+@synthesize _event;
 
 //NSNumber *_currentEventId;
 + (Observation *) observationWithGeometry:(nullable SFGeometry *) geometry andAccuracy: (CLLocationAccuracy) accuracy andProvider: (NSString *) provider andDelta: (double) delta inManagedObjectContext:(NSManagedObjectContext *) mangedObjectContext {
@@ -82,8 +92,8 @@ Event *_event;
 }
 
 - (Event *) event {
-    _event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
-    return _event;
+    self._event = [Event getEventById:self.eventId inContext:self.managedObjectContext];
+    return self._event;
 }
 
 - (nullable NSDictionary *) getPrimaryObservationForm {
@@ -188,19 +198,19 @@ Event *_event;
 }
 
 - (NSMutableArray *)transientAttachments {
-    if (_transientAttachments != nil) {
-        return _transientAttachments;
+    if (self.transientAttachments != nil) {
+        return self.transientAttachments;
     }
-    _transientAttachments = [NSMutableArray array];
-    return _transientAttachments;
+    self._transientAttachments = [NSMutableArray array];
+    return self._transientAttachments;
 }
 
 - (NSDictionary *)fieldNameToFieldForEvent:(Event *) event andFormId: (id) formId {
     if (event == nil) {
         NSLog(@"Nil event");
     }
-    if (_fieldNameToField != nil) {//} && [_currentEventId isEqualToNumber:event.remoteId]) {
-        return [_fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
+    if (self._fieldNameToField != nil) {//} && [_currentEventId isEqualToNumber:event.remoteId]) {
+        return [self._fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
     }
 
 //    _currentEventId = event.remoteId;
@@ -217,9 +227,9 @@ Event *_event;
         [formFieldMap setObject:fieldNameToFieldMap forKey:[NSString stringWithFormat:@"%@",[form objectForKey:@"id"]]];
     }
     
-    _fieldNameToField = formFieldMap;
+    self._fieldNameToField = formFieldMap;
 
-    return [_fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
+    return [self._fieldNameToField objectForKey:[NSString stringWithFormat:@"%@",formId]];
 }
 
 - (NSDictionary *) createJsonToSubmitForEvent:(Event *) event {
@@ -389,28 +399,28 @@ Event *_event;
 }
 
 - (NSIndexSet *) getFormsToBeDeleted {
-    if (_formsToBeDeleted == nil) {
-        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    if (self._formsToBeDeleted == nil) {
+        self._formsToBeDeleted = [[NSMutableIndexSet alloc] init];
     }
-    return _formsToBeDeleted;
+    return self._formsToBeDeleted;
 }
 
 - (void) clearFormsToBeDeleted {
-    _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    self._formsToBeDeleted = [[NSMutableIndexSet alloc] init];
 }
 
 - (void) addFormToBeDeleted:(NSInteger)formIndex {
-    if (_formsToBeDeleted == nil) {
-        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    if (self._formsToBeDeleted == nil) {
+        self._formsToBeDeleted = [[NSMutableIndexSet alloc] init];
     }
-    [_formsToBeDeleted addIndex:formIndex];
+    [self._formsToBeDeleted addIndex:formIndex];
 }
 
 - (void) removeFormToBeDeleted:(NSInteger)formIndex {
-    if (_formsToBeDeleted == nil) {
-        _formsToBeDeleted = [[NSMutableIndexSet alloc] init];
+    if (self._formsToBeDeleted == nil) {
+        self._formsToBeDeleted = [[NSMutableIndexSet alloc] init];
     }
-    [_formsToBeDeleted removeIndex:formIndex];
+    [self._formsToBeDeleted removeIndex:formIndex];
 }
 
 +(BOOL) checkIfRectangle: (NSArray<SFPoint *> *) points{
@@ -453,7 +463,8 @@ Event *_event;
 
 + (NSURLSessionDataTask *) operationToDeleteObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSLog(@"Trying to delete observation %@", observation.url);
-    NSURLSessionDataTask *task = [[MageSessionManager sharedManager] POST_TASK:[NSString stringWithFormat:@"%@/states", observation.url] parameters: @{@"name":@"archive"} progress:^(NSProgress * _Nonnull uploadProgress) {
+    RouteMethod *deleteMethod = [[MAGERoutes observation] deleteRoute:observation];
+    NSURLSessionDataTask *task = [[MageSessionManager sharedManager] POST_TASK:deleteMethod.route parameters: deleteMethod.parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"progress");
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"success");
@@ -479,11 +490,11 @@ Event *_event;
 }
 
 + (NSURLSessionDataTask *) operationToCreateObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
-    NSString *url = [NSString stringWithFormat:@"%@/api/events/%@/observations/id", [MageServer baseURL], observation.eventId];
-    NSLog(@"Trying to create observation %@", url);
+    RouteMethod *create = [[MAGERoutes observation] createId:observation];
+    NSLog(@"Trying to create observation %@", create.route);
 
     MageSessionManager *manager = [MageSessionManager sharedManager];
-    NSURLSessionDataTask *task = [manager POST_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id response) {
+    NSURLSessionDataTask *task = [manager POST_TASK:create.route parameters:nil progress:nil success:^(NSURLSessionTask *task, id response) {
         NSLog(@"Successfully created location for observation resource");
 
         NSString *observationUrl = [response objectForKey:@"url"];
