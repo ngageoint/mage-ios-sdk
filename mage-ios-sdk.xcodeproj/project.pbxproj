@@ -47,6 +47,7 @@
 		2FA2C7EC1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA2C7EB1EA2AAD80074C8B3 /* Observation+CoreDataProperties.m */; };
 		2FA5712C1D904D4A00B2F0CE /* ObservationImportant.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571271D904D4A00B2F0CE /* ObservationImportant.m */; };
 		2FA5712D1D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA571291D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m */; };
+		2FC0317B25FC2913008EB58F /* NSDate+display.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC0317A25FC2913008EB58F /* NSDate+display.m */; };
 		2FCDC35022BD85D9004189AD /* LdapAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCDC34F22BD85D9004189AD /* LdapAuthentication.m */; };
 		2FE3C999221754930066B19E /* Model14To15.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3C998221754930066B19E /* Model14To15.xcmappingmodel */; };
 		2FE3C9C1221759590066B19E /* Model1To15.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3C9B4221759590066B19E /* Model1To15.xcmappingmodel */; };
@@ -215,6 +216,8 @@
 		2FA571271D904D4A00B2F0CE /* ObservationImportant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObservationImportant.m; path = MAGE/ObservationImportant.m; sourceTree = SOURCE_ROOT; };
 		2FA571281D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ObservationImportant+CoreDataProperties.h"; path = "MAGE/ObservationImportant+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
 		2FA571291D904D4A00B2F0CE /* ObservationImportant+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ObservationImportant+CoreDataProperties.m"; path = "MAGE/ObservationImportant+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
+		2FC0317925FC2913008EB58F /* NSDate+display.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDate+display.h"; path = "MAGE/NSDate+display.h"; sourceTree = "<group>"; };
+		2FC0317A25FC2913008EB58F /* NSDate+display.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSDate+display.m"; path = "MAGE/NSDate+display.m"; sourceTree = "<group>"; };
 		2FC308011A3F83DF00FBD2BA /* mage-ios-sdk-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "mage-ios-sdk-Prefix.pch"; path = "MAGE/mage-ios-sdk-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		2FCDC34E22BD85D9004189AD /* LdapAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LdapAuthentication.h; path = MAGE/LdapAuthentication.h; sourceTree = "<group>"; };
 		2FCDC34F22BD85D9004189AD /* LdapAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LdapAuthentication.m; path = MAGE/LdapAuthentication.m; sourceTree = "<group>"; };
@@ -359,6 +362,8 @@
 			children = (
 				2F01653819A4F11E00C4862B /* NSDate+Iso8601.h */,
 				2F01653919A4F11E00C4862B /* NSDate+Iso8601.m */,
+				2FC0317925FC2913008EB58F /* NSDate+display.h */,
+				2FC0317A25FC2913008EB58F /* NSDate+display.m */,
 			);
 			name = Date;
 			sourceTree = "<group>";
@@ -857,6 +862,7 @@
 				049C654A1E53A9FB005F4FA4 /* SessionTaskQueue.m in Sources */,
 				2FE3C9C5221759590066B19E /* Model11To15.xcmappingmodel in Sources */,
 				2FE3C9C4221759590066B19E /* Model6To15.xcmappingmodel in Sources */,
+				2FC0317B25FC2913008EB58F /* NSDate+display.m in Sources */,
 				F7EDF8F823EE162E00B77379 /* DataConnectionUtilities.m in Sources */,
 				2F01653319A2A88D00C4862B /* LocationService.m in Sources */,
 				F7F8A1B32486F4BC00E3A2A2 /* Feed+CoreDataProperties.m in Sources */,
