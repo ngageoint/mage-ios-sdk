@@ -21,6 +21,7 @@
 @dynamic maxObservationForms;
 @dynamic minObservationForms;
 @dynamic teams;
+@dynamic feeds;
 @dynamic acl;
 
 @end

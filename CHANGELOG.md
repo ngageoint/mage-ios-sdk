@@ -3,7 +3,21 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.1.0] (TBD)
+## [3.1.2] (TBD)
+
+##### Features
+
+##### Bug Fixes
+* Fix crash when translating feed primary/secondary types that are not strings.
+
+## [3.1.1](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.1)
+
+##### Features
+
+##### Bug Fixes
+* Fix bug where 3rd party authentication module could not found, causing authentication to fail. 
+
+## [3.1.0](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.0) (02-02-2021)
 
 ##### Features
 * Json Web Token authorization support.
