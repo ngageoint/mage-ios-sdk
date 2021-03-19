@@ -184,7 +184,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (NSDictionary *) getField:(NSString *) name {
-    NSDictionary *form = [self getPrimaryForm];
+    NSDictionary *form = [self getPrimaryObservationForm];
     if (form != nil) {
         NSString *fieldName = [form objectForKey:name];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name==%@", fieldName];
