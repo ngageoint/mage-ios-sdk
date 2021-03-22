@@ -160,12 +160,12 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (NSString *) primaryFeedFieldText {
-    NSDictionary *secondaryFeedField = [self getField:@"primaryFeedField"];
+    NSDictionary *primaryFeedField = [self getField:@"primaryFeedField"];
     NSArray *observationForms = [self.properties objectForKey:@"forms"];
     
-    if (secondaryFeedField != nil && [observationForms count] > 0) {
-        id value = [[observationForms objectAtIndex:0] objectForKey:[secondaryFeedField objectForKey:@"name"]];
-        return [self fieldValueText:value field:secondaryFeedField];
+    if (primaryFeedField != nil && [observationForms count] > 0) {
+        id value = [[self getPrimaryObservationForm] objectForKey:[primaryFeedField objectForKey:@"name"]];
+        return [self fieldValueText:value field:primaryFeedField];
     }
     
     return nil;
@@ -176,7 +176,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
     NSArray *observationForms = [self.properties objectForKey:@"forms"];
     
     if (secondaryFeedField != nil && [observationForms count] > 0) {
-        id value = [[observationForms objectAtIndex:0] objectForKey:[secondaryFeedField objectForKey:@"name"]];
+        id value = [[self getPrimaryObservationForm] objectForKey:[secondaryFeedField objectForKey:@"name"]];
         return [self fieldValueText:value field:secondaryFeedField];
     }
     
@@ -184,7 +184,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (NSDictionary *) getField:(NSString *) name {
-    NSDictionary *form = [self getPrimaryObservationForm];
+    NSDictionary *form = [self getPrimaryEventForm];
     if (form != nil) {
         NSString *fieldName = [form objectForKey:name];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name==%@", fieldName];
