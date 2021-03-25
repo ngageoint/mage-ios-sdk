@@ -131,12 +131,14 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (NSString *) primaryFieldText {
-    NSString *primaryField = [self getPrimaryField];
-    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
-
-    if (primaryField != nil && primaryObservationForm) {
-        return [primaryObservationForm objectForKey:primaryField];
+    NSDictionary *primaryFeedField = [self getField:@"primaryField"];
+    NSArray *observationForms = [self.properties objectForKey:@"forms"];
+    
+    if (primaryFeedField != nil && [observationForms count] > 0) {
+        id value = [[self getPrimaryObservationForm] objectForKey:[primaryFeedField objectForKey:@"name"]];
+        return [self fieldValueText:value field:primaryFeedField];
     }
+    
     return nil;
 }
 
@@ -149,13 +151,14 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (NSString *) secondaryFieldText {
+    NSDictionary *variantFeedField = [self getField:@"variantField"];
+    NSArray *observationForms = [self.properties objectForKey:@"forms"];
     
-    NSString *secondaryField = [self getSecondaryField];
-    NSDictionary *primaryObservationForm = [self getPrimaryObservationForm];
-
-    if (secondaryField != nil && primaryObservationForm) {
-        return [primaryObservationForm objectForKey:secondaryField];
+    if (variantFeedField != nil && [observationForms count] > 0) {
+        id value = [[self getPrimaryObservationForm] objectForKey:[variantFeedField objectForKey:@"name"]];
+        return [self fieldValueText:value field:variantFeedField];
     }
+    
     return nil;
 }
 
@@ -202,7 +205,12 @@ NSString * const kObservationErrorMessage = @"errorMessage";
     
     NSString *type = [field valueForKey:@"type"];
     if ([@"geometry" isEqualToString:type]) {
-        SFGeometry *geometry = value;
+        SFGeometry *geometry = nil;
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            geometry = [GeometryDeserializer parseGeometry:value];
+        } else {
+            geometry = value;
+        }
         SFPoint *centroid = [SFGeometryUtils centroidOfGeometry:geometry];
         return [NSString stringWithFormat:@"%.6f, %.6f", [centroid.y doubleValue], [centroid.x doubleValue]];
     } else if ([@"date" isEqualToString:type]) {
@@ -214,7 +222,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
         return [value stringValue];
     } else if ([@"multiselectdropdown" isEqualToString:type]) {
         NSArray *array = (NSArray *) value;
-        return [array componentsJoinedByString:@","];
+        return [array componentsJoinedByString:@", "];
     } else if ([@"textfield" isEqualToString:type] ||
                [@"textarea" isEqualToString:type] ||
                [@"email" isEqualToString:type] ||
@@ -493,6 +501,8 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 + (NSURLSessionDataTask *) operationToDeleteObservation:(Observation *) observation success:(void (^)(id)) success failure: (void (^)(NSError *)) failure {
     NSLog(@"Trying to delete observation %@", observation.url);
     RouteMethod *deleteMethod = [[MAGERoutes observation] deleteRoute:observation];
+    NSLog(@"Delete method parameters %@", deleteMethod.parameters);
+    NSLog(@"route %@", deleteMethod.route);
     NSURLSessionDataTask *task = [[MageSessionManager sharedManager] POST_TASK:deleteMethod.route parameters: deleteMethod.parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"progress");
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -500,8 +510,10 @@ NSString * const kObservationErrorMessage = @"errorMessage";
         // if the delete worked, remove the observation from the database on the phone
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             [observation MR_deleteEntityInContext:localContext];
+            failure(nil);
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failure to delete");
         NSString *errorString = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
         NSLog(@"Error deleting observation %@", errorString);
         if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
@@ -510,8 +522,13 @@ NSString * const kObservationErrorMessage = @"errorMessage";
                 // Observation does not exist on the server, delete it
                 [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                     [observation MR_deleteEntityInContext:localContext];
+                    failure(nil);
                 }];
+            } else {
+                failure(nil);
             }
+        } else {
+            failure(error);
         }
     }];
     
@@ -1122,29 +1139,30 @@ NSString * const kObservationErrorMessage = @"errorMessage";
 }
 
 - (void) toggleFavoriteWithCompletion:(nullable void (^)(BOOL contextDidSave, NSError * _Nullable error)) completion {
-    NSManagedObjectContext *context = self.managedObjectContext;
-    User *user = [User fetchCurrentUserInManagedObjectContext:context];
-    ObservationFavorite *favorite = [[self getFavoritesMap] objectForKey:user.remoteId];
+    __weak typeof(self) weakSelf = self;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext * _Nonnull localContext) {
+        Observation *localObservation = [weakSelf MR_inContext:localContext];
 
-    NSLog(@"toggle favorite %@", favorite);
-    if (favorite && favorite.favorite) {
-        // toggle off
-        favorite.dirty = YES;
-        favorite.favorite = NO;
-    } else {
-        // toggle on
-        if (!favorite) {
-            favorite = [ObservationFavorite MR_createEntityInContext:context];
-            [self addFavoritesObject:favorite];
-            favorite.observation = self;
+        User *user = [User fetchCurrentUserInManagedObjectContext:localContext];
+        ObservationFavorite *favorite = [[localObservation getFavoritesMap] objectForKey:user.remoteId];
+
+        if (favorite && favorite.favorite) {
+            // toggle off
+            favorite.dirty = YES;
+            favorite.favorite = NO;
+        } else {
+            // toggle on
+            if (!favorite) {
+                favorite = [ObservationFavorite MR_createEntityInContext:localContext];
+                [localObservation addFavoritesObject:favorite];
+                favorite.observation = localObservation;
+            }
+
+            favorite.dirty = YES;
+            favorite.favorite = YES;
+            favorite.userId = user.remoteId;
         }
-
-        favorite.dirty = YES;
-        favorite.favorite = YES;
-        favorite.userId = user.remoteId;
-    }
-
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+    } completion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
         };
@@ -1167,26 +1185,27 @@ NSString * const kObservationErrorMessage = @"errorMessage";
         };
         return;
     }
-    NSManagedObjectContext *context = self.managedObjectContext;
-    User *currentUser = [User fetchCurrentUserInManagedObjectContext:context];
+    __weak typeof(self) weakSelf = self;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext * _Nonnull localContext) {
+        Observation *localObservation = [weakSelf MR_inContext:localContext];
+        User *currentUser = [User fetchCurrentUserInManagedObjectContext:localContext];
 
-    ObservationImportant *important = self.observationImportant;
-    if (!important) {
-        important = [ObservationImportant MR_createEntityInContext:context];
-        important.observation = self;
-        self.observationImportant = important;
-    }
+        ObservationImportant *important = weakSelf.observationImportant;
+        if (!important) {
+            important = [ObservationImportant MR_createEntityInContext:localContext];
+            important.observation = localObservation;
+            localObservation.observationImportant = important;
+        }
 
-    important.dirty = [NSNumber numberWithBool:YES];
-    important.important = [NSNumber numberWithBool:YES];
-    important.userId = currentUser.remoteId;
-    important.reason = description;
+        important.dirty = [NSNumber numberWithBool:YES];
+        important.important = [NSNumber numberWithBool:YES];
+        important.userId = currentUser.remoteId;
+        important.reason = description;
 
-    // This will get overriden by the server, but lets set an inital value
-    // so the UI has something to display
-    important.timestamp = [NSDate date];
-
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+        // This will get overriden by the server, but lets set an inital value
+        // so the UI has something to display
+        important.timestamp = [NSDate date];
+    } completion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
         };
@@ -1200,15 +1219,15 @@ NSString * const kObservationErrorMessage = @"errorMessage";
         };
         return;
     }
-    NSManagedObjectContext *context = self.managedObjectContext;
+    __weak typeof(self) weakSelf = self;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext * _Nonnull localContext) {
+        ObservationImportant *important = [weakSelf.observationImportant MR_inContext:localContext];
+        if (important) {
+            important.dirty = [NSNumber numberWithBool:YES];
 
-    ObservationImportant *important = self.observationImportant;
-    if (important) {
-        important.dirty = [NSNumber numberWithBool:YES];
-        important.important = [NSNumber numberWithBool:NO];
-    }
-
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            important.important = [NSNumber numberWithBool:NO];
+        }
+    } completion:^(BOOL contextDidSave, NSError * _Nullable error) {
         if (completion) {
             completion(contextDidSave, error);
         };

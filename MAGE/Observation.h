@@ -62,8 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *) getSecondaryField;
 - (NSString *) primaryFieldText;
 - (NSString *) secondaryFieldText;
-- (NSString *) getPrimaryFeedField;
-- (NSString *) getSecondaryFeedField;
 - (NSString *) primaryFeedFieldText;
 - (NSString *) secondaryFeedFieldText;
 
