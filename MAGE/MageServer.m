@@ -144,9 +144,30 @@ NSString * const kBaseServerUrlKey = @"baseServerUrl";
     NSURLSessionDataTask *task = [manager GET_TASK:apiURL parameters:nil progress:nil success:^(NSURLSessionTask *task, id response) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
-        [defaults setObject:[response valueForKeyPath:@"disclaimer.show"] forKey:@"showDisclaimer"];
-        [defaults setObject:[response valueForKeyPath:@"disclaimer.text"] forKey:@"disclaimerText"];
-        [defaults setObject:[response valueForKeyPath:@"disclaimer.title"] forKey:@"disclaimerTitle"];
+        if ([response isKindOfClass:[NSData class]]) {
+            if (((NSData *)response).length == 0) {
+                failure([NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:[NSDictionary dictionaryWithObject:@"Empty API response received from server." forKey:NSLocalizedDescriptionKey]]);
+                return;
+            }
+            // try to turn it into a string in case it was HTML
+            NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            if (responseString) {
+                failure([NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat: @"Invalid API response received from server. %@", responseString] forKey:NSLocalizedDescriptionKey]]);
+                return;
+            }
+        }
+        
+        if (![response isKindOfClass:[NSDictionary class]]) {
+            failure([NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:[NSDictionary dictionaryWithObject:@"Unknown API response received from server. %@" forKey:NSLocalizedDescriptionKey]]);
+            return;
+        }
+        
+        NSDictionary *disclaimer = [response valueForKey:@"disclaimer"];
+        if (disclaimer) {
+            [defaults setObject:[disclaimer valueForKeyPath:@"show"] forKey:@"showDisclaimer"];
+            [defaults setObject:[disclaimer valueForKeyPath:@"text"] forKey:@"disclaimerText"];
+            [defaults setObject:[disclaimer valueForKeyPath:@"title"] forKey:@"disclaimerTitle"];
+        }
         [defaults setObject:[response valueForKeyPath:@"authenticationStrategies"] forKey:@"authenticationStrategies"];
         
         NSMutableDictionary *authenticationModules = [[NSMutableDictionary alloc] init];
