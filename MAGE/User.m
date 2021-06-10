@@ -138,6 +138,16 @@ static User *currentUser = nil;
     
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:nil progress:nil success:^(NSURLSessionTask *task, id users) {
         
+        if ([users isKindOfClass:[NSData class]]) {
+            if (((NSData *)users).length == 0) {
+                NSLog(@"Users are empty");
+                if (success) {
+                    success();
+                }
+                return;
+            }
+        }
+        
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             // Get roles
             NSMutableDictionary *roleIdMap = [[NSMutableDictionary alloc] init];

@@ -685,6 +685,15 @@ NSString * const kObservationErrorMessage = @"errorMessage";
     
     __block BOOL sendBulkNotification = initialPull;
     NSURLSessionDataTask *task = [manager GET_TASK:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable features) {
+        if ([features isKindOfClass:[NSData class]]) {
+            if (((NSData *)features).length == 0) {
+                NSLog(@"Observations is empty");
+                if (success) {
+                    success();
+                }
+                return;
+            }
+        }
         NSManagedObjectContext *rootSavingContext = [NSManagedObjectContext MR_rootSavingContext];
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextWithParent:rootSavingContext];
         [localContext performBlock:^{
