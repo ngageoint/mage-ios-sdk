@@ -13,6 +13,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Features
 * Added more robust logging and user feedback in API error cases.
+* Updated build to remove frameworks 
 
 ##### Bug Fixes
 
