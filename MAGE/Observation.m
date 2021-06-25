@@ -427,7 +427,7 @@ NSString * const kObservationErrorMessage = @"errorMessage";
     return geometry;
 }
 
-- (void) setGeometry: (SFGeometry *) geometry{
+- (void) setGeometry: (nullable SFGeometry *) geometry{
     NSData *data = nil;
     if(geometry != nil){
         data = [SFGeometryUtils encodeGeometry:geometry];

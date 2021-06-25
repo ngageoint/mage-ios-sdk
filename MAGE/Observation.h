@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (CLLocation *) location;
 
 - (SFGeometry *) getGeometry;
-- (void) setGeometry: (SFGeometry *) geometry;
+- (void) setGeometry: (nullable SFGeometry *) geometry;
 
 - (Boolean) isDirty;
 - (Boolean) isImportant;
