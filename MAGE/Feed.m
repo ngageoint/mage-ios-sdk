@@ -35,7 +35,7 @@
 }
 
 - (nullable NSURL *) iconURL {
-    NSString *urlString =[NSString stringWithFormat:@"%@/api/icons/%@/content", [MageServer baseURL], [((NSDictionary *)self.mapStyle) valueForKeyPath:@"icon.id"]]; 
+    NSString *urlString =[NSString stringWithFormat:@"%@/api/icons/%@/content", [MageServer baseURL], [((NSDictionary *)self.mapStyle) valueForKeyPath:@"icon.id"]];
     if (urlString != nil) {
         return [NSURL URLWithString:urlString];
     }
