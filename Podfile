@@ -2,7 +2,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '13.0'
 
 inhibit_all_warnings!
-use_frameworks!
 
 target 'mage-ios-sdk' do
   pod "AFNetworking", "~> 4.0.1"
