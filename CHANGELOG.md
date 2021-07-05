@@ -3,7 +3,21 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.1.2] (TBD)
+## [3.1.4] (TBD)
+
+##### Features
+
+##### Bug Fixes
+
+## [3.1.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.3)
+
+##### Features
+* Added more robust logging and user feedback in API error cases.
+* Updated build to remove frameworks 
+
+##### Bug Fixes
+
+## [3.1.2](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.2)
 
 ##### Features
 
