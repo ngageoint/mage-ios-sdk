@@ -6,8 +6,14 @@ Adheres to [Semantic Versioning](http://semver.org/).
 ## [3.1.4] (TBD)
 
 ##### Features
+* Multi-form support
+* Update to GeoPackage 5.0.0
+* Allow nullable geometries for observations
+* Allow forms to be deleted from observations
+* Extra protections for no data responses from the server
 
 ##### Bug Fixes
+* Date formatter now matches Android
 
 ## [3.1.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.3)
 
