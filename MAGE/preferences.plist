@@ -10,12 +10,6 @@
     <array>
         <dict>
             <key>serverMajorVersion</key>
-            <integer>6</integer>
-            <key>serverMinorVersion</key>
-            <integer>0</integer>
-        </dict>
-        <dict>
-            <key>serverMajorVersion</key>
             <integer>5</integer>
             <key>serverMinorVersion</key>
             <integer>4</integer>
