@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
-## [3.1.4] (TBD)
+## [3.1.4] (https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.4)
 
 ##### Features
 
 ##### Bug Fixes
+* Remove support for mage server version 6.0
 
 ## [3.1.3](https://github.com/ngageoint/mage-ios-sdk/releases/tag/3.1.3)
 
